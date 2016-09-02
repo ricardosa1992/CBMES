@@ -12,5 +12,6 @@ jdk:
   - # do stuff with Java 7
   
   
-    
+  notifications:
+slack: cbmes:YHAXqhK6aDAVNxm0VtJHuJQY
 
