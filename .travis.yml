@@ -10,5 +10,9 @@ script:
   - # do stuff with Java 8
   - jdk_switcher use oraclejdk7
   - # do stuff with Java 7
+
 notifications:
-  slack: cbmes:7uVHsOCDDTAxADIGyVa4pe0d
+  slack:
+    rooms:
+      - cbmes:7uVHsOCDDTAxADIGyVa4pe0d#general
+      - cbmes:7uVHsOCDDTAxADIGyVa4pe0d#random
