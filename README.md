@@ -1,2 +1,2 @@
-# CBMES https://api.travis-ci.org/ricardosa1992/CBMES.svg?branch=master
+# CBMES
 Software de Controle de Recursos
