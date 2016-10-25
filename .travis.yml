@@ -18,8 +18,9 @@ before_script:
  - psql -U postgres -d sincap_teste -f src/main/resources/sincapBackup.sql 
  - export JAVA_HOME=/usr/lib/jvm/java-8-oracle
  
-+install:
-+  - sudo apt-get install phantomjs 
+install:
+  - sudo apt-get install phantomjs 
+
 script:
   - mvn clean install -Pqulice --batch-mode --errors
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.login=$SONAR_TOKEN
