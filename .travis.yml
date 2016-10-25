@@ -2,15 +2,6 @@ language: java
 
 jdk:
  - oraclejdk8 
- 
-addons:
- -postgresql: "9.3"
- 
-env:
-  global:
-      - secure: "vVSzQa1ygJ3gGfB6L1rR43wFWtrjBPWZYdiJetBjHtCQWEKPh7IAc4HK3HcFO1sbPV+poytVdhWY4YhYGquGmDgQl7zMVMoaXPvx8cN3GNzO6bOgTfw4CGmu1r12ZZQB4+FztK9qKH7UEz1xPAizJfKjhhruXFYy8BPyiptZu3zssTM3cexBfhdloeVlfh8rxWoIetVGMkE2k7+l4ioq+tjkmof8x6hN1LBto5kwiOCM4jXTse9OLN9NU9BtY+euz4P9cL9GorDJBzRtvVrHctXu8GTDf4AoXCP2iGgLOF0V5iVjRCNd69I5njG1093S/gEau6IllYie3h/o5mGyPEdxj0EViVslwDZrCDWDj3S01kc2ei+FX7xHZB6BPr2L92CKfwgw93jh+so2WglcROSrh6T2yPPimxUriCrFylZtT90JoeVTZ8rao9Z3IYQXNpUGGKLNslRRyxKTqJwxYbbfYB7L3T4uj0/mc4HZFQtj1sSXcp4t5rHQo+V+oWwexHN/8syM6WAogltOL8cOCXbjCiteYatVsefUAP7zo6qdbRmZkQzu4F5y2Z2keD+Vx/5P0k1/mdyqGeLBkv+MIR6i6dwuJi5Gq19pUm+Wno0RCm8Sl3NjKv+U1Zsex/WFAmC+/KtSNZm4VmHTC7cni63tPVh+Wg25m/QhJa3PNhA="
-
-services: postgresql
 
 install:
   - sudo apt-get install phantomjs 
