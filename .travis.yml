@@ -15,10 +15,6 @@ services: postgresql
 install:
   - sudo apt-get install phantomjs 
 
-script:
-  - mvn clean install -Pqulice --batch-mode --errors
-  
-
 branches:
   only:
     - master
