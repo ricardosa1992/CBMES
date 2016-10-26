@@ -4,8 +4,4 @@ jdk:
   - oraclejdk8
 
 script:
-  - jdk_switcher use oraclejdk8
-  - # do stuff with Java 8
-  - jdk_switcher use oraclejdk7
-  - # do stuff with Java 7
-
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent
