@@ -52,10 +52,10 @@
         </dependency>
 
        <dependency>
-            <groupId>unknown.binary</groupId>
+            <groupId>org.netbeans.external</groupId>
             <artifactId>AbsoluteLayout</artifactId>
-            <version>SNAPSHOT</version>
-            <scope>provided</scope>
+            <version>RELEASE701</version>
+           
         </dependency>
         <dependency>
             <groupId>org.jdesktop</groupId>
