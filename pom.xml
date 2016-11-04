@@ -51,11 +51,11 @@
             <version>9.4-1200-jdbc41</version>
         </dependency>
 
-       <dependency>
-            <groupId>org.netbeans.external</groupId>
+      <dependency>
+            <groupId>unknown.binary</groupId>
             <artifactId>AbsoluteLayout</artifactId>
-            <version>RELEASE701</version>
-           
+            <version>SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.jdesktop</groupId>
