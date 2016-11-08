@@ -41,7 +41,7 @@ public class MilitarAdapter {
         Militar militarConsult = militarDAO.buscaMilitarPorId(id);
         if (militarConsult != null) {
             SafoFuncionario safofuncionarioConsult = safoFuncionarioDAO.buscaSafoFuncionarioPorId(id);
-            if (safoFuncionarioDAO != null) {
+//            if (safoFuncionarioDAO != null) {
                 //seta dados do banco de militar
                 militarAdaptado.setIsalocado(militarConsult.getIsalocado());
                 militarAdaptado.setIdmilitar(militarConsult.getIdmilitar());
@@ -57,7 +57,7 @@ public class MilitarAdapter {
                 militarAdaptado.setPosto_graduacao(safofuncionarioConsult.getIdpostograducao().getIdpostograducao());
 
                 return militarAdaptado;
-            }
+//            }
         }
         return null;
     }

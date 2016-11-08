@@ -19,7 +19,6 @@ public class ControlMilitarAdapter {
     private List<MilitarAdapter> listTodosMilitar;
     private List<MilitarAdapter> listMilitarPostoGraduacao;
     private List<MilitarAdapter> listMilitarAux;
-    private MilitarAdapter militarAux;
     private MilitarAdapter militarAdaptado;
 
     public ControlMilitarAdapter() {
@@ -39,10 +38,10 @@ public class ControlMilitarAdapter {
     }
 
     public MilitarAdapter getMilitarbyId(Integer idMilitar) {
-        militarAux = new MilitarAdapter();
+        //MilitarAdapter militarAux = new MilitarAdapter();
         for (MilitarAdapter mil : listTodosMilitar) {
             if (mil.getIdmilitar().equals(idMilitar)) {
-                return militarAux = mil;
+                return mil;
             }
         }
         return null;
