@@ -68,8 +68,8 @@ public class ViaturaDAO extends AbstractDAO<Viatura> {
     public void remove(Viatura obj) {
         try {
             em.getTransaction().begin();
-            obj = em.find(obj.getClass(), obj.getIdviatura());
-            em.remove(obj);
+            Viatura viaturaResult = em.find(obj.getClass(), obj.getIdviatura());
+            em.remove(viaturaResult);
             em.getTransaction().commit();
            
         } catch (Exception ex) {

@@ -35,7 +35,7 @@ public class TelaUnidades extends javax.swing.JInternalFrame {
     List<Unidade> listaUnidade;
     List<SafoPostoGraducao> listaPG = new SafoPostoGraduacaoDAO().buscaSafoPostoGraducaos();
     List<Militar> listaMil = new MilitarDAO().buscaMilitars();
-
+    String opcao;
     /**
      * Creates new form Unidades
      */
@@ -45,6 +45,7 @@ public class TelaUnidades extends javax.swing.JInternalFrame {
         unidadeDao = new UnidadesDAO();
         miladap = new MilitarAdapter();
         btnExcluir.setVisible(false);
+        opcao = "Selecione";
         //define o modelo da tabela utilizada para exibir as unidades
         modeloTable = (DefaultTableModel) tblUnidades.getModel();
         atualizaTabela();
@@ -244,7 +245,7 @@ public class TelaUnidades extends javax.swing.JInternalFrame {
 
     private void bntCarregaMilSubcmtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntCarregaMilSubcmtMouseClicked
         cmbMilSubcmt.removeAllItems();
-        if (!cmbPostogradSubcmt.getSelectedItem().equals("Selecione")) {
+        if (!cmbPostogradSubcmt.getSelectedItem().equals(opcao)) {
             listMilAdap = controlMilitar.getMilitarByPostoGraduacao(cmbPostogradSubcmt.getSelectedIndex());
             for (MilitarAdapter mil : listMilAdap) {
                 cmbMilSubcmt.addItem(mil.getIdmilitar() + "");
@@ -254,7 +255,7 @@ public class TelaUnidades extends javax.swing.JInternalFrame {
 
     private void btnCarregaMilCmtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCarregaMilCmtMouseClicked
         cmbMilCmt.removeAllItems();
-        if (!cmbPostogradCmt.getSelectedItem().equals("Selecione")) {
+        if (!cmbPostogradCmt.getSelectedItem().equals(opcao)) {
             listMilAdap = controlMilitar.getMilitarByPostoGraduacao(cmbPostogradCmt.getSelectedIndex());
             for (MilitarAdapter mil : listMilAdap) {
                 cmbMilCmt.addItem(mil.getIdmilitar() + "");
@@ -359,8 +360,8 @@ public class TelaUnidades extends javax.swing.JInternalFrame {
         }
 
         //adiciona posto/graduacao nos campos
-        cmbPostogradCmt.addItem("Selecione");
-        cmbPostogradSubcmt.addItem("Selecione");
+        cmbPostogradCmt.addItem(opcao);
+        cmbPostogradSubcmt.addItem(opcao);
         for (SafoPostoGraducao pgaux : listaPG) {
             cmbPostogradCmt.addItem(pgaux.getAbreviacao());
             cmbPostogradSubcmt.addItem(pgaux.getAbreviacao());

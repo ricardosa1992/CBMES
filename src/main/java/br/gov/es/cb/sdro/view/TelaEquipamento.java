@@ -36,6 +36,7 @@ public class TelaEquipamento extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form TelaEquipamento
+     * @throws java.lang.Exception
      */
     public TelaEquipamento() throws Exception {
         initComponents();
@@ -361,7 +362,7 @@ public class TelaEquipamento extends javax.swing.JInternalFrame {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
 
         try {
-            if (!txtNome.getText().equals("") && !txtMarca.getText().equals("")) {
+            if (!txtNome.getText().isEmpty() && !txtMarca.getText().isEmpty()) {
                 String statusdescricao = jComboStatus.getSelectedItem().toString();
                 int id = getIdStatus(statusdescricao);
                 status.setIdstatus(id);
@@ -393,7 +394,7 @@ public class TelaEquipamento extends javax.swing.JInternalFrame {
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         try {
-            if (!txtNomeAlterar.getText().equals("") && !txtMarcaAlterar.getText().equals("")) {
+            if (!txtNomeAlterar.getText().isEmpty() && !txtMarcaAlterar.getText().isEmpty()) {
                 int linha = jTableEquipamentos.getSelectedRow();
                 codigo = Integer.parseInt(tableEquipamentos.getValueAt(linha, 0).toString());
                 String statusdescricao = jComboStatusAlterar.getSelectedItem().toString();
@@ -468,7 +469,7 @@ public class TelaEquipamento extends javax.swing.JInternalFrame {
             }
 
         }
-        if (input.equals("")) {
+        if (input.isEmpty()) {
             try {
                 addTabela();
             } catch (Exception ex) {

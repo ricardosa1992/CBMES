@@ -37,7 +37,7 @@ public class TelaEquipamentosAlocacao extends javax.swing.JFrame {
         addTabela();
     }
 
-    public void addTabela() throws Exception {
+    public void addTabela() {
 
         if (tableEquipamentos.getRowCount() > 0) {
 
