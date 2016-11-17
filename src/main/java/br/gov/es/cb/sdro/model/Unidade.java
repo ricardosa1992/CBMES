@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.gov.es.cb.sdro.model;
 
 import java.io.Serializable;
@@ -60,6 +55,7 @@ public class Unidade implements Serializable {
     private List<Militar> militarList;
 
     public Unidade() {
+        // para criacao de nova Unidade
     }
 
     public Unidade(Integer idunidade) {
@@ -148,7 +144,6 @@ public class Unidade implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Unidade)) {
             return false;
         }

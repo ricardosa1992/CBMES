@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.gov.es.cb.sdro.model;
 
 import br.gov.es.cb.sdro.util.MilitarDAO;
@@ -26,9 +22,9 @@ public class MilitarAdapter {
     private String celular;
     private String categoriacnh;
     private String nome;
-    private String nome_guerra;
-    private String numero_funcional;
-    private Integer posto_graduacao;
+    private String nomeGuerra;
+    private String numeroFuncional;
+    private Integer postoGraduacao;
 
     public MilitarAdapter() {
         this.militarDAO = new MilitarDAO();
@@ -41,7 +37,7 @@ public class MilitarAdapter {
         Militar militarConsult = militarDAO.buscaMilitarPorId(id);
         if (militarConsult != null) {
             SafoFuncionario safofuncionarioConsult = safoFuncionarioDAO.buscaSafoFuncionarioPorId(id);
-//            if (safoFuncionarioDAO != null) {
+            if (safofuncionarioConsult != null) {
                 //seta dados do banco de militar
                 militarAdaptado.setIsalocado(militarConsult.getIsalocado());
                 militarAdaptado.setIdmilitar(militarConsult.getIdmilitar());
@@ -52,28 +48,26 @@ public class MilitarAdapter {
                 militarAdaptado.setCategoriacnh(safofuncionarioConsult.getCategoriacnh());
                 militarAdaptado.setCelular(safofuncionarioConsult.getFone());
                 militarAdaptado.setNome(safofuncionarioConsult.getNome());
-                militarAdaptado.setNome_guerra(safofuncionarioConsult.getNomeGuerra());
-                militarAdaptado.setNumero_funcional(safofuncionarioConsult.getNumeroFuncional());
-                militarAdaptado.setPosto_graduacao(safofuncionarioConsult.getIdpostograducao().getIdpostograducao());
+                militarAdaptado.setNomeGuerra(safofuncionarioConsult.getNomeGuerra());
+                militarAdaptado.setNumeroFuncional(safofuncionarioConsult.getNumeroFuncional());
+                militarAdaptado.setPostoGraduacao(safofuncionarioConsult.getIdpostograducao().getIdpostograducao());
 
                 return militarAdaptado;
-//            }
+            }
         }
         return null;
     }
 
     public List<MilitarAdapter> getListMilitarByIdPostoGraduacao(Integer id) {
-        MilitarAdapter militarAux = new MilitarAdapter();
         int contador = 1;
         List<MilitarAdapter> listaReturn = new ArrayList<>();
 
         while (getMilitarById(contador) != null) {
-            if (getMilitarById(contador).getPosto_graduacao().equals(id)) {
+            if (getMilitarById(contador).getPostoGraduacao().equals(id)) {
                 listaReturn.add(getMilitarById(contador));
             }
             contador++;
         }
-        //System.out.println("\n");
         return listaReturn;
     }
 
@@ -82,42 +76,17 @@ public class MilitarAdapter {
         List<MilitarAdapter> listaReturn = new ArrayList<>();
         while (getMilitarById(contador) != null) {
         
-        /*
-        ########################################
-        ########################################
-        ############   REMOVER   ###############
-        ########################################
-        ########################################
-        
-        
-        */
-        
         //reduz consulta militar pra 100 pela demora de consulta
-        //while (contador < 300) {
-            //System.out.println(contador);
+       
             listaReturn.add(getMilitarById(contador));
             contador++;
         }
-        //System.out.println("\n");
         return listaReturn;
     }
 
-    /*
-     public List<MilitarAdapter> getMilitarAdapterbyPostoGraduacao() {
-     int contador = 1;
-     List<MilitarAdapter> listaReturn = new ArrayList<>();
-     while (getMilitarById(contador) != null) {
-     System.out.println(contador);
-     listaReturn.add(getMilitarById(contador));
-     contador++;
-     }
-     System.out.println("\n");
-     return listaReturn;
-     }
-     */
     @Override
     public String toString() {
-        return "MilitarAdapter{" + "idmilitar=" + idmilitar + ", isalocado=" + isalocado + ", idequipe=" + idequipe + ", idUnidade=" + idUnidade + ", celular=" + celular + ", categoriacnh=" + categoriacnh + ", nome=" + nome + ", nome_guerra=" + nome_guerra + ", numero_funcional=" + numero_funcional + ", posto_graduacao=" + posto_graduacao + '}';
+        return "MilitarAdapter{" + "idmilitar=" + idmilitar + ", isalocado=" + isalocado + ", idequipe=" + idequipe + ", idUnidade=" + idUnidade + ", celular=" + celular + ", categoriacnh=" + categoriacnh + ", nome=" + nome + ", nome_guerra=" + nomeGuerra + ", numero_funcional=" + numeroFuncional + ", posto_graduacao=" + postoGraduacao + '}';
     }
 
     //Getters e setters
@@ -193,27 +162,27 @@ public class MilitarAdapter {
         this.nome = nome;
     }
 
-    public String getNome_guerra() {
-        return nome_guerra;
+    public String getNomeGuerra() {
+        return nomeGuerra;
     }
 
-    public void setNome_guerra(String nome_guerra) {
-        this.nome_guerra = nome_guerra;
+    public void setNomeGuerra(String nomeGuerra) {
+        this.nomeGuerra = nomeGuerra;
     }
 
-    public String getNumero_funcional() {
-        return numero_funcional;
+    public String getNumeroFuncional() {
+        return numeroFuncional;
     }
 
-    public void setNumero_funcional(String numero_funcional) {
-        this.numero_funcional = numero_funcional;
+    public void setNumeroFuncional(String numeroFuncional) {
+        this.numeroFuncional = numeroFuncional;
     }
 
-    public Integer getPosto_graduacao() {
-        return posto_graduacao;
+    public Integer getPostoGraduacao() {
+        return postoGraduacao;
     }
 
-    public void setPosto_graduacao(Integer posto_graduacao) {
-        this.posto_graduacao = posto_graduacao;
+    public void setPostoGraduacao(Integer postoGraduacao) {
+        this.postoGraduacao = postoGraduacao;
     }
 }

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.gov.es.cb.sdro.model;
 
 import java.io.Serializable;
@@ -264,8 +260,10 @@ public class SafoFuncionario implements Serializable {
     private SafoPostoGraducao idpostograducao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "safoIdfuncionario")
     private List<Militar> militarList;
-
+    
+    
     public SafoFuncionario() {
+        // para criação de um novo SafoFuncionario
     }
 
     public SafoFuncionario(Integer idfuncionario) {
@@ -844,7 +842,6 @@ public class SafoFuncionario implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof SafoFuncionario)) {
             return false;
         }

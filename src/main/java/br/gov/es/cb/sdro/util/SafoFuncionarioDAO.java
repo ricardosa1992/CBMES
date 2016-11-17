@@ -45,7 +45,7 @@ public class SafoFuncionarioDAO extends AbstractDAO<SafoFuncionario> {
             safofuncionario = buscaPorInteger(id);
             return safofuncionario;
         } catch (NoResultException e) {
-            return null;
+            throw e;
         }
     }
 }

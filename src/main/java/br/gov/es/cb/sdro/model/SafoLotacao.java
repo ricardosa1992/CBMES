@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.gov.es.cb.sdro.model;
 
 import java.io.Serializable;
@@ -88,6 +84,7 @@ public class SafoLotacao implements Serializable {
     private List<SafoFuncionario> safoFuncionarioList;
 
     public SafoLotacao() {
+       // para criação de um novo SafoLotação
     }
 
     public SafoLotacao(Integer idlotacao) {
@@ -214,7 +211,6 @@ public class SafoLotacao implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof SafoLotacao)) {
             return false;
         }

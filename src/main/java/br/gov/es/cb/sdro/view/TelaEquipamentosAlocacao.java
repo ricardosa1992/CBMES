@@ -9,11 +9,8 @@ import br.gov.es.cb.sdro.model.Equipamento;
 import br.gov.es.cb.sdro.model.Status;
 import br.gov.es.cb.sdro.util.EquipamentoDAO;
 import br.gov.es.cb.sdro.util.StatusDAO;
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -30,16 +27,14 @@ public class TelaEquipamentosAlocacao extends javax.swing.JFrame {
     ArrayList<Integer> lstEquipamentosSelecionados;
     int idEquipamentoSelecionado;
 
-    public TelaEquipamentosAlocacao(ArrayList<Integer> lstIdEquipamentos) throws Exception {
+    public TelaEquipamentosAlocacao(List<Integer> lstIdEquipamentos) throws Exception {
         initComponents();
-        lstEquipamentosSelecionados = new ArrayList<Integer>();
-        lstEquipamentosSelecionados = lstIdEquipamentos;
+        lstEquipamentosSelecionados = new ArrayList<>();
+        lstEquipamentosSelecionados = (ArrayList<Integer>) lstIdEquipamentos;
         statusDAO = new StatusDAO();
         tableEquipamentos = (DefaultTableModel) jTableEquipamentos.getModel();
         equipamentoDAO = new EquipamentoDAO();
-        // lstEquipamentos = new List<Equipamento>();
         addTabela();
-        this.setVisible(true);
     }
 
     public void addTabela() throws Exception {
@@ -49,7 +44,6 @@ public class TelaEquipamentosAlocacao extends javax.swing.JFrame {
             int qtd = tableEquipamentos.getRowCount();
             for (int i = 0; i < qtd; i++) {
                 tableEquipamentos.removeRow(0);
-                System.out.println(i);
             }
         }
 
@@ -57,9 +51,6 @@ public class TelaEquipamentosAlocacao extends javax.swing.JFrame {
 
         for (Equipamento eq : lstEquipamentos) {
             if (!lstEquipamentosSelecionados.contains(eq.getIdequipamento())) {
-                Status status = eq.getIdstatus();
-                Status statusResult = statusDAO.buscaStatusPorID(status.getIdstatus());
-
                 tableEquipamentos.addRow(new Object[]{eq.getIdequipamento(), eq.getNome(), eq.getMarca()});
             }
         }
@@ -184,16 +175,6 @@ public class TelaEquipamentosAlocacao extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                try {
-//                    new TelaEquipamentosAlocacao().setVisible(true);
-//                } catch (Exception ex) {
-//                    Logger.getLogger(TelaEquipamentosAlocacao.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

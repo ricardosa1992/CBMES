@@ -5,7 +5,6 @@
  */
 package br.gov.es.cb.sdro.util;
 
-import br.gov.es.cb.sdro.model.Unidade;
 import br.gov.es.cb.sdro.model.Usuario;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -38,17 +37,16 @@ public class UsuarioDAO extends AbstractDAO<Usuario> {
             query.setParameter(parametro, senha);
             List<Usuario> users  = query.getResultList();
             em.getTransaction().commit();
-            if(users.size()>0){
+            if(!users.isEmpty()){
                 return users.get(0);
             }
             else{
               return null;  
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
             em.getTransaction().rollback();
+            throw ex;
         }
-        return null;
     }
 
     public List<Usuario> buscaUsuarios() {
@@ -64,7 +62,7 @@ public class UsuarioDAO extends AbstractDAO<Usuario> {
             usuario = buscaPorInteger(id);
             return usuario;
         } catch (NoResultException e) {
-            return null;
+           throw e;
         }
     }
 }

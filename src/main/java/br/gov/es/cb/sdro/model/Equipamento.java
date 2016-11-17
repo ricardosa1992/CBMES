@@ -61,6 +61,7 @@ public class Equipamento implements Serializable {
     private Viatura idviatura;
 
     public Equipamento() {
+        // para criação de um novo Equipamento
     }
 
     public Equipamento(Integer idequipamento) {

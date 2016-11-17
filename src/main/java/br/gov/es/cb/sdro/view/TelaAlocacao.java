@@ -19,7 +19,6 @@ import br.gov.es.cb.sdro.util.StatusDAO;
 import br.gov.es.cb.sdro.util.TipocombustivelDAO;
 import br.gov.es.cb.sdro.util.TipoviaturaDAO;
 import br.gov.es.cb.sdro.util.ViaturaDAO;
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,41 +41,28 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
     DefaultTableModel tableEquipamentosAlocados;
     DefaultTableModel tableMilitares;
     
-    ViaturaDAO viaturaDAO;
-    List<Viatura> lstViaturasDisponiveis;
-    List<Viatura> lstViaturasAlocadas;
-    StatusDAO statusDAO;
-    CategoriaDAO categoriaDAO;
-    TipocombustivelDAO tpCombustivelDAO;
-    TipoviaturaDAO tpViaturaDAO;
-    Status status;
-    Categoria categoria;
-    Tipocombustivel tpCombustivel;
-    Tipoviatura tpViatura;
-    ArrayList<Viatura> lstViaturasSelecionadasAlocacao;
-    ArrayList<Integer> lstAuxViaturas;
-    ArrayList<Integer> lstEquipamentosSelecionados;
+    private ViaturaDAO viaturaDAO;
+    private List<Viatura> lstViaturasDisponiveis;
+    private List<Viatura> lstViaturasAlocadas;
+    private StatusDAO statusDAO;
+    private CategoriaDAO categoriaDAO;
+    private TipoviaturaDAO tpViaturaDAO;
+    
+    private Status status;
+    private Categoria categoria;
+    private Tipoviatura tpViatura;
+    private ArrayList<Integer> lstAuxViaturas;
+    private ArrayList<Integer> lstEquipamentosSelecionados;
     private static TelaAlocacao telaAlocacao = null;
     int idEquipamentoSelecionado;
     int idViaturaSelecionadaAlocacao;
-    int idViaturaAlocada;
-    Sessao sessao;
+    
+    private Sessao sessao;
     HashMap<Integer, ArrayList<Integer>> mapViaturaEquipamento;
     HashMap<Integer, ArrayList<Equipamento>> mapViaturaEquipamentoAlocados;
     EquipamentoDAO equipamentoDAO;
 
-    /**
-     * Creates new form TelaAlocar
-     *
-     * @return
-     */
-    public static TelaAlocacao getInstancia() {
-        if (telaAlocacao == null) {
-            telaAlocacao = new TelaAlocacao();
-        }
-        return telaAlocacao;
-    }
-
+   
     private TelaAlocacao() {
         initComponents();
         sessao = Sessao.getInstancia();
@@ -90,27 +76,36 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
         
         statusDAO = new StatusDAO();
         categoriaDAO = new CategoriaDAO();
-        tpCombustivelDAO = new TipocombustivelDAO();
         tpViaturaDAO = new TipoviaturaDAO();
         viaturaDAO = new ViaturaDAO();
         equipamentoDAO = new EquipamentoDAO();
          
-        lstEquipamentosSelecionados = new ArrayList<Integer>();
-        lstViaturasSelecionadasAlocacao = new ArrayList<Viatura>();
-        lstAuxViaturas = new ArrayList<Integer>();
+        lstEquipamentosSelecionados = new ArrayList<>();
+        lstAuxViaturas = new ArrayList<>();
         lstViaturasDisponiveis = viaturaDAO.buscaViaturasDisponiveisUnidade(sessao.getUnidade());
         
-        mapViaturaEquipamento = new HashMap<Integer, ArrayList<Integer>>();
-        mapViaturaEquipamentoAlocados = new HashMap<Integer, ArrayList<Equipamento>>();
+        mapViaturaEquipamento = new HashMap<>();
+        mapViaturaEquipamentoAlocados = new HashMap<>();
        
         status = new Status();
         categoria = new Categoria();
-        tpCombustivel = new Tipocombustivel();
         tpViatura = new Tipoviatura();
         
         populaTabelaViaturasDisponiveis();
-        // this.setVisible(true);
     }
+    
+     /**
+     * Creates new form TelaAlocar
+     *
+     * @return
+     */
+    public static TelaAlocacao getInstancia() {
+        if (telaAlocacao == null) {
+            telaAlocacao = new TelaAlocacao();
+        }
+        return telaAlocacao;
+    }
+
 
     public void populaTabelaViaturasDisponiveis() {
         if (tableViaturasDisponiveis.getRowCount() > 0) {
@@ -120,16 +115,13 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
                 tableViaturasDisponiveis.removeRow(0);
             }
         }
-        System.out.println(lstViaturasDisponiveis);
         for (Viatura vt : lstViaturasDisponiveis) {
             status = vt.getIdstatus();
             categoria = vt.getIdcategoria();
             tpViatura = vt.getIdtipoviatura();
-            tpCombustivel = vt.getIdtipocombustivel();
             Status statusResult = statusDAO.buscaStatusPorID(status.getIdstatus());
 
             Categoria categoriaResult = categoriaDAO.buscaCategoriaPorID(categoria.getIdcategoria());
-            Tipocombustivel tpCombustivelResult = tpCombustivelDAO.buscaTipoCombustivelPorID(tpCombustivel.getIdtipocombustivel());
             Tipoviatura tpViaturaResult = tpViaturaDAO.buscaTipoViaturaPorID(tpViatura.getIdtipoviatura());
 
             tableViaturasDisponiveis.addRow(new Object[]{vt.getIdviatura(), vt.getPlaca(), vt.getPrefixo(), vt.getModelo(), categoriaResult.getDescricao(),
@@ -146,16 +138,13 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
                 tableViaturasAlocadas.removeRow(0);
             }
         }
-        //System.out.println(tableViaturasAlocadas);
         for (Viatura vt : lstViaturasAlocadas) {
             status = vt.getIdstatus();
             categoria = vt.getIdcategoria();
             tpViatura = vt.getIdtipoviatura();
-            tpCombustivel = vt.getIdtipocombustivel();
             Status statusResult = statusDAO.buscaStatusPorID(status.getIdstatus());
 
             Categoria categoriaResult = categoriaDAO.buscaCategoriaPorID(categoria.getIdcategoria());
-            Tipocombustivel tpCombustivelResult = tpCombustivelDAO.buscaTipoCombustivelPorID(tpCombustivel.getIdtipocombustivel());
             Tipoviatura tpViaturaResult = tpViaturaDAO.buscaTipoViaturaPorID(tpViatura.getIdtipoviatura());
 
             tableViaturasAlocadas.addRow(new Object[]{vt.getIdviatura(), vt.getPlaca(), vt.getPrefixo(), vt.getModelo(), categoriaResult.getDescricao(),
@@ -175,11 +164,9 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
             status = vt.getIdstatus();
             categoria = vt.getIdcategoria();
             tpViatura = vt.getIdtipoviatura();
-            tpCombustivel = vt.getIdtipocombustivel();
             Status statusResult = statusDAO.buscaStatusPorID(status.getIdstatus());
 
             Categoria categoriaResult = categoriaDAO.buscaCategoriaPorID(categoria.getIdcategoria());
-            Tipocombustivel tpCombustivelResult = tpCombustivelDAO.buscaTipoCombustivelPorID(tpCombustivel.getIdtipocombustivel());
             Tipoviatura tpViaturaResult = tpViaturaDAO.buscaTipoViaturaPorID(tpViatura.getIdtipoviatura());
             if (!lstAuxViaturas.contains(vt.getIdviatura())) {
                 tableViaturasDisponiveis.addRow(new Object[]{vt.getIdviatura(), vt.getPlaca(), vt.getPrefixo(), vt.getModelo(), categoriaResult.getDescricao(),
@@ -262,11 +249,6 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
-            }
-        });
-        jTableViaturasDisponiveis.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableViaturasDisponiveisMouseClicked(evt);
             }
         });
         jScrollPane3.setViewportView(jTableViaturasDisponiveis);
@@ -600,20 +582,19 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
 
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(TelaAlocacao.EXIT_ON_CLOSE);
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalvarAlocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarAlocacaoActionPerformed
         boolean sucesso = true;
-        ArrayList<Integer> lstEquipamentosAlocados = new ArrayList<>();
         for (Integer idviatura : lstAuxViaturas) {
             Viatura viatura = new Viatura();
             viatura.setIdviatura(idviatura);
             if (!viaturaDAO.updateIsAlocado(viatura)) {
                 sucesso = false;
             }
-            lstEquipamentosAlocados = mapViaturaEquipamento.get(idviatura);
+            ArrayList<Integer> lstEquipamentosAlocados = mapViaturaEquipamento.get(idviatura);
             for (Integer idEquipamentos : lstEquipamentosAlocados) {
                 Equipamento equipamento = new Equipamento();
                 equipamento.setIdequipamento(idEquipamentos);
@@ -672,7 +653,7 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
             idViaturaSelecionadaAlocacao = Integer.parseInt(tableViaturasSelecionadasAlocacao.getValueAt(linha, 0).toString());
             try {
                 TelaEquipamentosAlocacao equipamentoAlocacao = new TelaEquipamentosAlocacao(lstEquipamentosSelecionados);
-
+                equipamentoAlocacao.setVisible(true);
             } catch (Exception ex) {
                 Logger.getLogger(TelaAlocacao.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -683,12 +664,9 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
 
     private void btnAlocarViaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlocarViaturaActionPerformed
         int linha = jTableViaturasDisponiveis.getSelectedRow();
-        System.out.println("linha " + linha);
         if (linha >= 0) {
             int codigo = Integer.parseInt(tableViaturasDisponiveis.getValueAt(linha, 0).toString());
             lstAuxViaturas.add(codigo);
-            Viatura viatura = new Viatura();
-            viatura = viaturaDAO.buscaViaturaPorID(codigo);
             populaTabelaViaturasSelecionadasAlocacao();
             atualizaTabelaViaturasDisponiveis();
         } else {
@@ -702,14 +680,10 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
         populaTabelaEquipamentosSelecionadosAlocacao(idViaturaSelecionadaAlocacao);
     }//GEN-LAST:event_jTableViaturasSelecionadasAlocacaoMouseClicked
 
-    private void jTableViaturasDisponiveisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableViaturasDisponiveisMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTableViaturasDisponiveisMouseClicked
-
     private void JTableViaturasAlocadasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableViaturasAlocadasMouseClicked
         int linha = JTableViaturasAlocadas.getSelectedRow();
-        int idViaturaAlocada = Integer.parseInt(tableViaturasAlocadas.getValueAt(linha, 0).toString());
-        populaTabelaEquipamentosAlocados(idViaturaAlocada);
+        int idViatura = Integer.parseInt(tableViaturasAlocadas.getValueAt(linha, 0).toString());
+        populaTabelaEquipamentosAlocados(idViatura);
 
     }//GEN-LAST:event_JTableViaturasAlocadasMouseClicked
 
@@ -727,7 +701,6 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
                 mapViaturaEquipamentoAlocados.get(idViaturaAlocada).add(equipamento);
             }
         }
-        System.out.println("map " + mapViaturaEquipamentoAlocados);
     }
 
 
@@ -806,7 +779,6 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
     public void removeEquipamentoMap(int idEquipamento) {
         for (Map.Entry<Integer, ArrayList<Integer>> entry : mapViaturaEquipamento.entrySet()) {
             Integer key = entry.getKey();
-            ArrayList<Integer> value = entry.getValue();
             if (key.equals(idViaturaSelecionadaAlocacao)) {
                 for (int i = 0; i < mapViaturaEquipamento.get(key).size(); i++) {
                     if (mapViaturaEquipamento.get(key).get(i).equals(idEquipamento)) {
@@ -829,11 +801,7 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
             status = viatura.getIdstatus();
             categoria = viatura.getIdcategoria();
             tpViatura = viatura.getIdtipoviatura();
-            tpCombustivel = viatura.getIdtipocombustivel();
-            Status statusResult = statusDAO.buscaStatusPorID(status.getIdstatus());
-
             Categoria categoriaResult = categoriaDAO.buscaCategoriaPorID(categoria.getIdcategoria());
-            Tipocombustivel tpCombustivelResult = tpCombustivelDAO.buscaTipoCombustivelPorID(tpCombustivel.getIdtipocombustivel());
             Tipoviatura tpViaturaResult = tpViaturaDAO.buscaTipoViaturaPorID(tpViatura.getIdtipoviatura());
             if (lstAuxViaturas.contains(viatura.getIdviatura())) {
                 tableViaturasSelecionadasAlocacao.addRow(new Object[]{viatura.getIdviatura(), viatura.getPlaca(), categoriaResult.getDescricao(),
@@ -868,8 +836,6 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
             if (key.equals(idViaturaAlocada)) {
                 for (Integer idEquipamento : value) {
                     Equipamento eq = equipamentoDAO.buscaEquipamentoPorID(idEquipamento);
-//                    Status status = eq.getIdstatus();
-//                    Status statusResult = statusDAO.buscaStatusPorID(status.getIdstatus());
                     tableEquipamentosSelecionadosAlocacao.addRow(new Object[]{eq.getIdequipamento(), eq.getNome(), eq.getMarca()});
                 }
             }

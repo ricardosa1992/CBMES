@@ -12,8 +12,9 @@
             <url>file:${project.basedir}/lib</url>
         </repository>
     </repositories>
+    
     <dependencies>
-         <dependency>
+        <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-java</artifactId>
             <version>1.1.7</version>
@@ -50,24 +51,45 @@
             <artifactId>postgresql</artifactId>
             <version>9.4-1200-jdbc41</version>
         </dependency>
-
         <dependency>
-            <groupId>unknown.binary</groupId>
-            <artifactId>AbsoluteLayout</artifactId>
-            <version>SNAPSHOT</version>
-            <scope>provided</scope>
+            <groupId>org.codeartisans.thirdparties.swing</groupId>
+            <artifactId>org-netbeans-api-visual</artifactId>
+            <version>2.23.1</version>
         </dependency>
         <dependency>
             <groupId>org.jdesktop</groupId>
             <artifactId>beansbinding</artifactId>
             <version>1.2.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.googlecode.sarasvati.thirdparty.netbeans</groupId>
+            <artifactId>visual</artifactId>
+            <version>7.3</version>
+        </dependency>
+        <dependency>
+            <groupId>edu.mit.findstruct</groupId>
+            <artifactId>structmulti</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <!-- <dependency>
+            <groupId>unknown.binary</groupId>
+            <artifactId>AbsoluteLayout</artifactId>
+            <version>SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>-->
+        <dependency>
+            <groupId>unknown.binary</groupId>
+            <artifactId>AbsoluteLayout</artifactId>
+            <version>SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
+        <maven.test.skip>true</maven.test.skip>
         <sonar.host.url>https://sonarqube.com</sonar.host.url>
         <sonar.login>05d1b65463e25f5405fff4adff166bd399ccf2ed</sonar.login> 
+        
     </properties>
 </project>

@@ -58,6 +58,7 @@ public class Equipe implements Serializable {
     private Sco idsco;
 
     public Equipe() {
+        // para criação de uma nova Equipe
     }
 
     public Equipe(Integer idequipe) {

@@ -6,7 +6,6 @@
 package br.gov.es.cb.sdro.control;
 
 import br.gov.es.cb.sdro.model.MilitarAdapter;
-import br.gov.es.cb.sdro.model.SafoFuncionario;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,10 +15,8 @@ import java.util.List;
  */
 public class ControlMilitarAdapter {
 
-    private List<MilitarAdapter> listTodosMilitar;
-    private List<MilitarAdapter> listMilitarPostoGraduacao;
-    private List<MilitarAdapter> listMilitarAux;
-    private MilitarAdapter militarAdaptado;
+    List<MilitarAdapter> listTodosMilitar;
+    MilitarAdapter militarAdaptado;
 
     public ControlMilitarAdapter() {
         militarAdaptado = new MilitarAdapter();
@@ -27,9 +24,9 @@ public class ControlMilitarAdapter {
     }
 
     public List<MilitarAdapter> getMilitarByPostoGraduacao(Integer idpostograduacao) {
-        listMilitarAux = new ArrayList<>();
+        List<MilitarAdapter> listMilitarAux = new ArrayList<>();
         for (MilitarAdapter mil : listTodosMilitar) {
-            if (mil.getPosto_graduacao().equals(idpostograduacao)) {
+            if (mil.getPostoGraduacao().equals(idpostograduacao)) {
                 listMilitarAux.add(mil);
             }
 
@@ -38,7 +35,6 @@ public class ControlMilitarAdapter {
     }
 
     public MilitarAdapter getMilitarbyId(Integer idMilitar) {
-        //MilitarAdapter militarAux = new MilitarAdapter();
         for (MilitarAdapter mil : listTodosMilitar) {
             if (mil.getIdmilitar().equals(idMilitar)) {
                 return mil;

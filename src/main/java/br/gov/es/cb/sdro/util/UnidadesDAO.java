@@ -39,7 +39,7 @@ public class UnidadesDAO extends AbstractDAO<Unidade>{
             unidade = buscaPorInteger(id);
             return unidade;
         } catch (NoResultException e) {
-            return null;
+            throw e;
         }
     }
     

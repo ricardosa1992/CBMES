@@ -8,7 +8,6 @@ package br.gov.es.cb.sdro.util;
 import br.gov.es.cb.sdro.model.Unidade;
 import br.gov.es.cb.sdro.model.Viatura;
 import java.util.List;
-import javax.persistence.EntityExistsException;
 
 /**
  *
@@ -18,6 +17,13 @@ public class ViaturaDAO extends AbstractDAO<Viatura> {
 
     Viatura viatura;
     List<Viatura> listaViaturas;
+    String parametroId;
+
+    public ViaturaDAO() {
+        parametroId = "idviatura";
+    }
+    
+    
 
     public Viatura buscaViaturaPorNome(String nome) {
         busca = "Viatura.findByNome";
@@ -33,18 +39,16 @@ public class ViaturaDAO extends AbstractDAO<Viatura> {
     }
 
     public List<Viatura> buscaViaturasDisponiveisUnidade(Unidade unidade) {
-        Unidade un = new Unidade();
         busca = "Viatura.findAllDisponiveis";
         parametro = "idUnidade";
         query = em.createNamedQuery(busca);
         query.setParameter(parametro, unidade);
-        List<Viatura> listaViaturas = query.getResultList();;
-        return listaViaturas;
+        return query.getResultList();
     }
 
     public Viatura buscaViaturaPorID(int id) {
         busca = "Viatura.findByIdviatura";
-        parametro = "idviatura";
+        parametro = parametroId;
         return buscaPorInteger(id);
     }
 
@@ -55,43 +59,40 @@ public class ViaturaDAO extends AbstractDAO<Viatura> {
             em.getTransaction().commit();
             return true;
         } catch (Exception ex) {
-            ex.printStackTrace();
             em.getTransaction().rollback();
+            throw ex;
         }
-        return false;
     }
 
     @Override
-    public boolean remove(Viatura obj) {
+    public void remove(Viatura obj) {
         try {
             em.getTransaction().begin();
             obj = em.find(obj.getClass(), obj.getIdviatura());
             em.remove(obj);
             em.getTransaction().commit();
-            return true;
+           
         } catch (Exception ex) {
-            ex.printStackTrace();
             em.getTransaction().rollback();
+            throw ex;
         }
-        return false;
+       
     }
 
     public boolean updateIsAlocado(Viatura obj) {
         try {
             em.getTransaction().begin();
-//                       obj = em.find(obj.getClass(), obj.getIdviatura());
             busca = "Viatura.UpdateIsAlocado";
             query = em.createNamedQuery(busca);
-            parametro = "idviatura";
+            parametro = parametroId;
             query.setParameter(parametro, obj.getIdviatura());
             query.executeUpdate();
             em.getTransaction().commit();
             return true;
         } catch (Exception ex) {
-            ex.printStackTrace();
             em.getTransaction().rollback();
+            throw ex;
         }
-        return false;
     }
 
     public List<Viatura> buscaViaturasAlocadas(Unidade unidade) {
@@ -99,8 +100,7 @@ public class ViaturaDAO extends AbstractDAO<Viatura> {
         parametro = "idUnidade";
         query = em.createNamedQuery(busca);
         query.setParameter(parametro, unidade);
-        List<Viatura> listaViaturas = query.getResultList();;
-        return listaViaturas;
+        return query.getResultList();
     }
 
     public boolean liberaViatura(Viatura obj) {
@@ -109,14 +109,14 @@ public class ViaturaDAO extends AbstractDAO<Viatura> {
             em.getTransaction().begin();
             busca = "Viatura.liberaViatura";
             query = em.createNamedQuery(busca);
-            parametro = "idviatura";
+            parametro = parametroId;
             query.setParameter(parametro, obj.getIdviatura());
             query.executeUpdate();
             em.getTransaction().commit();
             return true;
         } catch (Exception ex) {
             em.getTransaction().rollback();
+            throw ex;
         }
-        return false;
     }
 }

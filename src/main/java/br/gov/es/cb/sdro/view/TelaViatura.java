@@ -5,11 +5,11 @@
  */
 package br.gov.es.cb.sdro.view;
 //import org.fluttercode.datafactory.impl.DataFactory;
+import br.gov.es.cb.sdro.control.ViaturaControler;
 import br.gov.es.cb.sdro.model.Categoria;
 import br.gov.es.cb.sdro.model.Status;
 import br.gov.es.cb.sdro.model.Tipocombustivel;
 import br.gov.es.cb.sdro.model.Tipoviatura;
-import br.gov.es.cb.sdro.model.Unidade;
 import br.gov.es.cb.sdro.model.Viatura;
 import br.gov.es.cb.sdro.util.CategoriaDAO;
 import br.gov.es.cb.sdro.util.ChecaSimilaridadeString;
@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -59,18 +58,25 @@ public class TelaViatura extends javax.swing.JInternalFrame {
     Tipocombustivel tipoCombustivel;
     ChecaSimilaridadeString similaridadeString;
 
+    private int idTipoViatura;
+    private int idStatus; 
+    private int idTipoCombustivel;
+    private int idCategoria;
+    
+    private ViaturaControler viaturaControler;
     /**
      * Creates new form NovoJInternalFrame
      */
     public TelaViatura() throws Exception {
         initComponents();
         sessao = Sessao.getInstancia();
+        viaturaControler = new ViaturaControler();
         tableViatura = (DefaultTableModel) jTableViatura.getModel();
-           viaturaDAO = new ViaturaDAO();
+        viaturaDAO = new ViaturaDAO();
         similaridadeString = new ChecaSimilaridadeString();
 
         tipoViatura = new Tipoviatura();
-        lstTipoViatura = new ArrayList<Tipoviatura>();
+        lstTipoViatura = new ArrayList<>();
         tipoViaturaDAO = new TipoviaturaDAO();
         lstTipoViatura = tipoViaturaDAO.buscaTipoviaturas();
         mapTipoViatura = getMapTipoViatura(lstTipoViatura);
@@ -756,41 +762,19 @@ public class TelaViatura extends javax.swing.JInternalFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         String tipoviaturadescricao = comboTipoViatura.getSelectedItem().toString();
-        int idTipoViatura = getIdTipoViatura(tipoviaturadescricao);
-        tipoViatura.setIdtipoviatura(idTipoViatura);
-
+        idTipoViatura = getIdTipoViatura(tipoviaturadescricao);
+        
         String statusdescricao = comboStatus.getSelectedItem().toString();
-        int idStatus = getIdStatus(statusdescricao);
-        status.setIdstatus(idStatus);
+        idStatus = getIdStatus(statusdescricao);
 
         String categoriadescricao = comboCategoria.getSelectedItem().toString();
-        int idCategoria = getIdCategoria(categoriadescricao);
-        categoria.setIdcategoria(idCategoria);
+        idCategoria = getIdCategoria(categoriadescricao);
 
         String tipocombustiveldescricao = comboTipoCombustivel.getSelectedItem().toString();
-        int idTipoCombustivel = getIdTipoCombustivel(tipocombustiveldescricao);
-        tipoCombustivel.setIdtipocombustivel(idTipoCombustivel);
-
-        Unidade unidade = new Unidade();
-        unidade.setIdunidade(sessao.getUnidade().getIdunidade());
-        Viatura viatura = new Viatura();
-        //       viatura.setIdviatura(101);
-//        viatura.setIdviatura(null);
-        viatura.setIdunidade(unidade);
-        viatura.setIsalocado(false);
-        viatura.setIscbmes(false);
-        viatura.setPrefixo(txtPrefixo.getText());
-        viatura.setPlaca(txtPlaca.getText());
-        viatura.setMarca(txtMarca.getText());
-        viatura.setAno(Integer.parseInt(txtAno.getText()));
-        viatura.setModelo(txtModelo.getText());
-        viatura.setCappessoas(Integer.parseInt(txtCapPessoas.getText()));
-        viatura.setCapagua(Integer.parseInt(txtCapAgua.getText()));
-        viatura.setIdtipoviatura(tipoViatura);
-        viatura.setIdstatus(status);
-        viatura.setIdcategoria(categoria);
-        viatura.setIdtipocombustivel(tipoCombustivel);
-        viaturaDAO.save(viatura);
+        idTipoCombustivel = getIdTipoCombustivel(tipocombustiveldescricao);
+        
+        viaturaControler.salvarViaturaNoBancoDeDados(0,idTipoViatura,idStatus,idCategoria,idTipoCombustivel,txtPrefixo.getText(),
+            txtPlaca.getText(),txtMarca.getText(),txtAno.getText(),txtModelo.getText(),txtCapPessoas.getText(),txtCapAgua.getText());
     }//GEN-LAST:event_btnSalvarActionPerformed
 
 
@@ -799,42 +783,19 @@ public class TelaViatura extends javax.swing.JInternalFrame {
         codigo = Integer.parseInt(jTableViatura.getValueAt(linha, 0).toString());
 
         String tipoviaturadescricao = comboTipoViaturaAlterar.getSelectedItem().toString();
-        int idTipoViatura = getIdTipoViatura(tipoviaturadescricao);
-        tipoViatura.setIdtipoviatura(idTipoViatura);
+        idTipoViatura = getIdTipoViatura(tipoviaturadescricao);
 
         String statusdescricao = comboStatusAlterar.getSelectedItem().toString();
-        int idStatus = getIdStatus(statusdescricao);
-        status.setIdstatus(idStatus);
-
+        idStatus = getIdStatus(statusdescricao);
+    
         String categoriadescricao = comboCategoriaAlterar.getSelectedItem().toString();
-        int idCategoria = getIdCategoria(categoriadescricao);
-        categoria.setIdcategoria(idCategoria);
+        idCategoria = getIdCategoria(categoriadescricao);
 
         String tipocombustiveldescricao = comboTipoCombustivelAlterar.getSelectedItem().toString();
-        int idTipoCombustivel = getIdTipoCombustivel(tipocombustiveldescricao);
-        tipoCombustivel.setIdtipocombustivel(idTipoCombustivel);
-
-       
-      
-        Viatura viatura = new Viatura();
-       
-        viatura.setIdviatura(codigo);
-        viatura.setIdunidade(sessao.getUnidade());
-        viatura.setIsalocado(false);
-        viatura.setIscbmes(false);
-        viatura.setPrefixo(txtPrefixoAlterar.getText());
-        viatura.setPlaca(txtPlacaAlterar.getText());
-        viatura.setMarca(txtMarcaAlterar.getText());
-        viatura.setAno(Integer.parseInt(txtAnoAlterar.getText()));
-        viatura.setModelo(txtModeloAlterar.getText());
-        viatura.setCappessoas(Integer.parseInt(txtCapPessoasAlterar.getText()));
-        viatura.setCapagua(Integer.parseInt(txtCapAguaAlterar.getText()));
-        viatura.setIdtipoviatura(tipoViatura);
-        viatura.setIdstatus(status);
-        viatura.setIdcategoria(categoria);
-        viatura.setIdtipocombustivel(tipoCombustivel);
-
-        viaturaDAO.update(viatura);
+        idTipoCombustivel = getIdTipoCombustivel(tipocombustiveldescricao);
+        
+         viaturaControler.salvarViaturaNoBancoDeDados(codigo,idTipoViatura,idStatus,idCategoria,idTipoCombustivel,txtPrefixoAlterar.getText(),
+            txtPlacaAlterar.getText(),txtMarcaAlterar.getText(),txtAnoAlterar.getText(),txtModeloAlterar.getText(),txtCapPessoasAlterar.getText(),txtCapAguaAlterar.getText());
     }//GEN-LAST:event_btnAlterarActionPerformed
 
 

@@ -76,6 +76,7 @@ public class Sco implements Serializable {
     private List<Equipe> equipeList;
 
     public Sco() {
+        // para criação de um novo SCO
     }
 
     public Sco(Integer idsco) {
@@ -189,7 +190,6 @@ public class Sco implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Sco)) {
             return false;
         }

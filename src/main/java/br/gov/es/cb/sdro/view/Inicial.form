@@ -49,12 +49,12 @@
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                  <Component id="lbl_senha" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lbl_tipo" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblSenha" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblTipo" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                  <Component id="lbl_login" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblLogin" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -64,7 +64,7 @@
                               <Component id="txtSenha" pref="176" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <Component id="lbl_tit_sdro" min="-2" pref="253" max="-2" attributes="0"/>
+                      <Component id="lblTitSdro" min="-2" pref="253" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -78,7 +78,7 @@
                           <EmptySpace min="-2" pref="254" max="-2" attributes="0"/>
                           <Component id="btnLogar" min="-2" pref="86" max="-2" attributes="0"/>
                           <EmptySpace pref="101" max="32767" attributes="0"/>
-                          <Component id="btn_config" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnConfig" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
@@ -89,26 +89,26 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                  <Component id="lbl_tit_sdro" min="-2" pref="69" max="-2" attributes="0"/>
+                  <Component id="lblTitSdro" min="-2" pref="69" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lbl_login" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblLogin" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtLogin" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lbl_senha" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblSenha" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtSenha" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jcomboTipoLogin" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lbl_tipo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblTipo" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnLogar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btn_config" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnConfig" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="58" max="32767" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
@@ -117,7 +117,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="lbl_tit_sdro">
+        <Component class="javax.swing.JLabel" name="lblTitSdro">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="36" style="1"/>
@@ -136,26 +136,20 @@
               </StringArray>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcomboTipoLoginActionPerformed"/>
-          </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="lbl_login">
+        <Component class="javax.swing.JLabel" name="lblLogin">
           <Properties>
             <Property name="text" type="java.lang.String" value="login"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lbl_senha">
+        <Component class="javax.swing.JLabel" name="lblSenha">
           <Properties>
             <Property name="text" type="java.lang.String" value="senha"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtLogin">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtLoginActionPerformed"/>
-          </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="lbl_tipo">
+        <Component class="javax.swing.JLabel" name="lblTipo">
           <Properties>
             <Property name="text" type="java.lang.String" value="tipo"/>
           </Properties>
@@ -166,7 +160,6 @@
           </Properties>
           <Events>
             <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtSenhaFocusGained"/>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtSenhaMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnLogar">
@@ -177,13 +170,10 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLogarActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btn_config">
+        <Component class="javax.swing.JButton" name="btnConfig">
           <Properties>
             <Property name="text" type="java.lang.String" value="Configura&#xe7;&#xf5;es"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_configActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
