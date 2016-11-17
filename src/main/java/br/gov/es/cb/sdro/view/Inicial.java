@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
 public class Inicial extends javax.swing.JFrame {
     ControlMilitarAdapter controlMilitar;
     private HashMap<String,Integer> mapComboTipoLogin;
-    private UsuarioDAO usuarioDAO;
+    UsuarioDAO usuarioDAO;
     /**
      * Creates new form inicial
      */
