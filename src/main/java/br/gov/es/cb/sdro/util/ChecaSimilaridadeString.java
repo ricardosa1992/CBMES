@@ -10,7 +10,7 @@ package br.gov.es.cb.sdro.util;
  * @author Patrícia
  */
 public class ChecaSimilaridadeString {
-    public static float checkSimilarity(String str1, String str2) throws Exception {
+    public static float checkSimilarity(String str1, String str2){
         String sString1 = str1.toUpperCase(); 
         String sString2 = str2.toUpperCase();
         // Se as strings têm tamanho distinto, obtêm a similaridade de todas as
