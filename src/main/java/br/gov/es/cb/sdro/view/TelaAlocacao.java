@@ -8,7 +8,6 @@ package br.gov.es.cb.sdro.view;
 import br.gov.es.cb.sdro.model.Categoria;
 import br.gov.es.cb.sdro.model.Equipamento;
 import br.gov.es.cb.sdro.model.Status;
-import br.gov.es.cb.sdro.model.Tipocombustivel;
 import br.gov.es.cb.sdro.model.Tipoviatura;
 import br.gov.es.cb.sdro.model.Unidade;
 import br.gov.es.cb.sdro.model.Viatura;
@@ -16,7 +15,6 @@ import br.gov.es.cb.sdro.util.CategoriaDAO;
 import br.gov.es.cb.sdro.util.EquipamentoDAO;
 import br.gov.es.cb.sdro.util.Sessao;
 import br.gov.es.cb.sdro.util.StatusDAO;
-import br.gov.es.cb.sdro.util.TipocombustivelDAO;
 import br.gov.es.cb.sdro.util.TipoviaturaDAO;
 import br.gov.es.cb.sdro.util.ViaturaDAO;
 import java.util.ArrayList;
@@ -574,10 +572,10 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
-        Unidade unidade = new Unidade();
-        unidade.setIdunidade(2);
-        lstViaturasAlocadas = viaturaDAO.buscaViaturasAlocadas(unidade);
+
+        lstViaturasAlocadas = viaturaDAO.buscaViaturasAlocadas(sessao.getUnidade());
         populaTabelaViaturasAlocadas();
+        limpaTabelaEquipamentosAlocados();
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
 
@@ -824,7 +822,6 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
             mapViaturaEquipamento.put(idViaturaAlocada, new ArrayList<Integer>());
             mapViaturaEquipamento.get(idViaturaAlocada).add(idEquipamentoSelecionado);
         }
-        System.out.println("map " + mapViaturaEquipamento);
         populaTabelaEquipamentosSelecionadosAlocacao(idViaturaAlocada);
     }
 

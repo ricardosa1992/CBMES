@@ -3,7 +3,6 @@ package br.gov.es.cb.sdro.view;
 import br.gov.es.cb.sdro.model.Equipamento;
 import br.gov.es.cb.sdro.model.Status;
 import br.gov.es.cb.sdro.model.Unidade;
-import br.gov.es.cb.sdro.model.Viatura;
 import br.gov.es.cb.sdro.util.ChecaSimilaridadeString;
 import br.gov.es.cb.sdro.util.EquipamentoDAO;
 import br.gov.es.cb.sdro.util.Sessao;
@@ -31,7 +30,6 @@ public class TelaEquipamento extends javax.swing.JInternalFrame {
     EquipamentoDAO equipamentoDAO;
     private DefaultTableModel tableEquipamentos;
     Status status;
-    ChecaSimilaridadeString similaridadeString;
     Sessao sessao;
 
     /**
@@ -49,8 +47,7 @@ public class TelaEquipamento extends javax.swing.JInternalFrame {
         lstStatus = statusDAO.buscaStatuss();
         this.mapStatus = (HashMap<String, Integer>) getMapStatus(lstStatus);
         jComboStatus.removeAllItems();
-        similaridadeString = new ChecaSimilaridadeString();
-
+        
         for (Status st : lstStatus) {
             jComboStatus.addItem(st.getDescricao());
         }
@@ -88,7 +85,6 @@ public class TelaEquipamento extends javax.swing.JInternalFrame {
             int qtd = tableEquipamentos.getRowCount();
             for (int i = 0; i < qtd; i++) {
                 tableEquipamentos.removeRow(0);
-                System.out.println(i);
             }
         }
         lstEquipamentos = equipamentoDAO.buscaEquipamentosDisponiveisUnidade(sessao.getUnidade());

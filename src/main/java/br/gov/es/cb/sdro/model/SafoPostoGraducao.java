@@ -158,10 +158,7 @@ public class SafoPostoGraducao implements Serializable {
             return false;
         }
         SafoPostoGraducao other = (SafoPostoGraducao) object;
-        if ((this.idpostograducao == null && other.idpostograducao != null) || (this.idpostograducao != null && !this.idpostograducao.equals(other.idpostograducao))) {
-            return false;
-        }
-        return true;
+        return !((this.idpostograducao == null && other.idpostograducao != null) || (this.idpostograducao != null && !this.idpostograducao.equals(other.idpostograducao)));
     }
 
     @Override

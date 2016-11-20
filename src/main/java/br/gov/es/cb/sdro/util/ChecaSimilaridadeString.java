@@ -21,7 +21,9 @@ public class ChecaSimilaridadeString {
         if(sString1.length() != sString2.length()) {
             int iDiff = Math.abs(sString1.length() - sString2.length());
             int iLen = Math.max(sString1.length(), sString2.length());
-            String sBigger, sSmaller, sAux;
+            String sBigger;
+            String sSmaller;
+            String sAux;
 
             if(iLen == sString1.length()) {
                 sBigger = sString1;
@@ -47,10 +49,7 @@ public class ChecaSimilaridadeString {
             return checkSimilaritySameSize(sString1, sString2);
     }
 
-    protected static float checkSimilaritySameSize(String sString1, String sString2) throws Exception {
-
-        if(sString1.length() != sString2.length())
-            throw new Exception("Strings devem ter o mesmo tamanho!");
+    protected static float checkSimilaritySameSize(String sString1, String sString2){
 
         int iLen = sString1.length();
         int iDiffs = 0;

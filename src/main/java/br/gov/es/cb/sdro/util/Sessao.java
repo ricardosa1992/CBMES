@@ -6,15 +6,17 @@
 package br.gov.es.cb.sdro.util;
 
 import br.gov.es.cb.sdro.model.Unidade;
+import java.io.Serializable;
 
 /**
  *
  * @author ricardo
  */
-public class Sessao {
+public class Sessao implements Serializable {
   private int tipoLogin;
   private Unidade unidade;
   private static Sessao sessao = null;
+  
   public static Sessao getInstancia() {
         if (sessao == null) {
             sessao = new Sessao();

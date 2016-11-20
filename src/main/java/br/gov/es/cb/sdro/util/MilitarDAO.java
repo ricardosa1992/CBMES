@@ -36,9 +36,7 @@ public class MilitarDAO extends AbstractDAO<Militar> {
         parametro = "idunidade";
         query = em.createNamedQuery(busca);
         query.setParameter(parametro, unidade);
-        List<Militar> listaMilitares = query.getResultList();
-        
-        return listaMilitares;
+        return query.getResultList();
     }
     
     public List<Militar> buscaMilitarsPorGraducao(String nome) {

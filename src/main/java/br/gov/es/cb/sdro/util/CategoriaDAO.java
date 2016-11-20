@@ -14,7 +14,6 @@ import java.util.List;
  */
 public class CategoriaDAO extends AbstractDAO<Categoria>{
     Categoria categoria;
-    List<Categoria> listaCategorias;
     
     public Categoria buscaCategoriaPorNome(String nome) {
         busca = "Categoria.findByNome";
@@ -25,7 +24,7 @@ public class CategoriaDAO extends AbstractDAO<Categoria>{
     
     public List<Categoria> buscaCategorias(){
         busca = "Categoria.findAll";
-        listaCategorias = (List<Categoria>) buscaListaSemParametro();
+        List<Categoria>  listaCategorias = (List<Categoria>) buscaListaSemParametro();
         return listaCategorias;
     }
     

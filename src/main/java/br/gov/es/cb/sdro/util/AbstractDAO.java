@@ -5,6 +5,7 @@
  */
 package br.gov.es.cb.sdro.util;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -12,7 +13,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 
-public class AbstractDAO<T> implements DAO<T> {
+public class AbstractDAO<T> implements DAO<T>, Serializable {
 
     protected EntityManagerFactory emf = Persistence.createEntityManagerFactory("br.gov.es.cb_sdro-desk_jar_1.0-SNAPSHOTPU");
     protected EntityManager em = emf.createEntityManager();
