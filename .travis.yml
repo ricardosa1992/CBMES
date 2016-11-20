@@ -4,7 +4,7 @@ jdk:
   - oraclejdk8
 
 before-install:
-  - mvn install:install-file -Dfile=AbsoluteLayout.jar -DgroupId=unknown.binary -DartifactId=xtool -Dversion=SNAPSHOT -Dpackaging=jar
+  - mvn install:install-file -Dfile=AbsoluteLayout.jar -DgroupId=unknown.binary -DartifactId=AbsoluteLayout -Dversion=SNAPSHOT -Dpackaging=jar
 
 addons:
   srcclr: true
