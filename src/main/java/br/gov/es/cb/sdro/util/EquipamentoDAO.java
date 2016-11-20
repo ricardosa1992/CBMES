@@ -17,7 +17,7 @@ import java.util.List;
 public class EquipamentoDAO extends AbstractDAO<Equipamento> {
 
     Equipamento equipamento;
-    List<Equipamento> listaEquipamentos;
+    private List<Equipamento> listaEquipamentos;
     String paramentroIdEquipamento;
 
     public EquipamentoDAO() {

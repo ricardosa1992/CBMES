@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class EmpenhoDAO  extends AbstractDAO<Empenho>{
     Empenho empenho;
-    List<Empenho> listaEmpenhos;
+    private List<Empenho> listaEmpenhos;
     
     public Empenho buscaEmpenhoPorNome(String nome) {
         busca = "Empenho.findByNome";
