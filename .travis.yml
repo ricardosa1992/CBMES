@@ -1,10 +1,10 @@
 language: java
 
-before-install:
-  - mvn install:install-file -Dfile=AbsoluteLayout.jar -DgroupId=unknown.binary -DartifactId=AbsoluteLayout -Dversion=SNAPSHOT -Dpackaging=jar
-
 jdk:
   - oraclejdk8
+
+before_install:
+  - mvn install:install-file -Dfile=AbsoluteLayout.jar -DgroupId=unknown.binary -DartifactId=AbsoluteLayout -Dversion=SNAPSHOT -Dpackaging=jar
 
 addons:
   srcclr: true
