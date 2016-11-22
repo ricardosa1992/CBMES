@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class SafoPostoGraduacaoDAO extends AbstractDAO<SafoPostoGraducao>{
     SafoPostoGraducao safopostograduacao;
-    List<SafoPostoGraducao> listaSafoPostoGraducaos;
+    private List<SafoPostoGraducao> listaSafoPostoGraducaos;
     
     public SafoPostoGraducao buscaSafoPostoGraducaoPorNome(String nome) {
         busca = "SafoPostoGraducao.findByNome";

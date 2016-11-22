@@ -20,14 +20,14 @@ import javax.swing.table.DefaultTableModel;
 public class TelaEquipamentosAlocacao extends javax.swing.JFrame {
 
     private DefaultTableModel tableEquipamentos;
-    List<Equipamento> lstEquipamentos;
-    List<Status> lstStatus;
+    private List<Equipamento> lstEquipamentos;
+    private List<Status> lstStatus;
     StatusDAO statusDAO;
     EquipamentoDAO equipamentoDAO;
     ArrayList<Integer> lstEquipamentosSelecionados;
     int idEquipamentoSelecionado;
 
-    public TelaEquipamentosAlocacao(List<Integer> lstIdEquipamentos) throws Exception {
+    public TelaEquipamentosAlocacao(List<Integer> lstIdEquipamentos){
         initComponents();
         lstEquipamentosSelecionados = new ArrayList<>();
         lstEquipamentosSelecionados = (ArrayList<Integer>) lstIdEquipamentos;

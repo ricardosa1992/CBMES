@@ -16,7 +16,7 @@ import javax.persistence.NoResultException;
 public class SafoFuncionarioDAO extends AbstractDAO<SafoFuncionario> {
 
     SafoFuncionario safofuncionario;
-    List<SafoFuncionario> listaSafoFuncionarios;
+    private List<SafoFuncionario> listaSafoFuncionarios;
 
     public SafoFuncionario buscaSafoFuncionarioPorNome(String nome) {
         busca = "SafoFuncionario.findByNome";

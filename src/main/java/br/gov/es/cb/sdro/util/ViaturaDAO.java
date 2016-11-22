@@ -16,7 +16,7 @@ import java.util.List;
 public class ViaturaDAO extends AbstractDAO<Viatura> {
 
     Viatura viatura;
-    List<Viatura> listaViaturas;
+    private List<Viatura> listaViaturas;
     String parametroId;
 
     public ViaturaDAO() {

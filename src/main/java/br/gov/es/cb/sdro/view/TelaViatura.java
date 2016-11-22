@@ -24,14 +24,14 @@ import javax.swing.table.DefaultTableModel;
 public class TelaViatura extends javax.swing.JInternalFrame {
     int codigo;
     Sessao sessao;
-    List<Viatura> lstViatura;
+    private List<Viatura> lstViatura;
     ViaturaDAO viaturaDAO;
     private DefaultTableModel tableViatura;
 
-    List<Tipoviatura> lstTipoViatura;
-    List<Status> lstStatus;
-    List<Categoria> lstCategoria;
-    List<Tipocombustivel> lstTipoCombustivel;
+    private List<Tipoviatura> lstTipoViatura;
+    private List<Status> lstStatus;
+    private List<Categoria> lstCategoria;
+    private List<Tipocombustivel> lstTipoCombustivel;
 
     TipoviaturaDAO tipoViaturaDAO;
     StatusDAO statusDAO;
@@ -59,7 +59,7 @@ public class TelaViatura extends javax.swing.JInternalFrame {
      * Creates new form NovoJInternalFrame
      * @throws java.lang.Exception
      */
-    public TelaViatura() throws Exception {
+    public TelaViatura(){
         initComponents();
         sessao = Sessao.getInstancia();
         viaturaControler = new ViaturaControler();
@@ -185,7 +185,7 @@ public class TelaViatura extends javax.swing.JInternalFrame {
         return 0;
     }
 
-    public void addTabela() throws Exception {
+    public void addTabela(){
         //pega o modelo da tabela
         //chama metodo da Class Gerenciador com o nome de ListaCliente passando um nome
 
@@ -808,7 +808,7 @@ public class TelaViatura extends javax.swing.JInternalFrame {
             }
 
         }
-        if (input.equals("")) {
+        if (input.isEmpty()) {
             for (Viatura eq : lstViatura) {
                 Status st = eq.getIdstatus();
                 Status statusResult = statusDAO.buscaStatusPorID(st.getIdstatus());

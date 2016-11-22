@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class TipoviaturaDAO extends AbstractDAO<Tipoviatura>{
     Tipoviatura tipoviatura;
-    List<Tipoviatura> listaTipoviaturas;
+    private List<Tipoviatura> listaTipoviaturas;
     
     public Tipoviatura buscaTipoviaturaPorNome(String nome) {
         busca = "Tipoviatura.findByNome";

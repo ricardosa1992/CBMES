@@ -10,6 +10,11 @@ package br.gov.es.cb.sdro.util;
  * @author Patrícia
  */
 public class ChecaSimilaridadeString {
+
+    private ChecaSimilaridadeString() {
+    }
+   
+    
     public static float checkSimilarity(String str1, String str2){
         String sString1 = str1.toUpperCase(); 
         String sString2 = str2.toUpperCase();
@@ -34,7 +39,8 @@ public class ChecaSimilaridadeString {
                 sSmaller = sString1;
             }
 
-            float fSim, fMaxSimilarity = Float.MIN_VALUE;
+            float fSim;
+            float fMaxSimilarity = Float.MIN_VALUE;
             for(int i = 0; i <= sSmaller.length(); i++) {
                 sAux = sSmaller.substring(0, i) + sBigger.substring(i, i+iDiff) + sSmaller.substring(i);
                 fSim = checkSimilaritySameSize(sBigger,  sAux);

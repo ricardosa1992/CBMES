@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class ScoDAO extends AbstractDAO<Sco>{
     Sco sco;
-    List<Sco> listaScos;
+    private List<Sco> listaScos;
     
     public Sco buscaScoPorNome(String nome) {
         busca = "Sco.findByNome";

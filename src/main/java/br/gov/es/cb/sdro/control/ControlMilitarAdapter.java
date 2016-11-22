@@ -6,6 +6,7 @@
 package br.gov.es.cb.sdro.control;
 
 import br.gov.es.cb.sdro.model.MilitarAdapter;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,9 +14,9 @@ import java.util.List;
  *
  * @author Heitor
  */
-public class ControlMilitarAdapter {
+public class ControlMilitarAdapter implements Serializable{
 
-    List<MilitarAdapter> listTodosMilitar;
+    private List<MilitarAdapter> listTodosMilitar;
     MilitarAdapter militarAdaptado;
 
     public ControlMilitarAdapter() {

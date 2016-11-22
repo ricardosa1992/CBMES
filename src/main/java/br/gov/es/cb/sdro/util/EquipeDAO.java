@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class EquipeDAO extends AbstractDAO<Equipe>{
     Equipe equipe;
-    List<Equipe> listaEquipes;
+    private List<Equipe> listaEquipes;
     
     public Equipe buscaEquipePorNome(String nome) {
         busca = "Equipe.findByNome";

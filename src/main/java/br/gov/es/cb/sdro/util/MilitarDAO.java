@@ -17,7 +17,7 @@ import javax.persistence.NoResultException;
 public class MilitarDAO extends AbstractDAO<Militar> {
 
     Militar militar;
-    List<Militar> listaMilitars;
+    private List<Militar> listaMilitars;
 
     public Militar buscaMilitarPorNome(String nome) {
         busca = "Militar.findByNome";
@@ -46,14 +46,16 @@ public class MilitarDAO extends AbstractDAO<Militar> {
         return listaMilitars;
     }
 
-    public Militar buscaMilitarPorId(Integer id) {
-        try {
-            busca = "Militar.findByIdmilitar";
-            parametro = "idmilitar";
-            militar = buscaPorInteger(id);
-            return militar;
-        } catch (NoResultException e) {
+    public Militar buscaMilitarPorId(Integer id){
+        try{
+        busca = "Militar.findByIdmilitar";
+        parametro = "idmilitar";
+        militar = buscaPorInteger(id);
+        return militar;
+        }
+        catch(Exception e){
             return null;
         }
     }
+    
 }

@@ -13,7 +13,7 @@ import java.util.List;
  * @author Heitor
  */
 public class TipocombustivelDAO extends AbstractDAO<Tipocombustivel>{
-    List<Tipocombustivel> lstTpCombustivel;
+    private List<Tipocombustivel> lstTpCombustivel;
     public Tipocombustivel buscaTipoCombustivelPorNome(String nome) {
         busca = "Tipocombustivel.findByDescricao";
         parametro = "descricao";

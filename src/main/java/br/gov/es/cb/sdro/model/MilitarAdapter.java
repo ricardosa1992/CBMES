@@ -3,6 +3,7 @@ package br.gov.es.cb.sdro.model;
 
 import br.gov.es.cb.sdro.util.MilitarDAO;
 import br.gov.es.cb.sdro.util.SafoFuncionarioDAO;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  *
  * @author Heitor
  */
-public class MilitarAdapter {
+public class MilitarAdapter implements Serializable{
 
     private MilitarDAO militarDAO;
     private SafoFuncionarioDAO safoFuncionarioDAO;

@@ -28,13 +28,13 @@ public class TelaUnidades extends javax.swing.JInternalFrame {
     private ControlMilitarAdapter controlMilitar;
     UnidadesDAO unidadeDao;
     MilitarAdapter miladap;
-    List<MilitarAdapter> listMilAdap = new ArrayList();
+    private List<MilitarAdapter> listMilAdap = new ArrayList();
     DefaultTableModel modeloTable = new DefaultTableModel();
     DefaultListModel modelList = new DefaultListModel();
     Unidade unidadeSelecionada;
-    List<Unidade> listaUnidade;
-    List<SafoPostoGraducao> listaPG = new SafoPostoGraduacaoDAO().buscaSafoPostoGraducaos();
-    List<Militar> listaMil = new MilitarDAO().buscaMilitars();
+    private List<Unidade> listaUnidade;
+    private List<SafoPostoGraducao> listaPG = new SafoPostoGraduacaoDAO().buscaSafoPostoGraducaos();
+    private List<Militar> listaMil = new MilitarDAO().buscaMilitars();
     String opcao;
     /**
      * Creates new form Unidades
@@ -291,6 +291,7 @@ public class TelaUnidades extends javax.swing.JInternalFrame {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao salvar Unidade");
+            throw e;
         }
         atualizaTabela();
         abaAlteraExclui.setSelectedIndex(0);

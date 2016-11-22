@@ -23,8 +23,8 @@ import javax.swing.table.DefaultTableModel;
 public class TelaEquipamento extends javax.swing.JInternalFrame {
 
     int codigo;
-    List<Status> lstStatus;
-    List<Equipamento> lstEquipamentos;
+    private List<Status> lstStatus;
+    private List<Equipamento> lstEquipamentos;
     StatusDAO statusDAO;
     HashMap<String, Integer> mapStatus;
     EquipamentoDAO equipamentoDAO;
@@ -36,7 +36,7 @@ public class TelaEquipamento extends javax.swing.JInternalFrame {
      * Creates new form TelaEquipamento
      * @throws java.lang.Exception
      */
-    public TelaEquipamento() throws Exception {
+    public TelaEquipamento(){
         initComponents();
         sessao = Sessao.getInstancia();
         status = new Status();
@@ -80,7 +80,7 @@ public class TelaEquipamento extends javax.swing.JInternalFrame {
         return 0;
     }
 
-    public void addTabela() throws Exception {
+    public void addTabela(){
         if (tableEquipamentos.getRowCount() > 0) {
             int qtd = tableEquipamentos.getRowCount();
             for (int i = 0; i < qtd; i++) {

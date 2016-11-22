@@ -13,12 +13,13 @@ import br.gov.es.cb.sdro.model.Unidade;
 import br.gov.es.cb.sdro.model.Viatura;
 import br.gov.es.cb.sdro.util.Sessao;
 import br.gov.es.cb.sdro.util.ViaturaDAO;
+import java.io.Serializable;
 
 /**
  *
  * @author ricardo
  */
-public class ViaturaControler {
+public class ViaturaControler implements Serializable{
     
     private Sessao sessao;
     private Tipoviatura tipoViatura;

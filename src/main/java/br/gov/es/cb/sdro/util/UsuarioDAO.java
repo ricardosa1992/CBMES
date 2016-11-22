@@ -17,7 +17,7 @@ import javax.persistence.TypedQuery;
 public class UsuarioDAO extends AbstractDAO<Usuario> {
 
     Usuario usuario;
-    List<Usuario> listaUsuarios;
+    private List<Usuario> listaUsuarios;
 
     public Usuario buscaUsuarioPorNome(String login) {
         busca = "Usuario.findByLogin";

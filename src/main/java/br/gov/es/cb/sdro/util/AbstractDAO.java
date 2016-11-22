@@ -15,11 +15,11 @@ import javax.persistence.Query;
 
 public class AbstractDAO<T> implements DAO<T>, Serializable {
 
-    protected EntityManagerFactory emf = Persistence.createEntityManagerFactory("br.gov.es.cb_sdro-desk_jar_1.0-SNAPSHOTPU");
-    protected EntityManager em = emf.createEntityManager();
-    protected Query query;
-    protected String busca;
-    protected String parametro;
+    protected transient EntityManagerFactory emf = Persistence.createEntityManagerFactory("br.gov.es.cb_sdro-desk_jar_1.0-SNAPSHOTPU");
+    protected transient EntityManager em = emf.createEntityManager();
+    protected transient Query query;
+    protected transient String busca;
+    protected transient String parametro;
 
     @Override
     public boolean save(T objeto){
