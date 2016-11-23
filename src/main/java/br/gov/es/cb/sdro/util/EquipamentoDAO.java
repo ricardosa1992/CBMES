@@ -17,7 +17,6 @@ import java.util.List;
 public class EquipamentoDAO extends AbstractDAO<Equipamento> {
 
     Equipamento equipamento;
-    private List<Equipamento> listaEquipamentos;
     String paramentroIdEquipamento;
 
     public EquipamentoDAO() {
@@ -35,14 +34,12 @@ public class EquipamentoDAO extends AbstractDAO<Equipamento> {
 
     public List<Equipamento> buscaEquipamentos() {
         busca = "Equipamento.findAll";
-        listaEquipamentos = (List<Equipamento>) buscaListaSemParametro();
-        return listaEquipamentos;
+        return (List<Equipamento>) buscaListaSemParametro();
     }
 
     public List<Equipamento> buscaEquipamentosDisponiveis() {
         busca = "Equipamento.findAllDisponiveis";
-        listaEquipamentos = (List<Equipamento>) buscaListaSemParametro();
-        return listaEquipamentos;
+        return (List<Equipamento>) buscaListaSemParametro();
     }
 
     @Override

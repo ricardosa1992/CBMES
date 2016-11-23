@@ -24,6 +24,33 @@ import javax.swing.table.DefaultTableModel;
  * @author Heitor
  */
 public class TelaUnidades extends javax.swing.JInternalFrame {
+   
+     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTabbedPane abaAlteraExclui;
+    private javax.swing.JButton bntCarregaMilSubcmt;
+    private javax.swing.JButton btnCarregaMilCmt;
+    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnNovo;
+    private javax.swing.JButton btnSalvar;
+    private javax.swing.JComboBox<String> cmbMilCmt;
+    private javax.swing.JComboBox cmbMilSubcmt;
+    private javax.swing.JComboBox cmbPostogradCmt;
+    private javax.swing.JComboBox cmbPostogradSubcmt;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblCadastroUnidade;
+    private javax.swing.JLabel lblCmt;
+    private javax.swing.JLabel lblMilitarCmt;
+    private javax.swing.JLabel lblMilitarSubcmt;
+    private javax.swing.JLabel lblNomeUnidade;
+    private javax.swing.JLabel lblPostoGradCmt;
+    private javax.swing.JLabel lblPostoGradSubcmt;
+    private javax.swing.JLabel lblSubcmt;
+    private javax.swing.JTable tblUnidades;
+    private javax.swing.JTextField txtNomeUnidade;
+    // End of variables declaration//GEN-END:variables
 
     private ControlMilitarAdapter controlMilitar;
     UnidadesDAO unidadeDao;
@@ -304,34 +331,6 @@ public class TelaUnidades extends javax.swing.JInternalFrame {
         btnExcluir.setVisible(false);
         abaAlteraExclui.setSelectedIndex(0);
     }//GEN-LAST:event_btnExcluirMouseClicked
-
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTabbedPane abaAlteraExclui;
-    private javax.swing.JButton bntCarregaMilSubcmt;
-    private javax.swing.JButton btnCarregaMilCmt;
-    private javax.swing.JButton btnExcluir;
-    private javax.swing.JButton btnNovo;
-    private javax.swing.JButton btnSalvar;
-    private javax.swing.JComboBox<String> cmbMilCmt;
-    private javax.swing.JComboBox cmbMilSubcmt;
-    private javax.swing.JComboBox cmbPostogradCmt;
-    private javax.swing.JComboBox cmbPostogradSubcmt;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblCadastroUnidade;
-    private javax.swing.JLabel lblCmt;
-    private javax.swing.JLabel lblMilitarCmt;
-    private javax.swing.JLabel lblMilitarSubcmt;
-    private javax.swing.JLabel lblNomeUnidade;
-    private javax.swing.JLabel lblPostoGradCmt;
-    private javax.swing.JLabel lblPostoGradSubcmt;
-    private javax.swing.JLabel lblSubcmt;
-    private javax.swing.JTable tblUnidades;
-    private javax.swing.JTextField txtNomeUnidade;
-    // End of variables declaration//GEN-END:variables
 
     public void inicializa(ControlMilitarAdapter controlMilitar) {
         this.controlMilitar = controlMilitar;

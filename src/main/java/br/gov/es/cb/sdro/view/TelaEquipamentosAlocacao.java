@@ -19,6 +19,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TelaEquipamentosAlocacao extends javax.swing.JFrame {
 
+     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSalvar;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableEquipamentos;
+    // End of variables declaration//GEN-END:variables
+
     private DefaultTableModel tableEquipamentos;
     private List<Equipamento> lstEquipamentos;
     private List<Status> lstStatus;
@@ -177,11 +185,5 @@ public class TelaEquipamentosAlocacao extends javax.swing.JFrame {
 
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSalvar;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTableEquipamentos;
-    // End of variables declaration//GEN-END:variables
+   
 }

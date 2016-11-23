@@ -25,8 +25,7 @@ public class EquipeDAO extends AbstractDAO<Equipe>{
     
     public List<Equipe> buscaEquipes(){
         busca = "Equipe.findAll";
-        listaEquipes = (List<Equipe>) buscaListaSemParametro();
-        return listaEquipes;
+        return (List<Equipe>) buscaListaSemParametro();
     }
     
     

@@ -17,8 +17,7 @@ import javax.persistence.NoResultException;
  */
 public class UnidadesDAO extends AbstractDAO<Unidade>{
     Unidade unidade;
-   private List<Unidade> listaUnidades;
-    
+   
     public Unidade buscaUnidadePorNome(String nome) {
         busca = "Unidade.findByNome";
         parametro = "nome";
@@ -28,8 +27,7 @@ public class UnidadesDAO extends AbstractDAO<Unidade>{
     
     public List<Unidade> buscaUnidades(){
         busca = "Unidade.findAll";
-        listaUnidades = (List<Unidade>) buscaListaSemParametro();
-        return listaUnidades;
+        return (List<Unidade>) buscaListaSemParametro();
     }
     
     public Unidade buscaUnidadePorId(Integer id) {

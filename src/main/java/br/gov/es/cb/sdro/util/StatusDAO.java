@@ -14,7 +14,6 @@ import java.util.List;
  */
 public class StatusDAO extends AbstractDAO<Status>{
     Status status;
-    private List<Status> listaStatuss;
     
     public Status buscaStatusPorNome(String nome) {
         busca = "Status.findByNome";
@@ -25,8 +24,7 @@ public class StatusDAO extends AbstractDAO<Status>{
     
     public List<Status> buscaStatuss(){
         busca = "Status.findAll";
-        listaStatuss = (List<Status>) buscaListaSemParametro();
-        return listaStatuss;
+        return (List<Status>) buscaListaSemParametro();
     }
     
     public Status buscaStatusPorID(int id){

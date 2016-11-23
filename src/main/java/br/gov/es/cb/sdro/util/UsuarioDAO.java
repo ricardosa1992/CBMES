@@ -17,8 +17,7 @@ import javax.persistence.TypedQuery;
 public class UsuarioDAO extends AbstractDAO<Usuario> {
 
     Usuario usuario;
-    private List<Usuario> listaUsuarios;
-
+   
     public Usuario buscaUsuarioPorNome(String login) {
         busca = "Usuario.findByLogin";
         parametro = "login";
@@ -51,8 +50,7 @@ public class UsuarioDAO extends AbstractDAO<Usuario> {
 
     public List<Usuario> buscaUsuarios() {
         busca = "Usuario.findAll";
-        listaUsuarios = (List<Usuario>) buscaListaSemParametro();
-        return listaUsuarios;
+        return (List<Usuario>) buscaListaSemParametro();
     }
 
     public Usuario buscaUsuarioPorId(Integer id) {

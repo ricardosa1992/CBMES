@@ -31,6 +31,40 @@ import javax.swing.table.DefaultTableModel;
  * @author Patrícia
  */
 public class TelaAlocacao extends javax.swing.JInternalFrame {
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable JTableEquipamentosAlocados;
+    private javax.swing.JTable JTableViaturasAlocadas;
+    private javax.swing.JButton btnAdicionarEquipamentoViatura;
+    private javax.swing.JButton btnAlocarViatura;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnRemoverEquipamento;
+    private javax.swing.JButton btnRemoverViaturaAlocada;
+    private javax.swing.JButton btnSalvarAlocacao;
+    private javax.swing.JComboBox<String> jComboStatusMilitar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTableEquipamentosSelecionadosAlocacao;
+    private javax.swing.JTable jTableMilitares;
+    private javax.swing.JTable jTableViaturasDisponiveis;
+    private javax.swing.JTable jTableViaturasSelecionadasAlocacao;
+    private javax.swing.JButton liberarViatura;
+    // End of variables declaration//GEN-END:variables
+
 
     DefaultTableModel tableViaturasDisponiveis;
     DefaultTableModel tableViaturasSelecionadasAlocacao;
@@ -839,37 +873,5 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
 
         }
     }
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable JTableEquipamentosAlocados;
-    private javax.swing.JTable JTableViaturasAlocadas;
-    private javax.swing.JButton btnAdicionarEquipamentoViatura;
-    private javax.swing.JButton btnAlocarViatura;
-    private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnRemoverEquipamento;
-    private javax.swing.JButton btnRemoverViaturaAlocada;
-    private javax.swing.JButton btnSalvarAlocacao;
-    private javax.swing.JComboBox<String> jComboStatusMilitar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTableEquipamentosSelecionadosAlocacao;
-    private javax.swing.JTable jTableMilitares;
-    private javax.swing.JTable jTableViaturasDisponiveis;
-    private javax.swing.JTable jTableViaturasSelecionadasAlocacao;
-    private javax.swing.JButton liberarViatura;
-    // End of variables declaration//GEN-END:variables
+    
 }

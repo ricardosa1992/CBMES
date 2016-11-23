@@ -8,7 +8,6 @@ package br.gov.es.cb.sdro.util;
 import br.gov.es.cb.sdro.model.Militar;
 import br.gov.es.cb.sdro.model.Unidade;
 import java.util.List;
-import javax.persistence.NoResultException;
 
 /**
  *
