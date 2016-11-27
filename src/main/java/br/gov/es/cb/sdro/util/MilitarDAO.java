@@ -56,5 +56,13 @@ public class MilitarDAO extends AbstractDAO<Militar> {
             return null;
         }
     }
+
+    public List<Militar> buscaMilitaresAlocadosUnidade(Unidade unidade) {
+        busca = "Militar.alocadosUnidade";
+        parametro = "idunidade";
+        query = em.createNamedQuery(busca);
+        query.setParameter(parametro, unidade);
+        return query.getResultList();
+    }
     
 }

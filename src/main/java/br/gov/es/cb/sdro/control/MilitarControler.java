@@ -27,5 +27,9 @@ public class MilitarControler {
         
     }
     
+    public List<Militar> listaMilitaresAlocados(Unidade unidade){
+        return militarDAO.buscaMilitaresAlocadosUnidade(unidade);
+    }
+    
     
 }
