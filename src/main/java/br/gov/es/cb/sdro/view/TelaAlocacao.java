@@ -543,6 +543,9 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
             }
         ));
         jScrollPane7.setViewportView(JTableEquipamentosAlocados);
+        if (JTableEquipamentosAlocados.getColumnModel().getColumnCount() > 0) {
+            JTableEquipamentosAlocados.getColumnModel().getColumn(0).setMaxWidth(200);
+        }
 
         jLabel4.setText("EQUIPAMENTOS ALOCADOS VIATURA");
 
@@ -552,11 +555,11 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 955, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 955, Short.MAX_VALUE)
                     .addComponent(liberarViatura)
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(jScrollPane7))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
