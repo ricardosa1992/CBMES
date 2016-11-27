@@ -198,8 +198,7 @@ public class Inicial extends javax.swing.JFrame {
             int idTipoLogin = getIdTipoLogin(tipoLoginJCombo);
             if(idTipoLogin == usuario.getTipoLogin()){
                 if(idTipoLogin == 1){// Login feito por Unidade
-                    Unidade unidade = usuario.getIdmilitar().getIdunidade();
-                    sessao.setUnidade(unidade);
+                    sessao.setUnidade(usuario.getIdmilitar().getIdunidade());
                 }
                 
                 sessao.setTipoLogin(idTipoLogin);
