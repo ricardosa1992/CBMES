@@ -12,21 +12,28 @@ import java.util.List;
  *
  * @author Heitor
  */
-public class EquipeDAO extends AbstractDAO<Equipe>{
+public class EquipeDAO extends AbstractDAO<Equipe> {
+
     Equipe equipe;
     private List<Equipe> listaEquipes;
-    
+
     public Equipe buscaEquipePorNome(String nome) {
         busca = "Equipe.findByNome";
         parametro = "nome";
         equipe = buscaPorString(nome);
         return equipe;
     }
-    
-    public List<Equipe> buscaEquipes(){
+
+    public List<Equipe> buscaEquipes() {
         busca = "Equipe.findAll";
         return (List<Equipe>) buscaListaSemParametro();
     }
-    
-    
+
+    public List<Equipe> buscaListaComParametro(int id) {
+        busca = "Equipe.findByIdsco";
+        query = em.createNamedQuery(busca);
+        query.setParameter(parametro, id);
+        return query.getResultList();
+    }
+
 }
