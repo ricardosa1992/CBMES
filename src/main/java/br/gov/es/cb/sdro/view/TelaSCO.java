@@ -125,10 +125,10 @@ public class TelaSCO extends javax.swing.JInternalFrame {
                 txt_sco_nomeActionPerformed(evt);
             }
         });
-        jPanel2.add(txt_sco_nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 284, -1));
+        jPanel2.add(txt_sco_nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 284, -1));
 
         lbl_sco_mil_adm.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.lbl_sco_mil_adm.text")); // NOI18N
-        jPanel2.add(lbl_sco_mil_adm, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, -1));
+        jPanel2.add(lbl_sco_mil_adm, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
 
         txt_sco_mil_adm.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.txt_sco_mil_adm.text")); // NOI18N
         txt_sco_mil_adm.addActionListener(new java.awt.event.ActionListener() {
@@ -136,7 +136,7 @@ public class TelaSCO extends javax.swing.JInternalFrame {
                 txt_sco_mil_admActionPerformed(evt);
             }
         });
-        jPanel2.add(txt_sco_mil_adm, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 150, 260, -1));
+        jPanel2.add(txt_sco_mil_adm, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, 260, -1));
 
         cmb_list_sco.setMaximumRowCount(10);
         cmb_list_sco.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Clique para selecionar" }));
@@ -156,7 +156,7 @@ public class TelaSCO extends javax.swing.JInternalFrame {
         jPanel2.add(btn_sco_carregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 20, 110, -1));
 
         lbl_sco_mil_ope.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.lbl_sco_mil_ope.text")); // NOI18N
-        jPanel2.add(lbl_sco_mil_ope, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, -1, -1));
+        jPanel2.add(lbl_sco_mil_ope, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
 
         txt_sco_mil_ope.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.txt_sco_mil_ope.text")); // NOI18N
         txt_sco_mil_ope.addActionListener(new java.awt.event.ActionListener() {
@@ -164,25 +164,25 @@ public class TelaSCO extends javax.swing.JInternalFrame {
                 txt_sco_mil_opeActionPerformed(evt);
             }
         });
-        jPanel2.add(txt_sco_mil_ope, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, 260, -1));
+        jPanel2.add(txt_sco_mil_ope, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 260, -1));
 
         lbl_sco_mil_cmd.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.lbl_sco_mil_cmd.text")); // NOI18N
-        jPanel2.add(lbl_sco_mil_cmd, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, -1, -1));
+        jPanel2.add(lbl_sco_mil_cmd, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, -1, -1));
 
         txt_sco_mil_cmd.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.txt_sco_mil_cmd.text")); // NOI18N
-        jPanel2.add(txt_sco_mil_cmd, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, 260, -1));
+        jPanel2.add(txt_sco_mil_cmd, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, 260, -1));
 
         lbl_sco_mil_log.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.lbl_sco_mil_log.text")); // NOI18N
-        jPanel2.add(lbl_sco_mil_log, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, -1));
+        jPanel2.add(lbl_sco_mil_log, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
 
         lbl_sco_mil_plan.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.lbl_sco_mil_plan.text")); // NOI18N
-        jPanel2.add(lbl_sco_mil_plan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, -1, -1));
+        jPanel2.add(lbl_sco_mil_plan, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, -1, -1));
 
         txt_sco_mil_log.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.txt_sco_mil_log.text")); // NOI18N
-        jPanel2.add(txt_sco_mil_log, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 220, 260, -1));
+        jPanel2.add(txt_sco_mil_log, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 210, 260, -1));
 
         txt_sco_mil_plan.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.txt_sco_mil_plan.text")); // NOI18N
-        jPanel2.add(txt_sco_mil_plan, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 250, 260, -1));
+        jPanel2.add(txt_sco_mil_plan, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 250, 260, -1));
 
         btn_sco_altera.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.btn_sco_altera.text")); // NOI18N
         btn_sco_altera.addActionListener(new java.awt.event.ActionListener() {
@@ -224,7 +224,7 @@ public class TelaSCO extends javax.swing.JInternalFrame {
                 txt_fld_emp_descrActionPerformed(evt);
             }
         });
-        jPanel3.add(txt_fld_emp_descr, new org.netbeans.lib.awtextra.AbsoluteConstraints(64, 221, 480, -1));
+        jPanel3.add(txt_fld_emp_descr, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 221, 450, -1));
 
         lbl_emp_descricao.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.lbl_emp_descricao.text")); // NOI18N
         jPanel3.add(lbl_emp_descricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 224, -1, -1));
