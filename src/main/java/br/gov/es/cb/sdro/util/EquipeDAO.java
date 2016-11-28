@@ -23,6 +23,12 @@ public class EquipeDAO extends AbstractDAO<Equipe> {
         equipe = buscaPorString(nome);
         return equipe;
     }
+    
+     public Equipe buscaEquipePorID(int id) {
+        busca = "Equipe.findByIdequipe";
+        parametro = "idequipe";
+        return buscaPorInteger(id);
+    }
 
     public List<Equipe> buscaEquipes() {
         busca = "Equipe.findAll";
@@ -34,6 +40,19 @@ public class EquipeDAO extends AbstractDAO<Equipe> {
         query = em.createNamedQuery(busca);
         query.setParameter(parametro, id);
         return query.getResultList();
+    }
+    
+    
+    public boolean update(Equipe obj) {
+        try {
+            em.getTransaction().begin();
+            em.merge(obj);
+            em.getTransaction().commit();
+            return true;
+        } catch (Exception ex) {
+            em.getTransaction().rollback();
+            throw ex;
+        }
     }
 
 }

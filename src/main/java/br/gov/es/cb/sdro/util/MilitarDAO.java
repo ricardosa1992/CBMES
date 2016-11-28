@@ -5,6 +5,7 @@
  */
 package br.gov.es.cb.sdro.util;
 
+import br.gov.es.cb.sdro.model.Equipe;
 import br.gov.es.cb.sdro.model.Militar;
 import br.gov.es.cb.sdro.model.Unidade;
 import java.util.List;
@@ -92,6 +93,29 @@ public class MilitarDAO extends AbstractDAO<Militar> {
        try {
             em.getTransaction().begin();
             busca = "Militar.liberarMilitar";
+            query = em.createNamedQuery(busca);
+            parametro = parametroId;
+            query.setParameter(parametro, obj.getIdmilitar());
+            query.executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            em.getTransaction().rollback();
+            throw ex;
+        }
+    }
+
+    public List<Militar> listaMilitaresAlocadosEquipe(Equipe obj) {
+        busca = "Militar.alocadosEquipe";
+        parametro = "idequipe";
+        query = em.createNamedQuery(busca);
+        query.setParameter(parametro, obj);
+        return query.getResultList();
+    }
+
+    public void removeMiltarEquipe(Militar obj) {
+         try {
+            em.getTransaction().begin();
+            busca = "Militar.liberarMilitarEquipe";
             query = em.createNamedQuery(busca);
             parametro = parametroId;
             query.setParameter(parametro, obj.getIdmilitar());

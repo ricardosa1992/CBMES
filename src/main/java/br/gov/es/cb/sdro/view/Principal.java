@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  */
 public class Principal extends javax.swing.JFrame {
 	
-     // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barra_menu;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenu jMenu1;
@@ -100,6 +100,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu1.add(jMenuItem4);
 
         jMenuItem5.setText("Equipe");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem5);
 
         jMenuItem6.setText("Equipamento");
@@ -212,6 +217,12 @@ public class Principal extends javax.swing.JFrame {
         TelaSCO telaSco = new TelaSCO();
         jDesktopPane1.add(telaSco);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        TelaEquipe telaEquipe = new TelaEquipe();
+        telaEquipe.setVisible(true);
+        jDesktopPane1.add(telaEquipe);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments
