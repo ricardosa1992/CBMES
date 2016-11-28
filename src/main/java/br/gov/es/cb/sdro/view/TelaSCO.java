@@ -7,14 +7,19 @@ package br.gov.es.cb.sdro.view;
 
 import br.gov.es.cb.sdro.control.ControlMilitarAdapter;
 import br.gov.es.cb.sdro.control.MilitarControler;
+import br.gov.es.cb.sdro.model.Equipe;
 import br.gov.es.cb.sdro.model.MilitarAdapter;
 import br.gov.es.cb.sdro.model.Sco;
+import br.gov.es.cb.sdro.util.EmpenhoDAO;
+import br.gov.es.cb.sdro.util.EquipeDAO;
 import br.gov.es.cb.sdro.util.ScoDAO;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -25,6 +30,8 @@ public class TelaSCO extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_emp_gravar;
+    private javax.swing.JButton btn_equipe_remove;
+    private javax.swing.JButton btn_equipes_add;
     private javax.swing.JButton btn_sco_altera;
     private javax.swing.JButton btn_sco_carregar;
     private javax.swing.JButton btn_sco_excluir;
@@ -34,9 +41,13 @@ public class TelaSCO extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lbl_emp_descricao;
+    private javax.swing.JLabel lbl_list_equipes;
     private javax.swing.JLabel lbl_sco_mil_adm;
     private javax.swing.JLabel lbl_sco_mil_cmd;
     private javax.swing.JLabel lbl_sco_mil_log;
@@ -45,6 +56,7 @@ public class TelaSCO extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lbl_sco_nome;
     private javax.swing.JTextArea txt_area_emp;
     private javax.swing.JTextField txt_fld_emp_descr;
+    private javax.swing.JTextArea txt_list_equipes;
     private javax.swing.JTextField txt_sco_mil_adm;
     private javax.swing.JTextField txt_sco_mil_cmd;
     private javax.swing.JTextField txt_sco_mil_log;
@@ -56,9 +68,13 @@ public class TelaSCO extends javax.swing.JInternalFrame {
     GregorianCalendar gc = new GregorianCalendar();
     ScoDAO scoDao = new ScoDAO();
     private List<Sco> listaSco;
+    private List<Equipe> listaEquipes;
     private MilitarAdapter militarAdaptado;
     private ControlMilitarAdapter milControl;
     private Sco scoAtual;
+    private EmpenhoDAO empenhoDAO;
+    private EquipeDAO equipeDao;
+    private List<Equipe> listaAuxEquipes;
 
     /**
      * Creates new form TelaSCO
@@ -69,7 +85,11 @@ public class TelaSCO extends javax.swing.JInternalFrame {
         alteraCampos(false);
         carregaTela();
         milControl = new ControlMilitarAdapter();
-
+        empenhoDAO = new EmpenhoDAO();
+        equipeDao = new EquipeDAO();
+        listaAuxEquipes = new ArrayList();
+        DefaultListModel model = new DefaultListModel();
+        txt_list_equipes.setEditable(false);
     }
 
     /**
@@ -88,7 +108,7 @@ public class TelaSCO extends javax.swing.JInternalFrame {
         txt_sco_nome = new javax.swing.JTextField();
         lbl_sco_mil_adm = new javax.swing.JLabel();
         txt_sco_mil_adm = new javax.swing.JTextField();
-        cmb_list_sco = new javax.swing.JComboBox<>();
+        cmb_list_sco = new javax.swing.JComboBox<String>();
         btn_sco_carregar = new javax.swing.JButton();
         lbl_sco_mil_ope = new javax.swing.JLabel();
         txt_sco_mil_ope = new javax.swing.JTextField();
@@ -108,6 +128,13 @@ public class TelaSCO extends javax.swing.JInternalFrame {
         txt_fld_emp_descr = new javax.swing.JTextField();
         lbl_emp_descricao = new javax.swing.JLabel();
         btn_emp_gravar = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        lbl_list_equipes = new javax.swing.JLabel();
+        btn_equipes_add = new javax.swing.JButton();
+        btn_equipe_remove = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txt_list_equipes = new javax.swing.JTextArea();
 
         setClosable(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -139,7 +166,7 @@ public class TelaSCO extends javax.swing.JInternalFrame {
         jPanel2.add(txt_sco_mil_adm, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, 260, -1));
 
         cmb_list_sco.setMaximumRowCount(10);
-        cmb_list_sco.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Clique para selecionar" }));
+        cmb_list_sco.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Clique para selecionar" }));
         cmb_list_sco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmb_list_scoActionPerformed(evt);
@@ -190,13 +217,13 @@ public class TelaSCO extends javax.swing.JInternalFrame {
                 btn_sco_alteraActionPerformed(evt);
             }
         });
-        jPanel2.add(btn_sco_altera, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 300, 90, -1));
+        jPanel2.add(btn_sco_altera, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 320, 90, -1));
 
         btn_sco_excluir.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.btn_sco_excluir.text")); // NOI18N
-        jPanel2.add(btn_sco_excluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 300, 110, -1));
+        jPanel2.add(btn_sco_excluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 320, 110, -1));
 
         btn_sco_salvar.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.btn_sco_salvar.text")); // NOI18N
-        jPanel2.add(btn_sco_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 300, 100, -1));
+        jPanel2.add(btn_sco_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 320, 100, -1));
 
         btn_sco_novo.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.btn_sco_novo.text")); // NOI18N
         btn_sco_novo.addActionListener(new java.awt.event.ActionListener() {
@@ -204,9 +231,9 @@ public class TelaSCO extends javax.swing.JInternalFrame {
                 btn_sco_novoActionPerformed(evt);
             }
         });
-        jPanel2.add(btn_sco_novo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
+        jPanel2.add(btn_sco_novo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 320, -1, -1));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 600, 360));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 640, 440));
 
         jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.jPanel1.TabConstraints.tabTitle"), jPanel1); // NOI18N
 
@@ -239,7 +266,30 @@ public class TelaSCO extends javax.swing.JInternalFrame {
 
         jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.jPanel3.TabConstraints.tabTitle"), jPanel3); // NOI18N
 
-        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 440));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lbl_list_equipes.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.lbl_list_equipes.text")); // NOI18N
+        jPanel5.add(lbl_list_equipes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+
+        btn_equipes_add.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.btn_equipes_add.text")); // NOI18N
+        jPanel5.add(btn_equipes_add, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, -1, -1));
+
+        btn_equipe_remove.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.btn_equipe_remove.text")); // NOI18N
+        jPanel5.add(btn_equipe_remove, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 150, -1, -1));
+
+        txt_list_equipes.setColumns(20);
+        txt_list_equipes.setRows(5);
+        jScrollPane3.setViewportView(txt_list_equipes);
+
+        jPanel5.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 36, 540, 100));
+
+        jPanel4.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 440));
+
+        jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.jPanel4.TabConstraints.tabTitle"), jPanel4); // NOI18N
+
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 390));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -266,6 +316,7 @@ public class TelaSCO extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cmb_list_scoActionPerformed
 
     private void btn_sco_carregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sco_carregarActionPerformed
+        txt_list_equipes.setText("");
         alteraCampos(false);
         btn_sco_excluir.setEnabled(true);
         scoAtual = scoDao.buscaScoPorID(cmb_list_sco.getSelectedIndex());
@@ -275,22 +326,30 @@ public class TelaSCO extends javax.swing.JInternalFrame {
         txt_sco_mil_ope.setText(milControl.getMilitarbyId(scoAtual.getIdfuncionariooperacoes()).getNomeGuerra());
         txt_sco_mil_log.setText(milControl.getMilitarbyId(scoAtual.getIdfuncionariologistica()).getNomeGuerra());
         txt_sco_mil_plan.setText(milControl.getMilitarbyId(scoAtual.getIdfuncionarioplanejamento()).getNomeGuerra());
-
+        listaEquipes = equipeDao.buscaEquipes();
+        for (Equipe equipe : listaEquipes) {
+            if (equipe != null) {
+                if (equipe.getIdsco().getIdsco() == cmb_list_sco.getSelectedIndex()) {
+                    listaAuxEquipes.add(equipe);
+                    txt_list_equipes.setText(txt_list_equipes.getText()+"\n"+equipe.getIdequipe()+" - "+equipe.getDescricao());
+                }
+            }
+        }
 
     }//GEN-LAST:event_btn_sco_carregarActionPerformed
 
     private void txt_sco_mil_opeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_sco_mil_opeActionPerformed
-        
+
     }//GEN-LAST:event_txt_sco_mil_opeActionPerformed
 
     private void btn_sco_alteraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sco_alteraActionPerformed
-        
+
         alteraCampos(true);
         btn_sco_salvar.setEnabled(true);
     }//GEN-LAST:event_btn_sco_alteraActionPerformed
 
     private void btn_sco_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sco_novoActionPerformed
-        
+
         cmb_list_sco.setSelectedIndex(0);
         limpaCampos();
         alteraCampos(true);
