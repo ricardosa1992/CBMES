@@ -36,9 +36,11 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
     private javax.swing.JTable JTableEquipamentosAlocados;
     private javax.swing.JTable JTableViaturasAlocadas;
     private javax.swing.JButton btnAdicionarEquipamentoViatura;
+    private javax.swing.JButton btnAlocarMilitar;
     private javax.swing.JButton btnAlocarViatura;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCarregar;
+    private javax.swing.JButton btnLiberarMilitar;
     private javax.swing.JButton btnRemoverEquipamento;
     private javax.swing.JButton btnRemoverViaturaAlocada;
     private javax.swing.JButton btnSalvarAlocacao;
@@ -141,9 +143,8 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
             }
         }
         if (jComboStatusMilitar.getSelectedItem().toString().equals("DISPONIVEL")) {
-            
+
             listMilitares = militarControler.listaMilitaresDisponiveis(sessao.getUnidade());
-            System.out.println(listMilitares);
         } else if (jComboStatusMilitar.getSelectedItem().toString().equals("ALOCADA")) {
             listMilitares = militarControler.listaMilitaresAlocados(sessao.getUnidade());
         }
@@ -283,6 +284,8 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
         jComboStatusMilitar = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         btnCarregar = new javax.swing.JButton();
+        btnLiberarMilitar = new javax.swing.JButton();
+        btnAlocarMilitar = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -428,18 +431,14 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 955, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 19, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAlocarViatura)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(btnCancelar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnSalvarAlocacao))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnSalvarAlocacao)
+                                .addGap(6, 6, 6))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -453,13 +452,18 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
                                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel3)
                                     .addComponent(btnRemoverEquipamento))))
-                        .addGap(21, 21, 21))))
+                        .addGap(21, 21, 21))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAlocarViatura)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(8, 8, 8)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 14, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -483,11 +487,11 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addComponent(btnRemoverEquipamento)))
-                .addGap(44, 44, 44)
+                .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSalvarAlocacao)
-                    .addComponent(btnCancelar))
-                .addGap(33, 33, 33))
+                    .addComponent(btnCancelar)
+                    .addComponent(btnSalvarAlocacao))
+                .addGap(49, 49, 49))
         );
 
         jTabMilitares.addTab("Alocar Viatura", jPanel1);
@@ -539,6 +543,9 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
             }
         ));
         jScrollPane7.setViewportView(JTableEquipamentosAlocados);
+        if (JTableEquipamentosAlocados.getColumnModel().getColumnCount() > 0) {
+            JTableEquipamentosAlocados.getColumnModel().getColumn(0).setMaxWidth(200);
+        }
 
         jLabel4.setText("EQUIPAMENTOS ALOCADOS VIATURA");
 
@@ -548,11 +555,11 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 955, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 955, Short.MAX_VALUE)
                     .addComponent(liberarViatura)
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(jScrollPane7))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -566,7 +573,7 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(268, Short.MAX_VALUE))
+                .addContainerGap(205, Short.MAX_VALUE))
         );
 
         jTabMilitares.addTab("Liberar Viaturas", jPanel3);
@@ -625,6 +632,20 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
             }
         });
 
+        btnLiberarMilitar.setText("Liberar");
+        btnLiberarMilitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLiberarMilitarActionPerformed(evt);
+            }
+        });
+
+        btnAlocarMilitar.setText("Alocar");
+        btnAlocarMilitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlocarMilitarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -641,6 +662,12 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
                         .addComponent(btnCarregar)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAlocarMilitar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnLiberarMilitar)
+                .addGap(14, 14, 14))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -651,8 +678,12 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
                     .addComponent(jComboStatusMilitar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCarregar))
                 .addGap(23, 23, 23)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(436, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAlocarMilitar)
+                    .addComponent(btnLiberarMilitar))
+                .addContainerGap(243, Short.MAX_VALUE))
         );
 
         jTabMilitares.addTab("Alocar/Liberar Militares", jPanel4);
@@ -837,8 +868,8 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_liberarViaturaActionPerformed
 
     private void jComboStatusMilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboStatusMilitarActionPerformed
-       
-       
+
+
     }//GEN-LAST:event_jComboStatusMilitarActionPerformed
 
     private void jComboStatusMilitarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboStatusMilitarItemStateChanged
@@ -847,16 +878,55 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jComboStatusMilitarItemStateChanged
 
     private void jComboStatusMilitarInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jComboStatusMilitarInputMethodTextChanged
-      
+
     }//GEN-LAST:event_jComboStatusMilitarInputMethodTextChanged
 
     private void jComboStatusMilitarPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jComboStatusMilitarPropertyChange
-          
+
     }//GEN-LAST:event_jComboStatusMilitarPropertyChange
 
     private void btnCarregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregarActionPerformed
-       populaTabelaMilitares();
+        populaTabelaMilitares();
     }//GEN-LAST:event_btnCarregarActionPerformed
+
+    private void btnAlocarMilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlocarMilitarActionPerformed
+        int linha = jTableMilitares.getSelectedRow();
+
+        if (linha >= 0) {
+            int idMilitar = Integer.parseInt(tableMilitares.getValueAt(linha, 0).toString());
+            Militar militar = new Militar();
+            militar.setIdmilitar(idMilitar);
+            if (jComboStatusMilitar.getSelectedItem().toString().equals("DISPONIVEL")) {
+                militarControler.alocarMilitar(militar);
+                JOptionPane.showMessageDialog(null, "Militar Alocado com sucesso!");
+                populaTabelaMilitares();
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro!!! Somente Militares Disponívies podem ser Alocados.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Um Militar deve ser selecionado");
+        }
+    }//GEN-LAST:event_btnAlocarMilitarActionPerformed
+
+    private void btnLiberarMilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLiberarMilitarActionPerformed
+        int linha = jTableMilitares.getSelectedRow();
+        if (linha >= 0) {
+            int idMilitar = Integer.parseInt(tableMilitares.getValueAt(linha, 0).toString());
+            Militar militar = new Militar();
+            militar.setIdmilitar(idMilitar);
+            if (jComboStatusMilitar.getSelectedItem().toString().equals("ALOCADA")) {
+                militarControler.liberarMilitar(militar);
+                JOptionPane.showMessageDialog(null, "Militar Liberado com sucesso!");
+                populaTabelaMilitares();
+
+            } else {
+
+                JOptionPane.showMessageDialog(null, "Erro!!! Somente Militares Alocados podem ser liberados.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Um Militar deve ser selecionado");
+        }
+    }//GEN-LAST:event_btnLiberarMilitarActionPerformed
     public void populaTabelaEquipamentosAlocados(int idViatura) {
         limpaTabelaEquipamentosAlocados();
         Viatura viatura = new Viatura();

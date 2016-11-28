@@ -31,5 +31,13 @@ public class MilitarControler {
         return militarDAO.buscaMilitaresAlocadosUnidade(unidade);
     }
     
+    public void alocarMilitar(Militar obj){
+        militarDAO.alocarMilitarUnidade(obj);
+    }
+    
+    public void liberarMilitar(Militar obj){
+        militarDAO.liberarMilitarUnidade(obj);
+    }
+    
     
 }

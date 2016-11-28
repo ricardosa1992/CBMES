@@ -17,7 +17,14 @@ public class MilitarDAO extends AbstractDAO<Militar> {
 
     Militar militar;
     private List<Militar> listaMilitars;
+    String parametroId;
 
+    public MilitarDAO() {
+        parametroId = "idmilitar";
+    
+    }
+    
+    
     public Militar buscaMilitarPorNome(String nome) {
         busca = "Militar.findByNome";
         parametro = "nome";
@@ -63,6 +70,37 @@ public class MilitarDAO extends AbstractDAO<Militar> {
         query = em.createNamedQuery(busca);
         query.setParameter(parametro, unidade);
         return query.getResultList();
+    }
+
+    public void alocarMilitarUnidade(Militar obj) {
+        
+        try {
+            em.getTransaction().begin();
+            busca = "Militar.alocarMilitar";
+            query = em.createNamedQuery(busca);
+            parametro = parametroId;
+            query.setParameter(parametro, obj.getIdmilitar());
+            query.executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            em.getTransaction().rollback();
+            throw ex;
+        }
+    }
+
+    public void liberarMilitarUnidade(Militar obj) {
+       try {
+            em.getTransaction().begin();
+            busca = "Militar.liberarMilitar";
+            query = em.createNamedQuery(busca);
+            parametro = parametroId;
+            query.setParameter(parametro, obj.getIdmilitar());
+            query.executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            em.getTransaction().rollback();
+            throw ex;
+        }
     }
     
 }

@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Equipamento.findAllDisponiveisUnidade", query = "SELECT e FROM Equipamento e where e.isalocado = false and e.idunidade = :idUnidade"),
     @NamedQuery(name = "Equipamento.findAllAlocadosViatura", query = "SELECT e FROM Equipamento e where e.isalocado = true and e.idviatura = :idViatura"),
     @NamedQuery(name = "Equipamento.UpdateEstadoEquipamento", query = "UPDATE Equipamento SET isalocado=true, idviatura = :idviatura WHERE idViatura = :idequipamento"),
-     @NamedQuery(name = "Equipamento.liberaEquipamento", query = "UPDATE Equipamento SET isalocado=false, idviatura = null WHERE idViatura = :idequipamento"),
+    @NamedQuery(name = "Equipamento.liberaEquipamento", query = "UPDATE Equipamento SET isalocado=false, idviatura = null WHERE idViatura = :idequipamento"),
     @NamedQuery(name = "Equipamento.findAll", query = "SELECT e FROM Equipamento e"),
     @NamedQuery(name = "Equipamento.findByIdequipamento", query = "SELECT e FROM Equipamento e WHERE e.idequipamento = :idequipamento"),
     @NamedQuery(name = "Equipamento.findByNome", query = "SELECT e FROM Equipamento e WHERE e.nome = :nome"),
