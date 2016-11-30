@@ -109,6 +109,7 @@ public class TelaEquipamento extends javax.swing.JInternalFrame {
 
     public void addTabela(){
         if (tableEquipamentos.getRowCount() > 0) {
+           //teste
             int qtd = tableEquipamentos.getRowCount();
             for (int i = 0; i < qtd; i++) {
                 tableEquipamentos.removeRow(0);
