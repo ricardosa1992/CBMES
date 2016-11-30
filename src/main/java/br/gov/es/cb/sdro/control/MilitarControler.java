@@ -32,12 +32,12 @@ public class MilitarControler {
         return militarDAO.buscaMilitaresAlocadosUnidade(unidade);
     }
     
-    public void alocarMilitar(Militar obj){
-        militarDAO.alocarMilitarUnidade(obj);
+    public boolean alocarMilitar(Militar obj){
+        return militarDAO.alocarMilitarUnidade(obj);
     }
     
-    public void liberarMilitar(Militar obj){
-        militarDAO.liberarMilitarUnidade(obj);
+    public boolean liberarMilitar(Militar obj){
+        return militarDAO.liberarMilitarUnidade(obj);
     }
     
     public List<Militar> listaMilitaresAlocadosEquipe(Equipe obj){
@@ -49,6 +49,8 @@ public class MilitarControler {
         militar.setIdmilitar(id);
         militarDAO.removeMiltarEquipe(militar);
     }
+    
+    
     
     
 }

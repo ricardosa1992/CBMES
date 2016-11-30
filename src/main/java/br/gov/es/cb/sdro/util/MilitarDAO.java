@@ -73,7 +73,7 @@ public class MilitarDAO extends AbstractDAO<Militar> {
         return query.getResultList();
     }
 
-    public void alocarMilitarUnidade(Militar obj) {
+    public boolean alocarMilitarUnidade(Militar obj) {
         
         try {
             em.getTransaction().begin();
@@ -83,13 +83,14 @@ public class MilitarDAO extends AbstractDAO<Militar> {
             query.setParameter(parametro, obj.getIdmilitar());
             query.executeUpdate();
             em.getTransaction().commit();
+            return true;
         } catch (Exception ex) {
             em.getTransaction().rollback();
             throw ex;
         }
     }
 
-    public void liberarMilitarUnidade(Militar obj) {
+    public boolean liberarMilitarUnidade(Militar obj) {
        try {
             em.getTransaction().begin();
             busca = "Militar.liberarMilitar";
@@ -98,6 +99,7 @@ public class MilitarDAO extends AbstractDAO<Militar> {
             query.setParameter(parametro, obj.getIdmilitar());
             query.executeUpdate();
             em.getTransaction().commit();
+            return true;
         } catch (Exception ex) {
             em.getTransaction().rollback();
             throw ex;

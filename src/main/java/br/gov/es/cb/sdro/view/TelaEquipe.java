@@ -10,6 +10,7 @@ import br.gov.es.cb.sdro.model.Equipe;
 import br.gov.es.cb.sdro.model.Militar;
 import br.gov.es.cb.sdro.util.EquipamentoDAO;
 import br.gov.es.cb.sdro.util.EquipeDAO;
+import br.gov.es.cb.sdro.util.MilitarDAO;
 import br.gov.es.cb.sdro.util.Sessao;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,12 +26,13 @@ public class TelaEquipe extends javax.swing.JInternalFrame {
 
     MilitarControler militarControler;
     EquipeDAO equipedao;
+    MilitarDAO militarDAO;
     DefaultTableModel tableMilitaresDisponiveis;
     DefaultTableModel tableMilitaresAlocadosEquipe;
     HashMap<Integer, ArrayList<Integer>> mapMilitaresExcluir;
     Sessao sessao;
     
-   
+    List<Militar> lstMilitaresSelecionadosEquipe;
     int idEquipeSelecionadaAlteracao;
     boolean novaEquipe;
     /**
@@ -38,11 +40,13 @@ public class TelaEquipe extends javax.swing.JInternalFrame {
      */
     public TelaEquipe() {
         initComponents();
+        lstMilitaresSelecionadosEquipe = new ArrayList<>();
         sessao = Sessao.getInstancia();
         novaEquipe = true;
         mapMilitaresExcluir = new HashMap<>();
         militarControler = new MilitarControler();
         equipedao = new EquipeDAO();
+        militarDAO = new MilitarDAO();
         tableMilitaresDisponiveis = (DefaultTableModel) jTableMilitaresDisponiveis.getModel();
         tableMilitaresAlocadosEquipe = (DefaultTableModel) jTableMilitaresEquipe.getModel();
         populaComboboxEquipes();
@@ -67,9 +71,8 @@ public class TelaEquipe extends javax.swing.JInternalFrame {
             tableMilitaresDisponiveis.addRow(new Object[]{ml.getIdmilitar(), ml.getSafoIdfuncionario().getNome(), ml.getSafoIdfuncionario().getIdpostograducao().getDescricao()});
         }
     }
-
-    public void populaTabelaMilitaresAlocadosEquipe(List<Militar> listMilitares) {
-
+    
+    public void limpaTabelaMilitaresAlocadosEquipe(){
         if (tableMilitaresAlocadosEquipe.getRowCount() > 0) {
 
             int qtd = tableMilitaresAlocadosEquipe.getRowCount();
@@ -77,6 +80,11 @@ public class TelaEquipe extends javax.swing.JInternalFrame {
                 tableMilitaresAlocadosEquipe.removeRow(0);
             }
         }
+    }
+    
+    public void populaTabelaMilitaresAlocadosEquipe(List<Militar> listMilitares) {
+
+        limpaTabelaMilitaresAlocadosEquipe();
 
         for (Militar ml : listMilitares) {
             tableMilitaresAlocadosEquipe.addRow(new Object[]{ml.getIdmilitar(), ml.getSafoIdfuncionario().getNome()});
@@ -145,6 +153,8 @@ public class TelaEquipe extends javax.swing.JInternalFrame {
 
         jRadioButtonMenuItem1.setSelected(true);
         jRadioButtonMenuItem1.setText(org.openide.util.NbBundle.getMessage(TelaEquipe.class, "TelaEquipe.jRadioButtonMenuItem1.text")); // NOI18N
+
+        setClosable(true);
 
         jLabel1.setBackground(new java.awt.Color(204, 204, 204));
         jLabel1.setText(org.openide.util.NbBundle.getMessage(TelaEquipe.class, "TelaEquipe.jLabel1.text")); // NOI18N
@@ -352,15 +362,16 @@ public class TelaEquipe extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAdicionarMilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarMilitarActionPerformed
-        /*int linha = jTableViaturasDisponiveis.getSelectedRow();
+        int linha = jTableMilitaresDisponiveis.getSelectedRow();
         if (linha >= 0) {
-            int codigo = Integer.parseInt(tableViaturasDisponiveis.getValueAt(linha, 0).toString());
-            lstAuxViaturas.add(codigo);
-            populaTabelaViaturasSelecionadasAlocacao();
-            atualizaTabelaViaturasDisponiveis();
+            int idMilitar = Integer.parseInt(tableMilitaresDisponiveis.getValueAt(linha, 0).toString());
+            Militar militar = militarDAO.buscaMilitarPorId(idMilitar);
+            lstMilitaresSelecionadosEquipe.add(militar);
+            //System.out.println(lstMilitaresSelecionadosEquipe);
+            populaTabelaMilitaresAlocadosEquipe(lstMilitaresSelecionadosEquipe);
         } else {
-            JOptionPane.showMessageDialog(null, "Uma viatura deve ser selecionada!");
-        }*/
+            JOptionPane.showMessageDialog(null, "Uma militar deve ser selecionada!");
+        }
     }//GEN-LAST:event_btnAdicionarMilitarActionPerformed
 
     private void jComboEquipesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboEquipesActionPerformed
@@ -385,6 +396,10 @@ public class TelaEquipe extends javax.swing.JInternalFrame {
 
     private void novaEquipeBottonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novaEquipeBottonActionPerformed
         novaEquipe = true;
+        txtDescricao.setText("");
+        limpaTabelaMilitaresAlocadosEquipe();
+        populaComboboxEquipes();
+        
     }//GEN-LAST:event_novaEquipeBottonActionPerformed
 
     private void ExcluirEquipeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluirEquipeButtonActionPerformed
