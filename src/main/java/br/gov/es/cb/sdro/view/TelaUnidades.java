@@ -25,7 +25,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TelaUnidades extends javax.swing.JInternalFrame {
    
-     // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane abaAlteraExclui;
     private javax.swing.JButton bntCarregaMilSubcmt;
     private javax.swing.JButton btnCarregaMilCmt;
@@ -146,6 +146,9 @@ public class TelaUnidades extends javax.swing.JInternalFrame {
         tblUnidades.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblUnidadesMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                tblUnidadesMouseEntered(evt);
             }
         });
         jScrollPane1.setViewportView(tblUnidades);
@@ -331,6 +334,10 @@ public class TelaUnidades extends javax.swing.JInternalFrame {
         btnExcluir.setVisible(false);
         abaAlteraExclui.setSelectedIndex(0);
     }//GEN-LAST:event_btnExcluirMouseClicked
+
+    private void tblUnidadesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUnidadesMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblUnidadesMouseEntered
 
     public void inicializa(ControlMilitarAdapter controlMilitar) {
         this.controlMilitar = controlMilitar;

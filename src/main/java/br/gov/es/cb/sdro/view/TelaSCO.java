@@ -7,6 +7,7 @@ package br.gov.es.cb.sdro.view;
 
 import br.gov.es.cb.sdro.control.ControlMilitarAdapter;
 import br.gov.es.cb.sdro.control.MilitarControler;
+import br.gov.es.cb.sdro.model.Empenho;
 import br.gov.es.cb.sdro.model.Equipe;
 import br.gov.es.cb.sdro.model.MilitarAdapter;
 import br.gov.es.cb.sdro.model.Sco;
@@ -46,7 +47,6 @@ public class TelaSCO extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lbl_emp_descricao;
     private javax.swing.JLabel lbl_list_equipes;
@@ -59,7 +59,6 @@ public class TelaSCO extends javax.swing.JInternalFrame {
     private javax.swing.JTable tbl_equipes;
     private javax.swing.JTextArea txt_area_emp;
     private javax.swing.JTextField txt_fld_emp_descr;
-    private javax.swing.JTextArea txt_list_equipes;
     private javax.swing.JTextField txt_sco_mil_adm;
     private javax.swing.JTextField txt_sco_mil_cmd;
     private javax.swing.JTextField txt_sco_mil_log;
@@ -79,6 +78,8 @@ public class TelaSCO extends javax.swing.JInternalFrame {
     private EmpenhoDAO empenhoDAO;
     private EquipeDAO equipeDao;
     private List<Equipe> listaAuxEquipes;
+    private List<Empenho> listaEmpenhos;
+    private Equipe equipeSelecionada;
 
     /**
      * Creates new form TelaSCO
@@ -92,8 +93,6 @@ public class TelaSCO extends javax.swing.JInternalFrame {
         empenhoDAO = new EmpenhoDAO();
         equipeDao = new EquipeDAO();
         listaAuxEquipes = new ArrayList();
-        
-        txt_list_equipes.setEditable(false);
         modeloTable = (DefaultTableModel) tbl_equipes.getModel();
     }
 
@@ -138,8 +137,6 @@ public class TelaSCO extends javax.swing.JInternalFrame {
         lbl_list_equipes = new javax.swing.JLabel();
         btn_equipes_add = new javax.swing.JButton();
         btn_equipe_remove = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        txt_list_equipes = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_equipes = new javax.swing.JTable();
 
@@ -281,16 +278,10 @@ public class TelaSCO extends javax.swing.JInternalFrame {
         jPanel5.add(lbl_list_equipes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         btn_equipes_add.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.btn_equipes_add.text")); // NOI18N
-        jPanel5.add(btn_equipes_add, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, -1, -1));
+        jPanel5.add(btn_equipes_add, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, -1, -1));
 
         btn_equipe_remove.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.btn_equipe_remove.text")); // NOI18N
-        jPanel5.add(btn_equipe_remove, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 320, -1, -1));
-
-        txt_list_equipes.setColumns(20);
-        txt_list_equipes.setRows(5);
-        jScrollPane3.setViewportView(txt_list_equipes);
-
-        jPanel5.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 36, 540, 100));
+        jPanel5.add(btn_equipe_remove, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, -1, -1));
 
         tbl_equipes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -308,13 +299,18 @@ public class TelaSCO extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tbl_equipes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_equipesMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tbl_equipes);
         if (tbl_equipes.getColumnModel().getColumnCount() > 0) {
             tbl_equipes.getColumnModel().getColumn(0).setHeaderValue(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.tbl_equipes.columnModel.title0")); // NOI18N
             tbl_equipes.getColumnModel().getColumn(1).setHeaderValue(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.tbl_equipes.columnModel.title1")); // NOI18N
         }
 
-        jPanel5.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 540, 130));
+        jPanel5.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 540, 130));
 
         jPanel4.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 360));
 
@@ -347,18 +343,19 @@ public class TelaSCO extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cmb_list_scoActionPerformed
 
     private void btn_sco_carregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sco_carregarActionPerformed
-        txt_list_equipes.setText("");
-        alteraCampos(false);
-        btn_sco_excluir.setEnabled(true);
-        scoAtual = scoDao.buscaScoPorID(cmb_list_sco.getSelectedIndex());
-        txt_sco_nome.setText(scoAtual.getNome());
-        txt_sco_mil_cmd.setText(milControl.getMilitarbyId(scoAtual.getIdfuncionariocomando()).getNomeGuerra());
-        txt_sco_mil_adm.setText(milControl.getMilitarbyId(scoAtual.getIdfuncionarioadministracao()).getNomeGuerra());
-        txt_sco_mil_ope.setText(milControl.getMilitarbyId(scoAtual.getIdfuncionariooperacoes()).getNomeGuerra());
-        txt_sco_mil_log.setText(milControl.getMilitarbyId(scoAtual.getIdfuncionariologistica()).getNomeGuerra());
-        txt_sco_mil_plan.setText(milControl.getMilitarbyId(scoAtual.getIdfuncionarioplanejamento()).getNomeGuerra());
-
-        carregaTabelaEquipes();
+        if (cmb_list_sco.getSelectedIndex() != 0) {
+            alteraCampos(false);
+            btn_sco_excluir.setEnabled(true);
+            scoAtual = scoDao.buscaScoPorID(cmb_list_sco.getSelectedIndex());
+            txt_sco_nome.setText(scoAtual.getNome());
+            txt_sco_mil_cmd.setText(milControl.getMilitarbyId(scoAtual.getIdfuncionariocomando()).getNomeGuerra());
+            txt_sco_mil_adm.setText(milControl.getMilitarbyId(scoAtual.getIdfuncionarioadministracao()).getNomeGuerra());
+            txt_sco_mil_ope.setText(milControl.getMilitarbyId(scoAtual.getIdfuncionariooperacoes()).getNomeGuerra());
+            txt_sco_mil_log.setText(milControl.getMilitarbyId(scoAtual.getIdfuncionariologistica()).getNomeGuerra());
+            txt_sco_mil_plan.setText(milControl.getMilitarbyId(scoAtual.getIdfuncionarioplanejamento()).getNomeGuerra());
+            limpaTabelaEquipes();
+            carregaTabelaEquipes();
+        }
     }//GEN-LAST:event_btn_sco_carregarActionPerformed
 
     private void txt_sco_mil_opeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_sco_mil_opeActionPerformed
@@ -381,6 +378,13 @@ public class TelaSCO extends javax.swing.JInternalFrame {
         btn_sco_excluir.setEnabled(false);
 
     }//GEN-LAST:event_btn_sco_novoActionPerformed
+
+    private void tbl_equipesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_equipesMouseClicked
+        equipeSelecionada = listaAuxEquipes.get(tbl_equipes.getSelectedRow());
+        listaEmpenhos = empenhoDAO.buscaEmpenhos();
+        //teste de carregamento dos empenhos
+        txt_area_emp.setText(listaEmpenhos.get(0).getIdempenho()+" - "+listaEmpenhos.get(1).getDescricao());
+    }//GEN-LAST:event_tbl_equipesMouseClicked
 
     //pega a data e hora formatada
     public Date getPegaDataAtual() {
@@ -423,18 +427,22 @@ public class TelaSCO extends javax.swing.JInternalFrame {
     }
 
     public void carregaTabelaEquipes() {
-
         listaEquipes = equipeDao.buscaEquipes();
         for (Equipe equipe : listaEquipes) {
             if (equipe != null) {
                 if (equipe.getIdsco().getIdsco() == cmb_list_sco.getSelectedIndex()) {
                     listaAuxEquipes.add(equipe);
-                    txt_list_equipes.setText(txt_list_equipes.getText() + "\n" + equipe.getIdequipe() + " - " + equipe.getDescricao());
-                    modeloTable.addRow(new Object[]{equipe.getIdequipe(),equipe.getDescricao()});
+                    modeloTable.addRow(new Object[]{equipe.getIdequipe(), equipe.getDescricao()});
                 }
             }
         }
 
-       
     }
+    
+    public void limpaTabelaEquipes(){
+        while (modeloTable.getRowCount() > 0) {
+            modeloTable.removeRow(0);
+        }
+    }
+    
 }
