@@ -281,4 +281,13 @@ CREATE TABLE IF NOT EXISTS Usuario (
   
 );
 
+DROP TABLE IF EXISTS historicopostomilitar CASCADE;
+create table historicopostomilitar (
+	id serial not null,
+	id_funcionario int not null,
+	data_saida date not null,
+	id_posto_graduacao int not null
+
+);
+
 COMMIT;
