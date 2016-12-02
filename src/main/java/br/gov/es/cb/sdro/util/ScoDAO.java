@@ -12,20 +12,27 @@ import java.util.List;
  *
  * @author Heitor
  */
-public class ScoDAO extends AbstractDAO<Sco>{
+public class ScoDAO extends AbstractDAO<Sco> {
+
     Sco sco;
-    List<Sco> listaScos;
-    
+    String parametroId;
+
     public Sco buscaScoPorNome(String nome) {
         busca = "Sco.findByNome";
         parametro = "nome";
         sco = buscaPorString(nome);
         return sco;
     }
-    
-    public List<Sco> buscaScos(){
+
+    public List<Sco> buscaScos() {
         busca = "Sco.findAll";
-        listaScos = (List<Sco>) buscaListaSemParametro();
-        return listaScos;
+        return (List<Sco>) buscaListaSemParametro();
+    }
+
+    public Sco buscaScoPorID(int id) {
+        busca = "Sco.findByIdsco";
+        query = em.createNamedQuery(busca);
+        query.setParameter("idsco", id);
+        return (Sco) query.getSingleResult();
     }
 }

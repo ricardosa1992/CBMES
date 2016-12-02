@@ -20,6 +20,20 @@ import javax.swing.JOptionPane;
  * @author Heitor
  */
 public class Inicial extends javax.swing.JFrame {
+     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnConfig;
+    private javax.swing.JButton btnLogar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JComboBox jcomboTipoLogin;
+    private javax.swing.JLabel lblLogin;
+    private javax.swing.JLabel lblSenha;
+    private javax.swing.JLabel lblTipo;
+    private javax.swing.JLabel lblTitSdro;
+    private javax.swing.JTextField txtLogin;
+    private javax.swing.JPasswordField txtSenha;
+    // End of variables declaration//GEN-END:variables
+
     ControlMilitarAdapter controlMilitar;
     private HashMap<String,Integer> mapComboTipoLogin;
     UsuarioDAO usuarioDAO;
@@ -184,8 +198,7 @@ public class Inicial extends javax.swing.JFrame {
             int idTipoLogin = getIdTipoLogin(tipoLoginJCombo);
             if(idTipoLogin == usuario.getTipoLogin()){
                 if(idTipoLogin == 1){// Login feito por Unidade
-                    Unidade unidade = usuario.getIdmilitar().getIdunidade();
-                    sessao.setUnidade(unidade);
+                    sessao.setUnidade(usuario.getIdmilitar().getIdunidade());
                 }
                 
                 sessao.setTipoLogin(idTipoLogin);
@@ -241,17 +254,5 @@ public class Inicial extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnConfig;
-    private javax.swing.JButton btnLogar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JComboBox jcomboTipoLogin;
-    private javax.swing.JLabel lblLogin;
-    private javax.swing.JLabel lblSenha;
-    private javax.swing.JLabel lblTipo;
-    private javax.swing.JLabel lblTitSdro;
-    private javax.swing.JTextField txtLogin;
-    private javax.swing.JPasswordField txtSenha;
-    // End of variables declaration//GEN-END:variables
+   
 }

@@ -22,16 +22,95 @@ import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 public class TelaViatura extends javax.swing.JInternalFrame {
+    
+     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAlterar;
+    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnSalvar;
+    private javax.swing.JComboBox<String> comboCategoria;
+    private javax.swing.JComboBox<String> comboCategoriaAlterar;
+    private javax.swing.JComboBox<String> comboStatus;
+    private javax.swing.JComboBox<String> comboStatusAlterar;
+    private javax.swing.JComboBox<String> comboTipoCombustivel;
+    private javax.swing.JComboBox<String> comboTipoCombustivelAlterar;
+    private javax.swing.JComboBox<String> comboTipoViatura;
+    private javax.swing.JComboBox<String> comboTipoViaturaAlterar;
+    private javax.swing.JEditorPane jEditorPane1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLayeredPane jLayeredPane2;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JPopupMenu jPopupMenu2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTabbedPane jTabbedPane3;
+    private javax.swing.JTable jTableViatura;
+    private javax.swing.JTextField txtAno;
+    private javax.swing.JTextField txtAnoAlterar;
+    private javax.swing.JTextField txtCapAgua;
+    private javax.swing.JTextField txtCapAguaAlterar;
+    private javax.swing.JTextField txtCapPessoas;
+    private javax.swing.JTextField txtCapPessoasAlterar;
+    private javax.swing.JTextField txtMarca;
+    private javax.swing.JTextField txtMarcaAlterar;
+    private javax.swing.JTextField txtModelo;
+    private javax.swing.JTextField txtModeloAlterar;
+    private javax.swing.JTextField txtPesquisar;
+    private javax.swing.JTextField txtPlaca;
+    private javax.swing.JTextField txtPlacaAlterar;
+    private javax.swing.JTextField txtPrefixo;
+    private javax.swing.JTextField txtPrefixoAlterar;
+    // End of variables declaration//GEN-END:variables
+
     int codigo;
     Sessao sessao;
-    List<Viatura> lstViatura;
+    private List<Viatura> lstViatura;
     ViaturaDAO viaturaDAO;
     private DefaultTableModel tableViatura;
 
-    List<Tipoviatura> lstTipoViatura;
-    List<Status> lstStatus;
-    List<Categoria> lstCategoria;
-    List<Tipocombustivel> lstTipoCombustivel;
+    private List<Tipoviatura> lstTipoViatura;
+    private List<Status> lstStatus;
+    private List<Categoria> lstCategoria;
+    private List<Tipocombustivel> lstTipoCombustivel;
 
     TipoviaturaDAO tipoViaturaDAO;
     StatusDAO statusDAO;
@@ -59,7 +138,7 @@ public class TelaViatura extends javax.swing.JInternalFrame {
      * Creates new form NovoJInternalFrame
      * @throws java.lang.Exception
      */
-    public TelaViatura() throws Exception {
+    public TelaViatura(){
         initComponents();
         sessao = Sessao.getInstancia();
         viaturaControler = new ViaturaControler();
@@ -185,7 +264,7 @@ public class TelaViatura extends javax.swing.JInternalFrame {
         return 0;
     }
 
-    public void addTabela() throws Exception {
+    public void addTabela(){
         //pega o modelo da tabela
         //chama metodo da Class Gerenciador com o nome de ListaCliente passando um nome
 
@@ -808,7 +887,7 @@ public class TelaViatura extends javax.swing.JInternalFrame {
             }
 
         }
-        if (input.equals("")) {
+        if (input.isEmpty()) {
             for (Viatura eq : lstViatura) {
                 Status st = eq.getIdstatus();
                 Status statusResult = statusDAO.buscaStatusPorID(st.getIdstatus());
@@ -881,85 +960,5 @@ public class TelaViatura extends javax.swing.JInternalFrame {
         codigo = Integer.parseInt(jTableViatura.getValueAt(linha, 0).toString());
     }//GEN-LAST:event_jTableViaturaKeyPressed
 
-
-
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAlterar;
-    private javax.swing.JButton btnExcluir;
-    private javax.swing.JButton btnSalvar;
-    private javax.swing.JComboBox<String> comboCategoria;
-    private javax.swing.JComboBox<String> comboCategoriaAlterar;
-    private javax.swing.JComboBox<String> comboStatus;
-    private javax.swing.JComboBox<String> comboStatusAlterar;
-    private javax.swing.JComboBox<String> comboTipoCombustivel;
-    private javax.swing.JComboBox<String> comboTipoCombustivelAlterar;
-    private javax.swing.JComboBox<String> comboTipoViatura;
-    private javax.swing.JComboBox<String> comboTipoViaturaAlterar;
-    private javax.swing.JEditorPane jEditorPane1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JLayeredPane jLayeredPane2;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenu jMenu7;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuBar jMenuBar2;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPopupMenu jPopupMenu1;
-    private javax.swing.JPopupMenu jPopupMenu2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTabbedPane jTabbedPane3;
-    private javax.swing.JTable jTableViatura;
-    private javax.swing.JTextField txtAno;
-    private javax.swing.JTextField txtAnoAlterar;
-    private javax.swing.JTextField txtCapAgua;
-    private javax.swing.JTextField txtCapAguaAlterar;
-    private javax.swing.JTextField txtCapPessoas;
-    private javax.swing.JTextField txtCapPessoasAlterar;
-    private javax.swing.JTextField txtMarca;
-    private javax.swing.JTextField txtMarcaAlterar;
-    private javax.swing.JTextField txtModelo;
-    private javax.swing.JTextField txtModeloAlterar;
-    private javax.swing.JTextField txtPesquisar;
-    private javax.swing.JTextField txtPlaca;
-    private javax.swing.JTextField txtPlacaAlterar;
-    private javax.swing.JTextField txtPrefixo;
-    private javax.swing.JTextField txtPrefixoAlterar;
-    // End of variables declaration//GEN-END:variables
 
 }

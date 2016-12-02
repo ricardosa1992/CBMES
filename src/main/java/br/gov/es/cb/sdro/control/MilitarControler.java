@@ -5,6 +5,7 @@
  */
 package br.gov.es.cb.sdro.control;
 
+import br.gov.es.cb.sdro.model.Equipe;
 import br.gov.es.cb.sdro.model.Militar;
 import br.gov.es.cb.sdro.model.Unidade;
 import br.gov.es.cb.sdro.util.MilitarDAO;
@@ -26,6 +27,30 @@ public class MilitarControler {
         return militarDAO.buscaMilitaresDisponiveisUnidade(unidade);
         
     }
+    
+    public List<Militar> listaMilitaresAlocados(Unidade unidade){
+        return militarDAO.buscaMilitaresAlocadosUnidade(unidade);
+    }
+    
+    public boolean alocarMilitar(Militar obj){
+        return militarDAO.alocarMilitarUnidade(obj);
+    }
+    
+    public boolean liberarMilitar(Militar obj){
+        return militarDAO.liberarMilitarUnidade(obj);
+    }
+    
+    public List<Militar> listaMilitaresAlocadosEquipe(Equipe obj){
+        return militarDAO.listaMilitaresAlocadosEquipe(obj);
+    }
+    
+    public void removeMiltarEquipe(int id){
+        Militar militar = new Militar();
+        militar.setIdmilitar(id);
+        militarDAO.removeMiltarEquipe(militar);
+    }
+    
+    
     
     
 }

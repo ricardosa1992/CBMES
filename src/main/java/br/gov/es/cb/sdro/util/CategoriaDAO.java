@@ -24,8 +24,7 @@ public class CategoriaDAO extends AbstractDAO<Categoria>{
     
     public List<Categoria> buscaCategorias(){
         busca = "Categoria.findAll";
-        List<Categoria>  listaCategorias = (List<Categoria>) buscaListaSemParametro();
-        return listaCategorias;
+        return (List<Categoria>) buscaListaSemParametro();
     }
     
      public Categoria buscaCategoriaPorID(int id){

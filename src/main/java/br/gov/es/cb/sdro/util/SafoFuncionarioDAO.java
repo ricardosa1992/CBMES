@@ -16,8 +16,7 @@ import javax.persistence.NoResultException;
 public class SafoFuncionarioDAO extends AbstractDAO<SafoFuncionario> {
 
     SafoFuncionario safofuncionario;
-    List<SafoFuncionario> listaSafoFuncionarios;
-
+   
     public SafoFuncionario buscaSafoFuncionarioPorNome(String nome) {
         busca = "SafoFuncionario.findByNome";
         parametro = "nome";
@@ -27,15 +26,13 @@ public class SafoFuncionarioDAO extends AbstractDAO<SafoFuncionario> {
 
     public List<SafoFuncionario> buscaSafoFuncionarios() {
         busca = "SafoFuncionario.findAll";
-        listaSafoFuncionarios = (List<SafoFuncionario>) buscaListaSemParametro();
-        return listaSafoFuncionarios;
+        return (List<SafoFuncionario>) buscaListaSemParametro();
     }
 
     public List<SafoFuncionario> buscaSafoFuncionariosPorGraducao(String nome) {
         busca = "SafoFuncionario.findByPostoGraducao";
         parametro = "idgraducao";
-        listaSafoFuncionarios = (List<SafoFuncionario>) buscaListaComParametro(nome);
-        return listaSafoFuncionarios;
+        return (List<SafoFuncionario>) buscaListaComParametro(nome);
     }
 
     public SafoFuncionario buscaSafoFuncionarioPorId(Integer id) {

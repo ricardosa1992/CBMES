@@ -16,5 +16,5 @@ import org.junit.runner.RunWith;
         snippets = SnippetType.CAMELCASE, 
         features="src/test/resources")
 public class BDDTest {
-    
+
 }

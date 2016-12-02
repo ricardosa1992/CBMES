@@ -5,10 +5,10 @@
  */
 package br.gov.es.cb.sdro.util;
 
+import br.gov.es.cb.sdro.model.Equipe;
 import br.gov.es.cb.sdro.model.Militar;
 import br.gov.es.cb.sdro.model.Unidade;
 import java.util.List;
-import javax.persistence.NoResultException;
 
 /**
  *
@@ -17,8 +17,15 @@ import javax.persistence.NoResultException;
 public class MilitarDAO extends AbstractDAO<Militar> {
 
     Militar militar;
-    List<Militar> listaMilitars;
+    private List<Militar> listaMilitars;
+    String parametroId;
 
+    public MilitarDAO() {
+        parametroId = "idmilitar";
+    
+    }
+    
+    
     public Militar buscaMilitarPorNome(String nome) {
         busca = "Militar.findByNome";
         parametro = "nome";
@@ -46,14 +53,80 @@ public class MilitarDAO extends AbstractDAO<Militar> {
         return listaMilitars;
     }
 
-    public Militar buscaMilitarPorId(Integer id) {
-        try {
-            busca = "Militar.findByIdmilitar";
-            parametro = "idmilitar";
-            militar = buscaPorInteger(id);
-            return militar;
-        } catch (NoResultException e) {
+    public Militar buscaMilitarPorId(Integer id){
+        try{
+        busca = "Militar.findByIdmilitar";
+        parametro = "idmilitar";
+        militar = buscaPorInteger(id);
+        return militar;
+        }
+        catch(Exception e){
             return null;
         }
     }
+
+    public List<Militar> buscaMilitaresAlocadosUnidade(Unidade unidade) {
+        busca = "Militar.alocadosUnidade";
+        parametro = "idunidade";
+        query = em.createNamedQuery(busca);
+        query.setParameter(parametro, unidade);
+        return query.getResultList();
+    }
+
+    public boolean alocarMilitarUnidade(Militar obj) {
+        
+        try {
+            em.getTransaction().begin();
+            busca = "Militar.alocarMilitar";
+            query = em.createNamedQuery(busca);
+            parametro = parametroId;
+            query.setParameter(parametro, obj.getIdmilitar());
+            query.executeUpdate();
+            em.getTransaction().commit();
+            return true;
+        } catch (Exception ex) {
+            em.getTransaction().rollback();
+            throw ex;
+        }
+    }
+
+    public boolean liberarMilitarUnidade(Militar obj) {
+       try {
+            em.getTransaction().begin();
+            busca = "Militar.liberarMilitar";
+            query = em.createNamedQuery(busca);
+            parametro = parametroId;
+            query.setParameter(parametro, obj.getIdmilitar());
+            query.executeUpdate();
+            em.getTransaction().commit();
+            return true;
+        } catch (Exception ex) {
+            em.getTransaction().rollback();
+            throw ex;
+        }
+    }
+
+    public List<Militar> listaMilitaresAlocadosEquipe(Equipe obj) {
+        busca = "Militar.alocadosEquipe";
+        parametro = "idequipe";
+        query = em.createNamedQuery(busca);
+        query.setParameter(parametro, obj);
+        return query.getResultList();
+    }
+
+    public void removeMiltarEquipe(Militar obj) {
+         try {
+            em.getTransaction().begin();
+            busca = "Militar.liberarMilitarEquipe";
+            query = em.createNamedQuery(busca);
+            parametro = parametroId;
+            query.setParameter(parametro, obj.getIdmilitar());
+            query.executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            em.getTransaction().rollback();
+            throw ex;
+        }
+    }
+    
 }

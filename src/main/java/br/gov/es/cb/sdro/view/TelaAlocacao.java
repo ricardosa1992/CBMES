@@ -5,11 +5,12 @@
  */
 package br.gov.es.cb.sdro.view;
 
+import br.gov.es.cb.sdro.control.MilitarControler;
 import br.gov.es.cb.sdro.model.Categoria;
 import br.gov.es.cb.sdro.model.Equipamento;
+import br.gov.es.cb.sdro.model.Militar;
 import br.gov.es.cb.sdro.model.Status;
 import br.gov.es.cb.sdro.model.Tipoviatura;
-import br.gov.es.cb.sdro.model.Unidade;
 import br.gov.es.cb.sdro.model.Viatura;
 import br.gov.es.cb.sdro.util.CategoriaDAO;
 import br.gov.es.cb.sdro.util.EquipamentoDAO;
@@ -31,6 +32,42 @@ import javax.swing.table.DefaultTableModel;
  * @author Patrícia
  */
 public class TelaAlocacao extends javax.swing.JInternalFrame {
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable JTableEquipamentosAlocados;
+    private javax.swing.JTable JTableViaturasAlocadas;
+    private javax.swing.JButton btnAdicionarEquipamentoViatura;
+    private javax.swing.JButton btnAlocarMilitar;
+    private javax.swing.JButton btnAlocarViatura;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnCarregar;
+    private javax.swing.JButton btnLiberarMilitar;
+    private javax.swing.JButton btnRemoverEquipamento;
+    private javax.swing.JButton btnRemoverViaturaAlocada;
+    private javax.swing.JButton btnSalvarAlocacao;
+    private javax.swing.JComboBox<String> jComboStatusMilitar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTabbedPane jTabMilitares;
+    private javax.swing.JTable jTableEquipamentosSelecionadosAlocacao;
+    private javax.swing.JTable jTableMilitares;
+    private javax.swing.JTable jTableViaturasDisponiveis;
+    private javax.swing.JTable jTableViaturasSelecionadasAlocacao;
+    private javax.swing.JButton liberarViatura;
+    // End of variables declaration//GEN-END:variables
 
     DefaultTableModel tableViaturasDisponiveis;
     DefaultTableModel tableViaturasSelecionadasAlocacao;
@@ -38,14 +75,14 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
     DefaultTableModel tableEquipamentosSelecionadosAlocacao;
     DefaultTableModel tableEquipamentosAlocados;
     DefaultTableModel tableMilitares;
-    
+
     private ViaturaDAO viaturaDAO;
     private List<Viatura> lstViaturasDisponiveis;
     private List<Viatura> lstViaturasAlocadas;
     private StatusDAO statusDAO;
     private CategoriaDAO categoriaDAO;
     private TipoviaturaDAO tpViaturaDAO;
-    
+
     private Status status;
     private Categoria categoria;
     private Tipoviatura tpViatura;
@@ -54,45 +91,79 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
     private static TelaAlocacao telaAlocacao = null;
     int idEquipamentoSelecionado;
     int idViaturaSelecionadaAlocacao;
-    
+
+    private MilitarControler militarControler;
     private Sessao sessao;
     HashMap<Integer, ArrayList<Integer>> mapViaturaEquipamento;
     HashMap<Integer, ArrayList<Equipamento>> mapViaturaEquipamentoAlocados;
     EquipamentoDAO equipamentoDAO;
 
-   
     private TelaAlocacao() {
         initComponents();
         sessao = Sessao.getInstancia();
-        
+        militarControler = new MilitarControler();
+
         tableViaturasDisponiveis = (DefaultTableModel) jTableViaturasDisponiveis.getModel();
         tableViaturasSelecionadasAlocacao = (DefaultTableModel) jTableViaturasSelecionadasAlocacao.getModel();
         tableEquipamentosSelecionadosAlocacao = (DefaultTableModel) jTableEquipamentosSelecionadosAlocacao.getModel();
         tableViaturasAlocadas = (DefaultTableModel) JTableViaturasAlocadas.getModel();
         tableEquipamentosAlocados = (DefaultTableModel) JTableEquipamentosAlocados.getModel();
         tableMilitares = (DefaultTableModel) jTableMilitares.getModel();
-        
+
         statusDAO = new StatusDAO();
         categoriaDAO = new CategoriaDAO();
         tpViaturaDAO = new TipoviaturaDAO();
         viaturaDAO = new ViaturaDAO();
         equipamentoDAO = new EquipamentoDAO();
-         
+
         lstEquipamentosSelecionados = new ArrayList<>();
         lstAuxViaturas = new ArrayList<>();
         lstViaturasDisponiveis = viaturaDAO.buscaViaturasDisponiveisUnidade(sessao.getUnidade());
-        
+
         mapViaturaEquipamento = new HashMap<>();
         mapViaturaEquipamentoAlocados = new HashMap<>();
-       
+
         status = new Status();
         categoria = new Categoria();
         tpViatura = new Tipoviatura();
-        
+
+        inicializaComboboxStatusMilitar();
         populaTabelaViaturasDisponiveis();
+
     }
-    
-     /**
+
+    public void populaTabelaMilitares() {
+
+        List<Militar> listMilitares = new ArrayList<>();
+        if (tableMilitares.getRowCount() > 0) {
+
+            int qtd = tableMilitares.getRowCount();
+            for (int i = 0; i < qtd; i++) {
+                tableMilitares.removeRow(0);
+            }
+        }
+        if (jComboStatusMilitar.getSelectedItem().toString().equals("DISPONIVEL")) {
+
+            listMilitares = militarControler.listaMilitaresDisponiveis(sessao.getUnidade());
+        } else if (jComboStatusMilitar.getSelectedItem().toString().equals("ALOCADA")) {
+            listMilitares = militarControler.listaMilitaresAlocados(sessao.getUnidade());
+        }
+        for (Militar ml : listMilitares) {
+            tableMilitares.addRow(new Object[]{ml.getIdmilitar(), ml.getSafoIdfuncionario().getNome(), ml.getSafoIdfuncionario().getIdpostograducao().getDescricao()});
+        }
+
+    }
+
+    public void inicializaComboboxStatusMilitar() {
+        jComboStatusMilitar.removeAllItems();
+        for (Status st : statusDAO.buscaStatuss()) {
+            if (st.getDescricao().equals("DISPONIVEL") || st.getDescricao().equals("ALOCADA")) {
+                jComboStatusMilitar.addItem(st.getDescricao());
+            }
+        }
+    }
+
+    /**
      * Creates new form TelaAlocar
      *
      * @return
@@ -103,7 +174,6 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
         }
         return telaAlocacao;
     }
-
 
     public void populaTabelaViaturasDisponiveis() {
         if (tableViaturasDisponiveis.getRowCount() > 0) {
@@ -183,7 +253,7 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jTabMilitares = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableViaturasDisponiveis = new javax.swing.JTable();
@@ -213,6 +283,9 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
         jTableMilitares = new javax.swing.JTable();
         jComboStatusMilitar = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
+        btnCarregar = new javax.swing.JButton();
+        btnLiberarMilitar = new javax.swing.JButton();
+        btnAlocarMilitar = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -227,9 +300,9 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
 
         setClosable(true);
 
-        jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTabMilitares.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTabbedPane1MouseClicked(evt);
+                jTabMilitaresMouseClicked(evt);
             }
         });
 
@@ -358,18 +431,14 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 955, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 19, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAlocarViatura)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(btnCancelar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnSalvarAlocacao))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnSalvarAlocacao)
+                                .addGap(6, 6, 6))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -383,13 +452,18 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
                                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel3)
                                     .addComponent(btnRemoverEquipamento))))
-                        .addGap(21, 21, 21))))
+                        .addGap(21, 21, 21))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAlocarViatura)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(8, 8, 8)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 14, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -413,14 +487,14 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addComponent(btnRemoverEquipamento)))
-                .addGap(44, 44, 44)
+                .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSalvarAlocacao)
-                    .addComponent(btnCancelar))
-                .addGap(33, 33, 33))
+                    .addComponent(btnCancelar)
+                    .addComponent(btnSalvarAlocacao))
+                .addGap(49, 49, 49))
         );
 
-        jTabbedPane1.addTab("Alocar Viatura", jPanel1);
+        jTabMilitares.addTab("Alocar Viatura", jPanel1);
 
         JTableViaturasAlocadas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -469,6 +543,9 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
             }
         ));
         jScrollPane7.setViewportView(JTableEquipamentosAlocados);
+        if (JTableEquipamentosAlocados.getColumnModel().getColumnCount() > 0) {
+            JTableEquipamentosAlocados.getColumnModel().getColumn(0).setMaxWidth(200);
+        }
 
         jLabel4.setText("EQUIPAMENTOS ALOCADOS VIATURA");
 
@@ -478,11 +555,11 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 955, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 955, Short.MAX_VALUE)
                     .addComponent(liberarViatura)
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(jScrollPane7))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -496,10 +573,10 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(268, Short.MAX_VALUE))
+                .addContainerGap(205, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Liberar Viaturas", jPanel3);
+        jTabMilitares.addTab("Liberar Viaturas", jPanel3);
 
         jTableMilitares.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -523,8 +600,51 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
         }
 
         jComboStatusMilitar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboStatusMilitar.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboStatusMilitarItemStateChanged(evt);
+            }
+        });
+        jComboStatusMilitar.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                jComboStatusMilitarInputMethodTextChanged(evt);
+            }
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+        });
+        jComboStatusMilitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboStatusMilitarActionPerformed(evt);
+            }
+        });
+        jComboStatusMilitar.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jComboStatusMilitarPropertyChange(evt);
+            }
+        });
 
         jLabel5.setText("Status");
+
+        btnCarregar.setText("Carregar");
+        btnCarregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCarregarActionPerformed(evt);
+            }
+        });
+
+        btnLiberarMilitar.setText("Liberar");
+        btnLiberarMilitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLiberarMilitarActionPerformed(evt);
+            }
+        });
+
+        btnAlocarMilitar.setText("Alocar");
+        btnAlocarMilitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlocarMilitarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -538,45 +658,59 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboStatusMilitar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCarregar)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAlocarMilitar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnLiberarMilitar)
+                .addGap(14, 14, 14))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(19, 19, 19)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jComboStatusMilitar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(436, Short.MAX_VALUE))
+                    .addComponent(jComboStatusMilitar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCarregar))
+                .addGap(23, 23, 23)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAlocarMilitar)
+                    .addComponent(btnLiberarMilitar))
+                .addContainerGap(243, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Alocar/Liberar Militares", jPanel4);
+        jTabMilitares.addTab("Alocar/Liberar Militares", jPanel4);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(jTabMilitares)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTabMilitares, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
+    private void jTabMilitaresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabMilitaresMouseClicked
 
         lstViaturasAlocadas = viaturaDAO.buscaViaturasAlocadas(sessao.getUnidade());
         populaTabelaViaturasAlocadas();
+        populaTabelaMilitares();
         limpaTabelaEquipamentosAlocados();
-    }//GEN-LAST:event_jTabbedPane1MouseClicked
+    }//GEN-LAST:event_jTabMilitaresMouseClicked
 
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -708,32 +842,91 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
         Viatura viatura = new Viatura();
         viatura.setIdviatura(idViaturaAlocada);
         boolean sucesso = true;
-        if(!viaturaDAO.liberaViatura(viatura)){
+        if (!viaturaDAO.liberaViatura(viatura)) {
             sucesso = false;
         }
-        if(sucesso){
+        if (sucesso) {
             List<Equipamento> equipamentosAlocadosViatura;
             equipamentosAlocadosViatura = equipamentoDAO.buscaEquipamentosAlocadosViatura(viatura);
             for (Equipamento equipamento : equipamentosAlocadosViatura) {
-                if(!equipamentoDAO.liberaEquipamento(equipamento)){
+                if (!equipamentoDAO.liberaEquipamento(equipamento)) {
                     sucesso = false;
                     JOptionPane.showMessageDialog(null, "Erro ao liberar Equipamento!");
                 }
             }
-        }
-        else{
+        } else {
             JOptionPane.showMessageDialog(null, "Erro ao liberar Viatura!");
         }
-        if(sucesso){
+        if (sucesso) {
             JOptionPane.showMessageDialog(null, "Viatura e Equipamentos Liberados com Sucesso!");
-        }
-        else{
+        } else {
             JOptionPane.showMessageDialog(null, "Erro ao liberar Viatura e Equipamentos");
         }
-        
+
         AdicionaMapViaturaEquipamentoAlocados(idViaturaAlocada);
 
     }//GEN-LAST:event_liberarViaturaActionPerformed
+
+    private void jComboStatusMilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboStatusMilitarActionPerformed
+
+
+    }//GEN-LAST:event_jComboStatusMilitarActionPerformed
+
+    private void jComboStatusMilitarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboStatusMilitarItemStateChanged
+        //System.out.println("kkkkk");
+        //populaTabelaMilitares();
+    }//GEN-LAST:event_jComboStatusMilitarItemStateChanged
+
+    private void jComboStatusMilitarInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jComboStatusMilitarInputMethodTextChanged
+
+    }//GEN-LAST:event_jComboStatusMilitarInputMethodTextChanged
+
+    private void jComboStatusMilitarPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jComboStatusMilitarPropertyChange
+
+    }//GEN-LAST:event_jComboStatusMilitarPropertyChange
+
+    private void btnCarregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregarActionPerformed
+        populaTabelaMilitares();
+    }//GEN-LAST:event_btnCarregarActionPerformed
+
+    private void btnAlocarMilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlocarMilitarActionPerformed
+        int linha = jTableMilitares.getSelectedRow();
+
+        if (linha >= 0) {
+            int idMilitar = Integer.parseInt(tableMilitares.getValueAt(linha, 0).toString());
+            Militar militar = new Militar();
+            militar.setIdmilitar(idMilitar);
+            if (jComboStatusMilitar.getSelectedItem().toString().equals("DISPONIVEL")) {
+                militarControler.alocarMilitar(militar);
+                JOptionPane.showMessageDialog(null, "Militar Alocado com sucesso!");
+                populaTabelaMilitares();
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro!!! Somente Militares Disponívies podem ser Alocados.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Um Militar deve ser selecionado");
+        }
+    }//GEN-LAST:event_btnAlocarMilitarActionPerformed
+
+    private void btnLiberarMilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLiberarMilitarActionPerformed
+        int linha = jTableMilitares.getSelectedRow();
+        if (linha >= 0) {
+            int idMilitar = Integer.parseInt(tableMilitares.getValueAt(linha, 0).toString());
+            Militar militar = new Militar();
+            militar.setIdmilitar(idMilitar);
+            if (jComboStatusMilitar.getSelectedItem().toString().equals("ALOCADA")) {
+                militarControler.liberarMilitar(militar);
+                JOptionPane.showMessageDialog(null, "Militar Liberado com sucesso!");
+                populaTabelaMilitares();
+
+            } else {
+
+                JOptionPane.showMessageDialog(null, "Erro!!! Somente Militares Alocados podem ser liberados.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Um Militar deve ser selecionado");
+        }
+    }//GEN-LAST:event_btnLiberarMilitarActionPerformed
     public void populaTabelaEquipamentosAlocados(int idViatura) {
         limpaTabelaEquipamentosAlocados();
         Viatura viatura = new Viatura();
@@ -839,37 +1032,5 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
 
         }
     }
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable JTableEquipamentosAlocados;
-    private javax.swing.JTable JTableViaturasAlocadas;
-    private javax.swing.JButton btnAdicionarEquipamentoViatura;
-    private javax.swing.JButton btnAlocarViatura;
-    private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnRemoverEquipamento;
-    private javax.swing.JButton btnRemoverViaturaAlocada;
-    private javax.swing.JButton btnSalvarAlocacao;
-    private javax.swing.JComboBox<String> jComboStatusMilitar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTableEquipamentosSelecionadosAlocacao;
-    private javax.swing.JTable jTableMilitares;
-    private javax.swing.JTable jTableViaturasDisponiveis;
-    private javax.swing.JTable jTableViaturasSelecionadasAlocacao;
-    private javax.swing.JButton liberarViatura;
-    // End of variables declaration//GEN-END:variables
+
 }

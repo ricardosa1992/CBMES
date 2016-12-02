@@ -16,7 +16,6 @@ import java.util.List;
 public class ViaturaDAO extends AbstractDAO<Viatura> {
 
     Viatura viatura;
-    List<Viatura> listaViaturas;
     String parametroId;
 
     public ViaturaDAO() {
@@ -34,8 +33,7 @@ public class ViaturaDAO extends AbstractDAO<Viatura> {
 
     public List<Viatura> buscaViaturas() {
         busca = "Viatura.findAll";
-        listaViaturas = (List<Viatura>) buscaListaSemParametro();
-        return listaViaturas;
+        return (List<Viatura>) buscaListaSemParametro();
     }
 
     public List<Viatura> buscaViaturasDisponiveisUnidade(Unidade unidade) {

@@ -19,15 +19,23 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TelaEquipamentosAlocacao extends javax.swing.JFrame {
 
+     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSalvar;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableEquipamentos;
+    // End of variables declaration//GEN-END:variables
+
     private DefaultTableModel tableEquipamentos;
-    List<Equipamento> lstEquipamentos;
-    List<Status> lstStatus;
+    private List<Equipamento> lstEquipamentos;
+    private List<Status> lstStatus;
     StatusDAO statusDAO;
     EquipamentoDAO equipamentoDAO;
     ArrayList<Integer> lstEquipamentosSelecionados;
     int idEquipamentoSelecionado;
 
-    public TelaEquipamentosAlocacao(List<Integer> lstIdEquipamentos) throws Exception {
+    public TelaEquipamentosAlocacao(List<Integer> lstIdEquipamentos){
         initComponents();
         lstEquipamentosSelecionados = new ArrayList<>();
         lstEquipamentosSelecionados = (ArrayList<Integer>) lstIdEquipamentos;
@@ -177,11 +185,5 @@ public class TelaEquipamentosAlocacao extends javax.swing.JFrame {
 
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSalvar;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTableEquipamentos;
-    // End of variables declaration//GEN-END:variables
+   
 }

@@ -21,10 +21,37 @@ import javax.swing.table.DefaultTableModel;
  * @author Ricardo
  */
 public class TelaEquipamento extends javax.swing.JInternalFrame {
+    
+     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAlterar;
+    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnSalvar;
+    private javax.swing.JComboBox<String> jComboStatus;
+    private javax.swing.JComboBox<String> jComboStatusAlterar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTableEquipamentos;
+    private javax.swing.JTextField txtMarca;
+    private javax.swing.JTextField txtMarcaAlterar;
+    private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtNomeAlterar;
+    private javax.swing.JTextField txtPesquisar;
+    // End of variables declaration//GEN-END:variables
+
 
     int codigo;
-    List<Status> lstStatus;
-    List<Equipamento> lstEquipamentos;
+    private List<Status> lstStatus;
+    private List<Equipamento> lstEquipamentos;
     StatusDAO statusDAO;
     HashMap<String, Integer> mapStatus;
     EquipamentoDAO equipamentoDAO;
@@ -36,7 +63,7 @@ public class TelaEquipamento extends javax.swing.JInternalFrame {
      * Creates new form TelaEquipamento
      * @throws java.lang.Exception
      */
-    public TelaEquipamento() throws Exception {
+    public TelaEquipamento(){
         initComponents();
         sessao = Sessao.getInstancia();
         status = new Status();
@@ -80,8 +107,9 @@ public class TelaEquipamento extends javax.swing.JInternalFrame {
         return 0;
     }
 
-    public void addTabela() throws Exception {
+    public void addTabela(){
         if (tableEquipamentos.getRowCount() > 0) {
+           //teste
             int qtd = tableEquipamentos.getRowCount();
             for (int i = 0; i < qtd; i++) {
                 tableEquipamentos.removeRow(0);
@@ -517,33 +545,6 @@ public class TelaEquipamento extends javax.swing.JInternalFrame {
             Logger.getLogger(TelaEquipamento.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jTabbedPane1MouseClicked
-
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAlterar;
-    private javax.swing.JButton btnExcluir;
-    private javax.swing.JButton btnSalvar;
-    private javax.swing.JComboBox<String> jComboStatus;
-    private javax.swing.JComboBox<String> jComboStatusAlterar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTableEquipamentos;
-    private javax.swing.JTextField txtMarca;
-    private javax.swing.JTextField txtMarcaAlterar;
-    private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtNomeAlterar;
-    private javax.swing.JTextField txtPesquisar;
-    // End of variables declaration//GEN-END:variables
 
     public int somar(int valor1, int valor2) {
         return valor1 + valor2;
