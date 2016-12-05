@@ -381,9 +381,14 @@ public class TelaSCO extends javax.swing.JInternalFrame {
 
     private void tbl_equipesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_equipesMouseClicked
         equipeSelecionada = listaAuxEquipes.get(tbl_equipes.getSelectedRow());
-        listaEmpenhos = empenhoDAO.buscaEmpenhos();
+        listaEmpenhos = empenhoDAO.buscaEmpenhoPorEquipe(equipeSelecionada);
+        System.out.println(listaEmpenhos.get(0).getIdequipe() + " - " + listaEmpenhos.get(0).getDatafim() + " - " + listaEmpenhos.get(0).getIdempenho());
+        txt_area_emp.setText("");
         //teste de carregamento dos empenhos
-        txt_area_emp.setText(listaEmpenhos.get(0).getIdempenho()+" - "+listaEmpenhos.get(1).getDescricao());
+        for (Empenho empenho : listaEmpenhos) {
+            txt_area_emp.setText(txt_area_emp.getText()+"\n"+empenho.getIdempenho()+" - "+empenho.getDatainicio()+" - "+empenho.getDatafim()+" - "+empenho.getDescricao()+" - "+ empenho.getIdequipe().getIdequipe());
+        }
+
     }//GEN-LAST:event_tbl_equipesMouseClicked
 
     //pega a data e hora formatada
@@ -438,11 +443,11 @@ public class TelaSCO extends javax.swing.JInternalFrame {
         }
 
     }
-    
-    public void limpaTabelaEquipes(){
+
+    public void limpaTabelaEquipes() {
         while (modeloTable.getRowCount() > 0) {
             modeloTable.removeRow(0);
         }
     }
-    
+
 }

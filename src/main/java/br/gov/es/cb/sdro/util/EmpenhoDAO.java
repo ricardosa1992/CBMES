@@ -6,6 +6,7 @@
 package br.gov.es.cb.sdro.util;
 
 import br.gov.es.cb.sdro.model.Empenho;
+import br.gov.es.cb.sdro.model.Equipe;
 import java.util.List;
 
 /**
@@ -22,6 +23,15 @@ public class EmpenhoDAO  extends AbstractDAO<Empenho>{
         empenho = buscaPorString(nome);
         return empenho;
     }
+        
+    public List<Empenho> buscaEmpenhoPorEquipe(Equipe equipe) {
+        busca = "Empenho.findByIdequipe";
+        parametro = "idequipe";
+        query = em.createNamedQuery(busca);
+        query.setParameter(parametro, equipe);
+        return query.getResultList();
+    }
+    
     
     public List<Empenho> buscaEmpenhos(){
         busca = "Empenho.findAll";
