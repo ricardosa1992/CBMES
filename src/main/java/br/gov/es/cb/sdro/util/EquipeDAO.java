@@ -54,5 +54,19 @@ public class EquipeDAO extends AbstractDAO<Equipe> {
             throw ex;
         }
     }
+    
+    
+    public Equipe criar(Equipe obj){
+        try {
+            em.getTransaction().begin();
+            em.persist(obj);
+            em.getTransaction().commit();
+            return obj;
+        } catch (Exception ex) {
+            em.getTransaction().rollback();
+            throw ex;
+        }
+       
+    }
 
 }

@@ -8,6 +8,7 @@ package br.gov.es.cb.sdro.view;
 import br.gov.es.cb.sdro.control.MilitarControler;
 import br.gov.es.cb.sdro.model.Equipe;
 import br.gov.es.cb.sdro.model.Militar;
+import br.gov.es.cb.sdro.model.Sco;
 import br.gov.es.cb.sdro.util.EquipamentoDAO;
 import br.gov.es.cb.sdro.util.EquipeDAO;
 import br.gov.es.cb.sdro.util.MilitarDAO;
@@ -31,10 +32,11 @@ public class TelaEquipe extends javax.swing.JInternalFrame {
     DefaultTableModel tableMilitaresAlocadosEquipe;
     HashMap<Integer, ArrayList<Integer>> mapMilitaresExcluir;
     Sessao sessao;
-    
+
     List<Militar> lstMilitaresSelecionadosEquipe;
     int idEquipeSelecionadaAlteracao;
     boolean novaEquipe;
+
     /**
      * Creates new form TelaEquipe
      */
@@ -71,8 +73,8 @@ public class TelaEquipe extends javax.swing.JInternalFrame {
             tableMilitaresDisponiveis.addRow(new Object[]{ml.getIdmilitar(), ml.getSafoIdfuncionario().getNome(), ml.getSafoIdfuncionario().getIdpostograducao().getDescricao()});
         }
     }
-    
-    public void limpaTabelaMilitaresAlocadosEquipe(){
+
+    public void limpaTabelaMilitaresAlocadosEquipe() {
         if (tableMilitaresAlocadosEquipe.getRowCount() > 0) {
 
             int qtd = tableMilitaresAlocadosEquipe.getRowCount();
@@ -81,7 +83,7 @@ public class TelaEquipe extends javax.swing.JInternalFrame {
             }
         }
     }
-    
+
     public void populaTabelaMilitaresAlocadosEquipe(List<Militar> listMilitares) {
 
         limpaTabelaMilitaresAlocadosEquipe();
@@ -399,7 +401,7 @@ public class TelaEquipe extends javax.swing.JInternalFrame {
         txtDescricao.setText("");
         limpaTabelaMilitaresAlocadosEquipe();
         populaComboboxEquipes();
-        
+
     }//GEN-LAST:event_novaEquipeBottonActionPerformed
 
     private void ExcluirEquipeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluirEquipeButtonActionPerformed
@@ -427,19 +429,37 @@ public class TelaEquipe extends javax.swing.JInternalFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         String descricaoEquipe = txtDescricao.getText();
-        if(novaEquipe){
-            
-        }
-        else{
+        
+        if (novaEquipe) {
+            try {
+            Equipe eq = new Equipe();
+            eq.setDescricao(descricaoEquipe);
+            Sco sco = new Sco();
+            sco.setIdsco(2);
+            eq.setIdsco(sco);
+            eq.setIdunidade(sessao.getUnidade());
+            Equipe eqp = equipedao.criar(eq);
+                System.out.println(eqp);
+                for (Militar ml : lstMilitaresSelecionadosEquipe) {
+                    ml.setIdequipe(eqp);
+                    militarControler.alocarMiltarEquipe(ml);
+                    System.out.println(ml.getIdmilitar());
+                }
+               JOptionPane.showMessageDialog(null, "Equipe criada com sucesso!"); 
+            } catch (Exception e) {
+                throw e;
+            }
+
+        } else {
             Equipe equipe = equipedao.buscaEquipePorID(idEquipeSelecionadaAlteracao);
-            
+
             equipe.setDescricao(descricaoEquipe);
             equipedao.update(equipe);
             JOptionPane.showMessageDialog(null, "Equipe atualizada com sucesso!");
             populaComboboxEquipes();
         }
-        
-        
+
+
     }//GEN-LAST:event_btnSalvarActionPerformed
 
 

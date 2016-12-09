@@ -128,5 +128,22 @@ public class MilitarDAO extends AbstractDAO<Militar> {
             throw ex;
         }
     }
+
+    public void alocarMiltarEquipe(Militar obj) {
+        try {
+            em.getTransaction().begin();
+            busca = "Militar.alocarMilitarEquipe";
+            query = em.createNamedQuery(busca);
+            String parametro1 = "idequipe";
+            String parametro2 = "idmilitar";
+            query.setParameter(parametro1, obj.getIdequipe());
+            query.setParameter(parametro2, obj.getIdmilitar());
+            query.executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            em.getTransaction().rollback();
+            throw ex;
+        }
+    }
     
 }

@@ -50,6 +50,10 @@ public class MilitarControler {
         militarDAO.removeMiltarEquipe(militar);
     }
     
+    public void alocarMiltarEquipe(Militar obj){
+        militarDAO.alocarMiltarEquipe(obj);
+    }
+    
     
     
     
