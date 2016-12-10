@@ -23,8 +23,13 @@ public class MilitarControler {
     
     }
     
-    public List<Militar> listaMilitaresDisponiveis(Unidade unidade){
+    public List<Militar> listaMilitaresDisponiveisUnidade(Unidade unidade){
         return militarDAO.buscaMilitaresDisponiveisUnidade(unidade);
+        
+    }
+    
+    public List<Militar> listaMilitaresDisponiveis(){
+        return militarDAO.buscaMilitaresDisponiveis();
         
     }
     

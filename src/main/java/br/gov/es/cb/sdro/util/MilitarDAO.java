@@ -45,6 +45,12 @@ public class MilitarDAO extends AbstractDAO<Militar> {
         query.setParameter(parametro, unidade);
         return query.getResultList();
     }
+     
+      public List<Militar> buscaMilitaresDisponiveis() {
+        busca = "Militar.disponiveis";
+        query = em.createNamedQuery(busca);
+        return query.getResultList();
+    }
     
     public List<Militar> buscaMilitarsPorGraducao(String nome) {
         busca = "Militar.findByPostoGraducao";
@@ -113,6 +119,8 @@ public class MilitarDAO extends AbstractDAO<Militar> {
         query.setParameter(parametro, obj);
         return query.getResultList();
     }
+    
+    
 
     public void removeMiltarEquipe(Militar obj) {
          try {

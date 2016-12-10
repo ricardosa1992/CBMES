@@ -144,7 +144,7 @@ public class TelaAlocacao extends javax.swing.JInternalFrame {
         }
         if (jComboStatusMilitar.getSelectedItem().toString().equals("DISPONIVEL")) {
 
-            listMilitares = militarControler.listaMilitaresDisponiveis(sessao.getUnidade());
+            listMilitares = militarControler.listaMilitaresDisponiveisUnidade(sessao.getUnidade());
         } else if (jComboStatusMilitar.getSelectedItem().toString().equals("ALOCADA")) {
             listMilitares = militarControler.listaMilitaresAlocados(sessao.getUnidade());
         }

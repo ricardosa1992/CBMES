@@ -16,8 +16,10 @@ import br.gov.es.cb.sdro.util.Sessao;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import sun.security.x509.AttributeNameEnumeration;
 
 /**
  *
@@ -67,7 +69,7 @@ public class TelaEquipe extends javax.swing.JInternalFrame {
             }
         }
 
-        listMilitares = militarControler.listaMilitaresAlocados(sessao.getUnidade());
+        listMilitares = militarControler.listaMilitaresDisponiveis();
 
         for (Militar ml : listMilitares) {
             tableMilitaresDisponiveis.addRow(new Object[]{ml.getIdmilitar(), ml.getSafoIdfuncionario().getNome(), ml.getSafoIdfuncionario().getIdpostograducao().getDescricao()});
@@ -99,17 +101,6 @@ public class TelaEquipe extends javax.swing.JInternalFrame {
         for (Equipe eq : equipedao.buscaEquipes()) {
             jComboEquipes.addItem(eq.getIdequipe() + "-" + eq.getDescricao());
         }
-    }
-
-    public void AdicionaMapMilitaresExcluir(int idEquipe, int idMilitar) {
-        if (mapMilitaresExcluir.containsKey(idEquipe)) {
-            mapMilitaresExcluir.get(idEquipe).add(idMilitar);
-        } else {
-            mapMilitaresExcluir.put(idEquipe, new ArrayList<Integer>());
-            mapMilitaresExcluir.get(idEquipe).add(idMilitar);
-        }
-        System.out.println(mapMilitaresExcluir);
-
     }
 
     /**
@@ -368,11 +359,28 @@ public class TelaEquipe extends javax.swing.JInternalFrame {
         if (linha >= 0) {
             int idMilitar = Integer.parseInt(tableMilitaresDisponiveis.getValueAt(linha, 0).toString());
             Militar militar = militarDAO.buscaMilitarPorId(idMilitar);
-            lstMilitaresSelecionadosEquipe.add(militar);
-            //System.out.println(lstMilitaresSelecionadosEquipe);
-            populaTabelaMilitaresAlocadosEquipe(lstMilitaresSelecionadosEquipe);
+            if (novaEquipe) {
+                lstMilitaresSelecionadosEquipe.add(militar);
+                //System.out.println(lstMilitaresSelecionadosEquipe);
+                tableMilitaresDisponiveis.removeRow(linha);
+                populaTabelaMilitaresAlocadosEquipe(lstMilitaresSelecionadosEquipe);
+            } else {
+                try {
+                    Equipe eqp = new Equipe();
+                    eqp.setIdequipe(idEquipeSelecionadaAlteracao);
+                    militar.setIdequipe(eqp);
+                    militarControler.alocarMiltarEquipe(militar);
+                    JOptionPane.showMessageDialog(null, "Militar adicionado à equipe com sucesso!");
+                    tableMilitaresDisponiveis.removeRow(linha);
+                    tableMilitaresAlocadosEquipe.addRow(new Object[]{militar.getIdmilitar(), militar.getSafoIdfuncionario().getNome()});
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Erro ao adicionar Militar!");
+                    throw e;
+                }
+
+            }
         } else {
-            JOptionPane.showMessageDialog(null, "Uma militar deve ser selecionada!");
+            JOptionPane.showMessageDialog(null, "Um militar deve ser selecionado!");
         }
     }//GEN-LAST:event_btnAdicionarMilitarActionPerformed
 
@@ -416,36 +424,62 @@ public class TelaEquipe extends javax.swing.JInternalFrame {
         int linha = jTableMilitaresEquipe.getSelectedRow();
         if (linha >= 0) {
             int idMilitar = Integer.parseInt(jTableMilitaresEquipe.getValueAt(linha, 0).toString());
-            militarControler.removeMiltarEquipe(idMilitar);
-            JOptionPane.showMessageDialog(null, "Militar removido da Equipe com Sucesso!");
-            Equipe equipe = new Equipe();
-            equipe.setIdequipe(idEquipeSelecionadaAlteracao);
-            List<Militar> militaresAlocadosEquipe = militarControler.listaMilitaresAlocadosEquipe(equipe);
-            populaTabelaMilitaresAlocadosEquipe(militaresAlocadosEquipe);
+            Militar ml = militarDAO.buscaMilitarPorId(idMilitar);
+            if (novaEquipe) {
+                removeMilitarEquipe(idMilitar);
+                populaTabelaMilitaresAlocadosEquipe(lstMilitaresSelecionadosEquipe);
+
+            } else {
+                militarControler.removeMiltarEquipe(idMilitar);
+                JOptionPane.showMessageDialog(null, "Militar removido da Equipe com Sucesso!");
+                Equipe equipe = new Equipe();
+                equipe.setIdequipe(idEquipeSelecionadaAlteracao);
+                List<Militar> militaresAlocadosEquipe = militarControler.listaMilitaresAlocadosEquipe(equipe);
+                populaTabelaMilitaresAlocadosEquipe(militaresAlocadosEquipe);
+
+            }
+            tableMilitaresDisponiveis.addRow(new Object[]{ml.getIdmilitar(), ml.getSafoIdfuncionario().getNome(), ml.getSafoIdfuncionario().getIdpostograducao().getDescricao()});
         } else {
             JOptionPane.showMessageDialog(null, "Um Militar deve ser selecionado");
         }
     }//GEN-LAST:event_btnRemoverMilitarActionPerformed
 
+    public void removeMilitarEquipe(int idMilitar) {
+        int index = 0;
+        int i;
+        for (i = 0; i < lstMilitaresSelecionadosEquipe.size(); i++) {
+
+            if (lstMilitaresSelecionadosEquipe.get(i).getIdmilitar() == idMilitar) {
+                index = i;
+                break;
+            }
+        }
+
+        lstMilitaresSelecionadosEquipe.remove(i);
+    }
+
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         String descricaoEquipe = txtDescricao.getText();
-        
+
         if (novaEquipe) {
             try {
-            Equipe eq = new Equipe();
-            eq.setDescricao(descricaoEquipe);
-            Sco sco = new Sco();
-            sco.setIdsco(2);
-            eq.setIdsco(sco);
-            eq.setIdunidade(sessao.getUnidade());
-            Equipe eqp = equipedao.criar(eq);
-                System.out.println(eqp);
-                for (Militar ml : lstMilitaresSelecionadosEquipe) {
-                    ml.setIdequipe(eqp);
-                    militarControler.alocarMiltarEquipe(ml);
-                    System.out.println(ml.getIdmilitar());
+                if (!descricaoEquipe.isEmpty()) {
+                    Equipe eq = new Equipe();
+                    eq.setDescricao(descricaoEquipe);
+                    Sco sco = new Sco();
+                    sco.setIdsco(2);
+                    eq.setIdsco(sco);
+                    eq.setIdunidade(sessao.getUnidade());
+                    Equipe eqp = equipedao.criar(eq);
+                    System.out.println(eqp);
+                    for (Militar ml : lstMilitaresSelecionadosEquipe) {
+                        ml.setIdequipe(eqp);
+                        militarControler.alocarMiltarEquipe(ml);
+                        System.out.println(ml.getIdmilitar());
+                    }
+                    JOptionPane.showMessageDialog(null, "Equipe criada com sucesso!");
                 }
-               JOptionPane.showMessageDialog(null, "Equipe criada com sucesso!"); 
+
             } catch (Exception e) {
                 throw e;
             }
@@ -458,7 +492,9 @@ public class TelaEquipe extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Equipe atualizada com sucesso!");
             populaComboboxEquipes();
         }
-
+        limpaTabelaMilitaresAlocadosEquipe();
+        txtDescricao.setText("");
+        lstMilitaresSelecionadosEquipe.clear();
 
     }//GEN-LAST:event_btnSalvarActionPerformed
 
