@@ -33,8 +33,6 @@ public class TelaSCO extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane abasSco;
-    private javax.swing.JButton btnAdicionarEquipe;
-    private javax.swing.JButton btnAlterarEquipe;
     private javax.swing.JButton btn_emp_gravar;
     private javax.swing.JButton btn_emp_novo;
     private javax.swing.JButton btn_sco_altera;
@@ -94,7 +92,6 @@ public class TelaSCO extends javax.swing.JInternalFrame {
 
     private Sco novoSCO;
 
-
     private static TelaSCO telaSCO;
 
     /**
@@ -114,10 +111,6 @@ public class TelaSCO extends javax.swing.JInternalFrame {
         empenhosTable = (DefaultTableModel) tbl_empenho.getModel();
         btn_sco_altera.setEnabled(false);
     }
-    
-     
-    
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -157,8 +150,6 @@ public class TelaSCO extends javax.swing.JInternalFrame {
         lbl_list_equipes = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_equipes = new javax.swing.JTable();
-        btnAdicionarEquipe = new javax.swing.JButton();
-        btnAlterarEquipe = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         txt_fld_emp_descr = new javax.swing.JTextField();
         lbl_emp_descricao = new javax.swing.JLabel();
@@ -335,17 +326,6 @@ public class TelaSCO extends javax.swing.JInternalFrame {
 
         jPanel5.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 540, 230));
 
-        btnAdicionarEquipe.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.btnAdicionarEquipe.text")); // NOI18N
-        btnAdicionarEquipe.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdicionarEquipeActionPerformed(evt);
-            }
-        });
-        jPanel5.add(btnAdicionarEquipe, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 290, -1, -1));
-
-        btnAlterarEquipe.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.btnAlterarEquipe.text")); // NOI18N
-        jPanel5.add(btnAlterarEquipe, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 290, -1, -1));
-
         jPanel4.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 360));
 
         abasSco.addTab(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.jPanel4.TabConstraints.tabTitle"), jPanel4); // NOI18N
@@ -437,7 +417,7 @@ public class TelaSCO extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_sco_nomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_sco_nomeActionPerformed
-        
+
     }//GEN-LAST:event_txt_sco_nomeActionPerformed
 
     private void btn_emp_gravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_emp_gravarActionPerformed
@@ -454,15 +434,15 @@ public class TelaSCO extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_emp_gravarActionPerformed
 
     private void txt_fld_emp_descrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_fld_emp_descrActionPerformed
-       
+
     }//GEN-LAST:event_txt_fld_emp_descrActionPerformed
 
     private void txt_sco_mil_admActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_sco_mil_admActionPerformed
-        
+
     }//GEN-LAST:event_txt_sco_mil_admActionPerformed
 
     private void cmb_list_scoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_list_scoActionPerformed
-        
+
     }//GEN-LAST:event_cmb_list_scoActionPerformed
 
     private void btn_sco_carregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sco_carregarActionPerformed
@@ -512,6 +492,7 @@ public class TelaSCO extends javax.swing.JInternalFrame {
         limpaTabelaEmpenho();
         carregaTabelaEmpenho(listaEmpenhos);
         abasSco.setSelectedIndex(2);
+
     }//GEN-LAST:event_tbl_equipesMouseClicked
 
     private void txt_fld_emp_data_iniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_fld_emp_data_iniActionPerformed
@@ -521,10 +502,11 @@ public class TelaSCO extends javax.swing.JInternalFrame {
     private void btn_emp_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_emp_novoActionPerformed
         // TODO add your handling code here:
         alteraCamposEmp(true);
-
+        txt_fld_emp_data_ini.setEnabled(false);
+        txt_fld_emp_data_ini.setText(getPegaDataAtual().toString());
     }//GEN-LAST:event_btn_emp_novoActionPerformed
 
-    private void btn_sco_salvarActionPerformed(java.awt.event.ActionEvent evt) {                                               
+    private void btn_sco_salvarActionPerformed(java.awt.event.ActionEvent evt) {
 
         novoSCO.setNome(txt_sco_nome.getText());
         novoSCO.setLocal(txt_sco_local.getText());
@@ -548,11 +530,11 @@ public class TelaSCO extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Erro ao Cadastrar Equipamento");
         }
 
-    }                                              
+    }
 
     private void btn_sco_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sco_excluirActionPerformed
         int dialogButton = JOptionPane.YES_NO_OPTION;
-        int dialogResult = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do SCO: "+scoAtual.getIdsco()+" ???", "CONFIRMA EXCLUSÃO", dialogButton);
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do SCO: " + scoAtual.getIdsco() + " ???", "CONFIRMA EXCLUSÃO", dialogButton);
         if (dialogResult == JOptionPane.YES_OPTION) {
             scoDao.remove(scoAtual);
             limpaCamposSco();
@@ -565,18 +547,9 @@ public class TelaSCO extends javax.swing.JInternalFrame {
 
     private void btn_sco_ger_recursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sco_ger_recursosActionPerformed
         //chama tela do ricardo passando o idsco
-        
-        
+
+
     }//GEN-LAST:event_btn_sco_ger_recursosActionPerformed
-
-    private void btnAdicionarEquipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarEquipeActionPerformed
-        TelaEquipe telaEquipe = new TelaEquipe();
-        telaEquipe.setVisible(true);
-    }//GEN-LAST:event_btnAdicionarEquipeActionPerformed
-
-    private void btn_sco_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sco_salvarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_sco_salvarActionPerformed
 
     //pega a data e hora formatada
     public Date getPegaDataAtual() {
