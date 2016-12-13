@@ -27,8 +27,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Viatura.UpdateIsAlocado", query = "UPDATE Viatura SET isalocado=true WHERE idViatura = :idviatura"),
+     @NamedQuery(name = "Viatura.AlocarViaturaSCO", query = "UPDATE Viatura SET isalocado=true, idsco = :idsco  WHERE idViatura = :idviatura"),
     @NamedQuery(name = "Viatura.liberaViatura", query = "UPDATE Viatura SET isalocado=false WHERE idViatura = :idviatura"),
     @NamedQuery(name = "Viatura.findAllDisponiveis", query = "SELECT v FROM Viatura v where v.isalocado = false and v.idunidade = :idUnidade"),
+     @NamedQuery(name = "Viatura.todasDisponiveis", query = "SELECT v FROM Viatura v where v.isalocado = false and v.idsco is null"),
     @NamedQuery(name = "Viatura.findAllAlocadas", query = "SELECT v FROM Viatura v where v.isalocado = true and v.idunidade = :idUnidade"),
     @NamedQuery(name = "Viatura.findAll", query = "SELECT v FROM Viatura v"),
     @NamedQuery(name = "Viatura.findByIdviatura", query = "SELECT v FROM Viatura v WHERE v.idviatura = :idviatura"),

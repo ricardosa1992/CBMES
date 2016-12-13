@@ -35,6 +35,11 @@ public class ViaturaDAO extends AbstractDAO<Viatura> {
         busca = "Viatura.findAll";
         return (List<Viatura>) buscaListaSemParametro();
     }
+    
+    public List<Viatura> buscaViaturasDisponiveis() {
+        busca = "Viatura.todasDisponiveis";
+        return (List<Viatura>) buscaListaSemParametro();
+    }
 
     public List<Viatura> buscaViaturasDisponiveisUnidade(Unidade unidade) {
         busca = "Viatura.findAllDisponiveis";
@@ -84,6 +89,24 @@ public class ViaturaDAO extends AbstractDAO<Viatura> {
             query = em.createNamedQuery(busca);
             parametro = parametroId;
             query.setParameter(parametro, obj.getIdviatura());
+            query.executeUpdate();
+            em.getTransaction().commit();
+            return true;
+        } catch (Exception ex) {
+            em.getTransaction().rollback();
+            throw ex;
+        }
+    }
+    
+     public boolean alocaViaturaSCO(Viatura obj) {
+        try {
+            em.getTransaction().begin();
+            busca = "Viatura.AlocarViaturaSCO";
+            query = em.createNamedQuery(busca);
+            parametro = parametroId;
+            String parametro2 = "idsco";
+            query.setParameter(parametro, obj.getIdviatura());
+            query.setParameter(parametro2, obj.getIdsco());
             query.executeUpdate();
             em.getTransaction().commit();
             return true;
