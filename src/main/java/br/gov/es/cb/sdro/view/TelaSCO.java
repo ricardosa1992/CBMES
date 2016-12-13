@@ -32,6 +32,8 @@ public class TelaSCO extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane abasSco;
+    private javax.swing.JButton btnAdicionarEquipe;
+    private javax.swing.JButton btnAlterarEquipe;
     private javax.swing.JButton btn_emp_gravar;
     private javax.swing.JButton btn_emp_novo;
     private javax.swing.JButton btn_sco_altera;
@@ -85,7 +87,7 @@ public class TelaSCO extends javax.swing.JInternalFrame {
     private List<Equipe> listaAuxEquipes;
     private List<Empenho> listaEmpenhos;
     private Equipe equipeSelecionada;
-
+    private static TelaSCO telaSCO;
     /**
      * Creates new form TelaSCO
      */
@@ -102,6 +104,10 @@ public class TelaSCO extends javax.swing.JInternalFrame {
         equipesTable = (DefaultTableModel) tbl_equipes.getModel();
         empenhosTable = (DefaultTableModel) tbl_empenho.getModel();
     }
+    
+     
+    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -138,6 +144,8 @@ public class TelaSCO extends javax.swing.JInternalFrame {
         lbl_list_equipes = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_equipes = new javax.swing.JTable();
+        btnAdicionarEquipe = new javax.swing.JButton();
+        btnAlterarEquipe = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         txt_fld_emp_descr = new javax.swing.JTextField();
         lbl_emp_descricao = new javax.swing.JLabel();
@@ -239,6 +247,11 @@ public class TelaSCO extends javax.swing.JInternalFrame {
         jPanel2.add(btn_sco_excluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 320, 110, -1));
 
         btn_sco_salvar.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.btn_sco_salvar.text")); // NOI18N
+        btn_sco_salvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_sco_salvarActionPerformed(evt);
+            }
+        });
         jPanel2.add(btn_sco_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 320, 100, -1));
 
         btn_sco_novo.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.btn_sco_novo.text")); // NOI18N
@@ -287,7 +300,18 @@ public class TelaSCO extends javax.swing.JInternalFrame {
             tbl_equipes.getColumnModel().getColumn(1).setHeaderValue(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.tbl_equipes.columnModel.title1")); // NOI18N
         }
 
-        jPanel5.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 540, 280));
+        jPanel5.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 540, 230));
+
+        btnAdicionarEquipe.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.btnAdicionarEquipe.text")); // NOI18N
+        btnAdicionarEquipe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarEquipeActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btnAdicionarEquipe, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 290, -1, -1));
+
+        btnAlterarEquipe.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.btnAlterarEquipe.text")); // NOI18N
+        jPanel5.add(btnAlterarEquipe, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 290, -1, -1));
 
         jPanel4.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 360));
 
@@ -468,6 +492,15 @@ public class TelaSCO extends javax.swing.JInternalFrame {
         alteraCamposEmp(true);
         
     }//GEN-LAST:event_btn_emp_novoActionPerformed
+
+    private void btnAdicionarEquipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarEquipeActionPerformed
+        TelaEquipe telaEquipe = new TelaEquipe();
+        telaEquipe.setVisible(true);
+    }//GEN-LAST:event_btnAdicionarEquipeActionPerformed
+
+    private void btn_sco_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sco_salvarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_sco_salvarActionPerformed
 
     //pega a data e hora formatada
     public Date getPegaDataAtual() {

@@ -9,17 +9,14 @@ import br.gov.es.cb.sdro.control.MilitarControler;
 import br.gov.es.cb.sdro.model.Equipe;
 import br.gov.es.cb.sdro.model.Militar;
 import br.gov.es.cb.sdro.model.Sco;
-import br.gov.es.cb.sdro.util.EquipamentoDAO;
 import br.gov.es.cb.sdro.util.EquipeDAO;
 import br.gov.es.cb.sdro.util.MilitarDAO;
 import br.gov.es.cb.sdro.util.Sessao;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import sun.security.x509.AttributeNameEnumeration;
 
 /**
  *
@@ -38,6 +35,7 @@ public class TelaEquipe extends javax.swing.JInternalFrame {
     List<Militar> lstMilitaresSelecionadosEquipe;
     int idEquipeSelecionadaAlteracao;
     boolean novaEquipe;
+   
 
     /**
      * Creates new form TelaEquipe
@@ -57,7 +55,7 @@ public class TelaEquipe extends javax.swing.JInternalFrame {
         populaTabelaMilitaresDisponiveis();
 
     }
-
+   
     public void populaTabelaMilitaresDisponiveis() {
 
         List<Militar> listMilitares = new ArrayList<>();
