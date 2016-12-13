@@ -35,4 +35,19 @@ public class ScoDAO extends AbstractDAO<Sco> {
         query.setParameter("idsco", id);
         return (Sco) query.getSingleResult();
     }
+
+    @Override
+    public void remove(Sco scoremover) {
+        try {
+            em.getTransaction().begin();
+            Sco obj = em.find(scoremover.getClass(), scoremover.getIdsco());
+            em.remove(obj);
+
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            em.getTransaction().rollback();
+            throw ex;
+        }
+    }
+
 }

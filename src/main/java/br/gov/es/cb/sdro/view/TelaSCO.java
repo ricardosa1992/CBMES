@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -37,6 +38,7 @@ public class TelaSCO extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn_sco_altera;
     private javax.swing.JButton btn_sco_carregar;
     private javax.swing.JButton btn_sco_excluir;
+    private javax.swing.JButton btn_sco_ger_recursos;
     private javax.swing.JButton btn_sco_novo;
     private javax.swing.JButton btn_sco_salvar;
     private javax.swing.JComboBox<String> cmb_list_sco;
@@ -52,6 +54,7 @@ public class TelaSCO extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lbl_emp_data_inicio;
     private javax.swing.JLabel lbl_emp_descricao;
     private javax.swing.JLabel lbl_list_equipes;
+    private javax.swing.JLabel lbl_sco_local;
     private javax.swing.JLabel lbl_sco_mil_adm;
     private javax.swing.JLabel lbl_sco_mil_cmd;
     private javax.swing.JLabel lbl_sco_mil_log;
@@ -64,6 +67,7 @@ public class TelaSCO extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txt_fld_emp_data_ini;
     private javax.swing.JTextField txt_fld_emp_descr;
     private javax.swing.JTextField txt_fld_emp_equipe_atual;
+    private javax.swing.JTextField txt_sco_local;
     private javax.swing.JTextField txt_sco_mil_adm;
     private javax.swing.JTextField txt_sco_mil_cmd;
     private javax.swing.JTextField txt_sco_mil_log;
@@ -85,6 +89,7 @@ public class TelaSCO extends javax.swing.JInternalFrame {
     private List<Equipe> listaAuxEquipes;
     private List<Empenho> listaEmpenhos;
     private Equipe equipeSelecionada;
+    private Sco novoSCO;
 
     /**
      * Creates new form TelaSCO
@@ -101,6 +106,7 @@ public class TelaSCO extends javax.swing.JInternalFrame {
         listaAuxEquipes = new ArrayList();
         equipesTable = (DefaultTableModel) tbl_equipes.getModel();
         empenhosTable = (DefaultTableModel) tbl_empenho.getModel();
+        btn_sco_altera.setEnabled(false);
     }
 
     /**
@@ -119,7 +125,7 @@ public class TelaSCO extends javax.swing.JInternalFrame {
         txt_sco_nome = new javax.swing.JTextField();
         lbl_sco_mil_adm = new javax.swing.JLabel();
         txt_sco_mil_adm = new javax.swing.JTextField();
-        cmb_list_sco = new javax.swing.JComboBox<>();
+        cmb_list_sco = new javax.swing.JComboBox<String>();
         btn_sco_carregar = new javax.swing.JButton();
         lbl_sco_mil_ope = new javax.swing.JLabel();
         txt_sco_mil_ope = new javax.swing.JTextField();
@@ -133,6 +139,9 @@ public class TelaSCO extends javax.swing.JInternalFrame {
         btn_sco_excluir = new javax.swing.JButton();
         btn_sco_salvar = new javax.swing.JButton();
         btn_sco_novo = new javax.swing.JButton();
+        lbl_sco_local = new javax.swing.JLabel();
+        txt_sco_local = new javax.swing.JTextField();
+        btn_sco_ger_recursos = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         lbl_list_equipes = new javax.swing.JLabel();
@@ -160,7 +169,7 @@ public class TelaSCO extends javax.swing.JInternalFrame {
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lbl_sco_nome.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.lbl_sco_nome.text")); // NOI18N
-        jPanel2.add(lbl_sco_nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 87, -1, -1));
+        jPanel2.add(lbl_sco_nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
 
         txt_sco_nome.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.txt_sco_nome.text")); // NOI18N
         txt_sco_nome.addActionListener(new java.awt.event.ActionListener() {
@@ -168,7 +177,7 @@ public class TelaSCO extends javax.swing.JInternalFrame {
                 txt_sco_nomeActionPerformed(evt);
             }
         });
-        jPanel2.add(txt_sco_nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 284, -1));
+        jPanel2.add(txt_sco_nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 284, -1));
 
         lbl_sco_mil_adm.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.lbl_sco_mil_adm.text")); // NOI18N
         jPanel2.add(lbl_sco_mil_adm, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
@@ -182,7 +191,7 @@ public class TelaSCO extends javax.swing.JInternalFrame {
         jPanel2.add(txt_sco_mil_adm, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, 260, -1));
 
         cmb_list_sco.setMaximumRowCount(10);
-        cmb_list_sco.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Clique para selecionar" }));
+        cmb_list_sco.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Clique para selecionar" }));
         cmb_list_sco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmb_list_scoActionPerformed(evt);
@@ -236,9 +245,19 @@ public class TelaSCO extends javax.swing.JInternalFrame {
         jPanel2.add(btn_sco_altera, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 320, 90, -1));
 
         btn_sco_excluir.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.btn_sco_excluir.text")); // NOI18N
-        jPanel2.add(btn_sco_excluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 320, 110, -1));
+        btn_sco_excluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_sco_excluirActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn_sco_excluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 320, 110, -1));
 
         btn_sco_salvar.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.btn_sco_salvar.text")); // NOI18N
+        btn_sco_salvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_sco_salvarActionPerformed(evt);
+            }
+        });
         jPanel2.add(btn_sco_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 320, 100, -1));
 
         btn_sco_novo.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.btn_sco_novo.text")); // NOI18N
@@ -248,6 +267,21 @@ public class TelaSCO extends javax.swing.JInternalFrame {
             }
         });
         jPanel2.add(btn_sco_novo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 320, -1, -1));
+
+        lbl_sco_local.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.lbl_sco_local.text")); // NOI18N
+        jPanel2.add(lbl_sco_local, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
+
+        txt_sco_local.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.txt_sco_local.text")); // NOI18N
+        jPanel2.add(txt_sco_local, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 260, -1));
+
+        btn_sco_ger_recursos.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btn_sco_ger_recursos.setText(org.openide.util.NbBundle.getMessage(TelaSCO.class, "TelaSCO.btn_sco_ger_recursos.text")); // NOI18N
+        btn_sco_ger_recursos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_sco_ger_recursosActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn_sco_ger_recursos, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 230, 150, 40));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 640, 440));
 
@@ -380,36 +414,32 @@ public class TelaSCO extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_sco_nomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_sco_nomeActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_txt_sco_nomeActionPerformed
 
     private void btn_emp_gravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_emp_gravarActionPerformed
-        
         //cria novo empenho
         Empenho novoEmpenho = new Empenho();
         novoEmpenho.setDescricao(txt_fld_emp_descr.getText());
         novoEmpenho.setIdequipe(equipeSelecionada);
-        //converter string para date
-        //novoEmpenho.setDatainicio(txt_fld_emp_data_ini.getText());
+        novoEmpenho.setDatainicio(getPegaDataAtual());
         //novoEmpenho.setDatafim(txt_fld_emp_data_fim.getText());
-        
         //insere campos na tabela
-        empenhosTable.addRow(new Object[]{novoEmpenho.getIdempenho(),novoEmpenho.getDescricao(), novoEmpenho.getDatainicio(),novoEmpenho.getDatafim(),novoEmpenho.getIdequipe().getIdequipe()});
-        
+        empenhosTable.addRow(new Object[]{novoEmpenho.getIdempenho(), novoEmpenho.getDescricao(), novoEmpenho.getDatainicio(), novoEmpenho.getDatafim(), novoEmpenho.getIdequipe().getIdequipe()});
         limpaCamposEmpenho();
         alteraCamposEmp(false);
     }//GEN-LAST:event_btn_emp_gravarActionPerformed
 
     private void txt_fld_emp_descrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_fld_emp_descrActionPerformed
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_txt_fld_emp_descrActionPerformed
 
     private void txt_sco_mil_admActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_sco_mil_admActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_txt_sco_mil_admActionPerformed
 
     private void cmb_list_scoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_list_scoActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_cmb_list_scoActionPerformed
 
     private void btn_sco_carregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sco_carregarActionPerformed
@@ -423,8 +453,10 @@ public class TelaSCO extends javax.swing.JInternalFrame {
             txt_sco_mil_ope.setText(milControl.getMilitarbyId(scoAtual.getIdfuncionariooperacoes()).getNomeGuerra());
             txt_sco_mil_log.setText(milControl.getMilitarbyId(scoAtual.getIdfuncionariologistica()).getNomeGuerra());
             txt_sco_mil_plan.setText(milControl.getMilitarbyId(scoAtual.getIdfuncionarioplanejamento()).getNomeGuerra());
+            txt_sco_local.setText(scoAtual.getLocal());
             limpaTabelaEquipes();
             carregaTabelaEquipes();
+            abasSco.setSelectedIndex(1);
         }
     }//GEN-LAST:event_btn_sco_carregarActionPerformed
 
@@ -439,13 +471,14 @@ public class TelaSCO extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_sco_alteraActionPerformed
 
     private void btn_sco_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sco_novoActionPerformed
-
         cmb_list_sco.setSelectedIndex(0);
         limpaCamposSco();
         alteraCamposSco(true);
-        btn_sco_salvar.setEnabled(false);
+        btn_sco_salvar.setEnabled(true);
         btn_sco_altera.setEnabled(false);
         btn_sco_excluir.setEnabled(false);
+
+        novoSCO = new Sco();
 
     }//GEN-LAST:event_btn_sco_novoActionPerformed
 
@@ -453,10 +486,9 @@ public class TelaSCO extends javax.swing.JInternalFrame {
         equipeSelecionada = listaAuxEquipes.get(tbl_equipes.getSelectedRow());
         listaEmpenhos = empenhoDAO.buscaEmpenhoPorEquipe(equipeSelecionada);
         txt_fld_emp_equipe_atual.setText(equipeSelecionada.getIdequipe() + " - " + equipeSelecionada.getDescricao());
-       
         limpaTabelaEmpenho();
         carregaTabelaEmpenho(listaEmpenhos);
-    abasSco.setSelectedIndex(2);
+        abasSco.setSelectedIndex(2);
     }//GEN-LAST:event_tbl_equipesMouseClicked
 
     private void txt_fld_emp_data_iniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_fld_emp_data_iniActionPerformed
@@ -466,8 +498,53 @@ public class TelaSCO extends javax.swing.JInternalFrame {
     private void btn_emp_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_emp_novoActionPerformed
         // TODO add your handling code here:
         alteraCamposEmp(true);
-        
+
     }//GEN-LAST:event_btn_emp_novoActionPerformed
+
+    private void btn_sco_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sco_salvarActionPerformed
+
+        novoSCO.setNome(txt_sco_nome.getText());
+        novoSCO.setLocal(txt_sco_local.getText());
+        novoSCO.setIdfuncionarioadministracao(Integer.parseInt(txt_sco_mil_adm.getText()));
+        novoSCO.setIdfuncionariocomando(Integer.parseInt(txt_sco_mil_cmd.getText()));
+        novoSCO.setIdfuncionariologistica(Integer.parseInt(txt_sco_mil_log.getText()));
+        novoSCO.setIdfuncionariooperacoes(Integer.parseInt(txt_sco_mil_ope.getText()));
+        novoSCO.setIdfuncionarioplanejamento(Integer.parseInt(txt_sco_mil_plan.getText()));
+        novoSCO.setDatainicio(getPegaDataAtual());
+        listaSco.add(novoSCO);
+        boolean estadoSave = scoDao.save(novoSCO);
+        if (estadoSave) {
+            JOptionPane.showMessageDialog(null, "Novo SCO Cadastrado com sucesso!");
+            cmb_list_sco.addItem(novoSCO.getIdsco() + " - " + novoSCO.getNome());
+            limpaCamposSco();
+            alteraCamposSco(false);
+            btn_sco_salvar.setEnabled(false);
+            btn_sco_excluir.setEnabled(true);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro ao Cadastrar Equipamento");
+        }
+
+    }//GEN-LAST:event_btn_sco_salvarActionPerformed
+
+    private void btn_sco_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sco_excluirActionPerformed
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do SCO: "+scoAtual.getIdsco()+" ???", "CONFIRMA EXCLUSÃO", dialogButton);
+        if (dialogResult == JOptionPane.YES_OPTION) {
+            scoDao.remove(scoAtual);
+            limpaCamposSco();
+            cmb_list_sco.removeAllItems();
+            cmb_list_sco.addItem("Clique para selecionar...");
+            carregaTela();
+            btn_sco_excluir.setEnabled(false);
+        }
+    }//GEN-LAST:event_btn_sco_excluirActionPerformed
+
+    private void btn_sco_ger_recursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sco_ger_recursosActionPerformed
+        //chama tela do ricardo passando o idsco
+        
+        
+    }//GEN-LAST:event_btn_sco_ger_recursosActionPerformed
 
     //pega a data e hora formatada
     public Date getPegaDataAtual() {
@@ -495,8 +572,9 @@ public class TelaSCO extends javax.swing.JInternalFrame {
         txt_sco_mil_log.setEnabled(status);
         txt_sco_mil_plan.setEnabled(status);
         txt_sco_mil_ope.setEnabled(status);
+        txt_sco_local.setEnabled(status);
     }
-    
+
     public void alteraCamposEmp(boolean status) {
         txt_fld_emp_descr.setEnabled(status);
         txt_fld_emp_data_fim.setEnabled(status);
@@ -510,6 +588,7 @@ public class TelaSCO extends javax.swing.JInternalFrame {
         txt_sco_mil_log.setText("");
         txt_sco_mil_plan.setText("");
         txt_sco_mil_ope.setText("");
+        txt_sco_local.setText("");
     }
 
     public void limpaCamposEmpenho() {
@@ -517,8 +596,9 @@ public class TelaSCO extends javax.swing.JInternalFrame {
         txt_fld_emp_data_fim.setText("");
         txt_fld_emp_data_ini.setText("");
     }
-    
+
     public void carregaTabelaEquipes() {
+        listaAuxEquipes.clear();
         listaEquipes = equipeDao.buscaEquipes();
         for (Equipe equipe : listaEquipes) {
             if (equipe != null) {
@@ -546,7 +626,7 @@ public class TelaSCO extends javax.swing.JInternalFrame {
     public void carregaTabelaEmpenho(List<Empenho> listaEmp) {
         for (Empenho emp : listaEmp) {
             if (emp != null) {
-                empenhosTable.addRow(new Object[]{emp.getIdempenho(),emp.getDescricao(), emp.getDatainicio(),emp.getDatafim(),emp.getIdequipe().getIdequipe()});
+                empenhosTable.addRow(new Object[]{emp.getIdempenho(), emp.getDescricao(), emp.getDatainicio(), emp.getDatafim(), emp.getIdequipe().getIdequipe()});
             }
         }
     }
